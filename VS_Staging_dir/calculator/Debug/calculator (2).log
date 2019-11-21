@@ -1,0 +1,4 @@
+﻿  calculator.cpp
+K:\Cpp_Homeworks\calculator\calculator.cpp(5,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  LINK : K:\Cpp_Homeworks\calculator\Debug\calculator.exe not found or not built by the last incremental link; performing full link
+  calculator.vcxproj -> K:\Cpp_Homeworks\calculator\Debug\calculator.exe
