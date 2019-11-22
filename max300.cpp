@@ -13,6 +13,5 @@ int main() {
 	else { 
 		cout << "max = " << z << endl;
 		}
-	
 	return 0;
 }
