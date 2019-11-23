@@ -4,7 +4,7 @@ int main() {
 	cout << "enter three numbers to compare: \n" << endl;
 	int x,y,z;
 	cin >> x >> y >> z;
-	if (x > y > z) {
+	if (x > y && x > z)  {
 		cout << "max = " << x << endl;
 		} 
 	else if (y>z) { 

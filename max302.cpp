@@ -2,7 +2,7 @@
 using namespace std;
 int main() {
 	cout << "enter three numbers to compare: \n" << endl;
-	int x,y,z,g;
+	int x,y,z;
 	cin >> x >> y >> z;
 	if (x-y>0) {
 		cout << "max = " << x << endl;
@@ -15,7 +15,5 @@ int main() {
 	else {
 		cout << "max = " << y << endl;
 	}
-	
-	
 	return 0;
 }
