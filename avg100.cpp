@@ -12,7 +12,7 @@ int main() {
 		v++;
 	}
 	avg = sum / l;
-	cout << avg;
+	cout << "\nAverage = " << avg;
 	cout << "\nDone" << endl;
 	return 0;
 }
