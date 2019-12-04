@@ -4,8 +4,10 @@ using namespace std;
 int main(int){
 	double x, y;
 	char op;
+        int k = x - 1;
 	cout << "\nEnter Two Numbers (x,y):\n";
 	cin >> x >> y;
+	int r = x;
 	cout << "\nChoose an Operation:\n "
 		 << "____________________\n"
 		<< "\n1.Addition\n"
@@ -15,7 +17,8 @@ int main(int){
 		<< "5.Power x^y \n"
 		<< "6.Square Root of x\n"
 		<< "7.Normal Logarithm of x\n"
-		<< "8.Exit\n";
+		<< "8.Factorial of x\n"
+		<< "9.Exit\n";
 	cin >> op;
 	switch (op) {
 	case '1':
@@ -53,12 +56,30 @@ int main(int){
 		cout << "ln " << x<< "=" 
 			<< log(x) << endl;
 		break;
+	
 	case '8':
+        	if (x==1 || x==0){
+                	cout << x << "! = "<< "1" <<endl;
+               		 }
+	         
+       		 else {
+        	        for (int f = x ; f > 1 ; f--){
+        	                x = x * k;
+        	                k--;
+        	       		 }
+			
+        	        cout << r <<"! = "<< x << endl;
+	
+        	      }
+		break;
+
+	case '9':
 		cout << "Simple Calculator Out" << endl;
 		break;
 	
 	default :
 		cout << "Chose Something From The Menu";
+		break;
 	}
 	return 0; 
 
