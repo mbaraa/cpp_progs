@@ -26,7 +26,7 @@ int main(){
 		}
 	else
 		cout << "\nStick to the choices idiot.";
-
+	
 	return 0;
 }
 			
