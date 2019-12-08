@@ -1,13 +1,17 @@
 #include<iostream>
 using namespace std;
-int main(){
-	double f=1;
-	int n;
+int main() {
+	double f = 1;
+	double n;
 	cout << "Enter a number\n";
 	cin >> n;
-	for(int i = 1;i<=n;i++){
+
+	int i = 1;
+	do {
 		f *= i;
-		}
+		i++;
+	} while (i <= n);
+
 	cout << n << "! = " << f;
 
 }
