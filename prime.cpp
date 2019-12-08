@@ -3,21 +3,22 @@
 using namespace std;
 int main (){
 	cout << "Enter a number:\n";
-	int no;\
+	int no;
+	bool prime = 1;
 	string state;
 	cin >> no ;
-		if(no == 2 || no == 3 || no == 5 || no == 7 ){
-			state = ("Prime!");
+	for(int i = 2 ; i <= no / 2 ; i++){
+		if(no % i == 0){
+			prime = 0;
+			break;
 			}
+		}
+	if(prime)
+		state = ("Prime!");
+	else 
+		state = ("Not Prime!");
 
-		else if(no%2==0 || no%3==0 || no%5==0 || no%7==0 ){
-			state = ("Not Prime!");
-			}
-		else {
-			state = ("Prime!");
-			}
-		
-		cout << state << endl;
+	cout << state << endl;
 	
 	return 0 ;
 
