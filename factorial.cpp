@@ -1,11 +1,11 @@
 #include<iostream>
 using namespace std;
 int main() {
-	int n;
+	double n;
 	cout << "Input a number :\n";
 	cin >> n;
-	int r = n;
-	int  k = n - 1;
+	double r = n;
+	double  k = n - 1;
 	if (n==1 || n==0){
 		cout << n << "! = "<< "1" <<endl;
 		}
