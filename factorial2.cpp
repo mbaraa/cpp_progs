@@ -1,7 +1,8 @@
 #include<iostream>
 using namespace std;
 int main(){
-	int f=1,n;
+	double f=1;
+	int n;
 	cout << "Enter a number\n";
 	cin >> n;
 	for(int i = 1;i<=n;i++){
