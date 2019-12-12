@@ -1,13 +1,20 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
+int max(int a,int b); // forward declaration for the function max
+
 int main() {
-	int x,y,m;
+	int x,y;
+
+	cout << "Input Two Number To Compare:\n";
 	cin >> x >> y;
-	m = x - y;
-	if (m > 0) {
-		cout << "max =" << x;
-	}else if (m < 0) {
-		cout << "max =" << y;
-	}
-	return 0;
+	int m = max(x,y); //Calling the function max
+	cout << "\nMax = "<< m << endl ;
+	return 0 ;
+}
+
+int max(int a , int b){
+	if(a>b)
+		return a;
+	else
+		return b;
 }
