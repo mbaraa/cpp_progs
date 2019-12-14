@@ -2,25 +2,26 @@
 #include <iostream>
 #include <math.h>
 using namespace std;
-int digCheck(int x);
+double digCheck(double x);
 int main(){
-	int no,sep,digi,sum=0;
+	int sum=0;
+	long long int no,sep,digi;
 	cout << "Input a number :\n";
 	cin >> no;
 	digi = digCheck(no) ;
 	for(int i=1 ; i <= digi ; digi-- ){
 		
-		int mf = pow(10,digi - 1);	
+		long long int mf = pow(10,digi - 1);	
 		sep = no / mf % 10 ;
 		cout << sep << "  ";
 		sum += sep; 
 	}
-	cout << "\nSum of digits : " << sum << endl;
+	cout << "\nSum of the digits : " << sum << endl;
 	return 0;
 }
 
-int digCheck(int x){
-	int digi = 0;
+double digCheck(double x){
+	long long int digi = 0;
 	while(x > 1){
 		x /= 10;
 		digi++;
