@@ -1,8 +1,8 @@
 #include <iostream>
 #include <math.h>
 using namespace std;
-int main(int){
-	double x, y;
+int main(){
+	long double x, y;
 	char op;
         int k = x - 1;
 	cout << "\nEnter Two Numbers (x,y):\n";
