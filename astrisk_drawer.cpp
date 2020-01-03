@@ -2,8 +2,7 @@
 
 using namespace std;
 
-int main()
-{
+int main(){
 	int i, j, k,n;
 	cout << "Input number of itirations:\n";
 	cin >> n;  
