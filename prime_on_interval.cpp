@@ -1,37 +1,32 @@
 #include<iostream>
 using namespace std;
-int primer(int);
-int main (){
-	cout << "Enter an Interval [a,b]:\n";
+int IsPrime(int x);
+int main(){
 	int a,b;
-	int pno=0,npno=0;
-	cin >> a >> b ;
-	bool state ;
-	for(int j = a; j <= b;j++){
-		state = primer(j);
-		if(state){
-			pno++;
+	cout << "Input an interval [a,b] in this form" << endl;
+	cin >> a >> b;
+	cout << "Prime numbers in this interval are ";
+	for(int n = a ; n <= b;n++){
+		
+		if(!IsPrime(n)){
+			continue;
 		}
-		else{
-			npno++;
+		else if(IsPrime(n)){
+			cout << n << " ";
 		}
-	
 	}
-	cout << "\nNonPrimes :"<<npno << endl;
-	cout << "\nPrimes :"<<pno << endl;
-	return 0 ;
+	cout << endl;
+	return 0;
+}
 
-}	
+int IsPrime(int x){
 
-int primer(int no){
-	bool state = 1;
-	for(int i = 2 ; i <= no / 2 ; i++){
-	           
-		if(no % i == 0){
-                       	state = 0;
-			break;	
-			}
+	bool prime = 1;
+	for(int n = 2 ; n <= x/2 ; n++){
+		if(x % n == 0){
+			prime = 0;
+			break;
 		}
-	  		 
-	return state ;
+	}
+	return prime;
 }
