@@ -3,9 +3,9 @@ using namespace std;
 int IsPrime(int x);
 int main(){
 	int a,b;
-	cout << "Input an interval [a,b] in this form" << endl;
+	cout << "Input an interval bounds in the form [a,b] \"JUST THE NUMBERS\" :" << endl;
 	cin >> a >> b;
-	cout << "Prime numbers in this interval are ";
+	cout << "Prime numbers in this interval are : ";
 	for(int n = a ; n <= b;n++){
 		
 		if(!IsPrime(n)){
