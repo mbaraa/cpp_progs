@@ -14,7 +14,6 @@ int main() {
         if(dist.at(i)=='D'){d++;}
         if(dist.at(i)=='L'){l++;}
         if(dist.at(i)=='R'){r++;}
-
     }
     x += r - l;
     y += u - d;
