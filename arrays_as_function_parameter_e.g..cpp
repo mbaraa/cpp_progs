@@ -4,6 +4,7 @@ void readArray(int a[], int);
 void printArray(int a[], int);
 int sumArray(int a[], int);
 void copyArray(int a[], int b[],int);
+int max(int a[],int);
 
 int main() {
 	int a[10], b[10];
@@ -19,9 +20,8 @@ int main() {
 	cout << sumArray(a, 10) << endl;
 	cout << "Sum of values for array2 : \n";
 	cout << sumArray(b, 10) << endl;
+};
 
-	return 0;
-}
 void readArray(int a[], int size) {
 	for (int i = 0; i < size; i++) {
 		cin >> a[i];
@@ -29,9 +29,6 @@ void readArray(int a[], int size) {
 	cout << endl;
 
 }
-
-
-
 void printArray(int a[], int size) {
 	for (int i = 0; i < size; i++) {
 		cout << a[i];
@@ -51,4 +48,14 @@ void copyArray(int a[], int b[], int size) {
 	}
 	cout << endl;
 
+}
+int max(int a[], int size){
+	int m = a[0];
+	int loc = 0;
+	for(int i = 1; i < size ;i++){
+		if(a[i] > m){
+			m = a[i];
+			loc = i;
+		}
+	}
 }
