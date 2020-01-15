@@ -39,7 +39,7 @@ int main() {
               		  	}
 			cout << midmf << endl;
 			cout << lilmf << endl;
-			
+			break;
 		case '2' :
 			if (a < b && a < c)  {
         	        no1 = a ;
@@ -68,7 +68,7 @@ int main() {
               		  	}
 			cout << midmf << endl;
 			cout << lilmf << endl;
-			
+			break;
 		}
 	return 0;
 	
