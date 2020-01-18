@@ -1,5 +1,4 @@
 #include<iostream>
-#include<string>
 using namespace std;
 int main (){
 	cout << "Enter a number:\n";
@@ -14,12 +13,9 @@ int main (){
 			}
 		}
 	if(prime)
-		state = ("Prime!");
+		cout << "Prime!\n";
 	else 
-		state = ("Not Prime!");
-
-	cout << state << endl;
-	
+		cout << "Not Prime!\n";
 	return 0 ;
 
 }
