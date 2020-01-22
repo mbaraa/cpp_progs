@@ -1,8 +1,9 @@
 //generalize me please b****
 #include<iostream>
+#include<string>
 using namespace std;
 int main() {
-	char id[3] = {'n1','n2','n3'} ;
+	char id[3] = {'n1','n2','n3'};
 	int first[3], second[3], total[3];
 	cout << "enter 1st exam mark\n";
 	for (int i = 0; i < 3; i++) {

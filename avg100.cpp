@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int main() {
-	int v= 0 ,a,l;
+	double v= 0 ,a,l;
 	cout << "Enter Number of Integers:\n";
 	cin >> l;
 	cout << "Enter " << l << " Integer:\n" << endl;

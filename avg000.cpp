@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int main() {
-	int v= 0 ,a;
+	double v= 0 ,a;
 	cout << "Enter 5 Integer:\n";
 	double sum = 0, avg ;
 	while (v < 5) {
