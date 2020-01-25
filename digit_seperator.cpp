@@ -8,6 +8,9 @@ int main(){
 	long long int no,sep,digi;
 	cout << "Input a number :\n";
 	cin >> no;
+	if(no<0){
+		no*=-1;
+        }
 	digi = digCheck(no) ;
 	for(int i=1 ; i <= digi ; digi-- ){
 		
