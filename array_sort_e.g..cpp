@@ -1,38 +1,38 @@
-//to be rectified in the future
+//Rectified
 #include<iostream>
 using namespace std;
 int main(){
-    cout << "Enter array size :   ";
-    int size;
-    cin >> size;
-    int a[size];
-    int na[size];
-    int min=a[0] , max=a[0];
-    cout << "Enter array's component :  ";
-    for(int i = 0 ; i<size ; i++){
-        cin >> a[i];
-    }
-    for(int i=0;i<size;i++){
-    if(a[i]>max){
-            max=a[i] + 1;
+    cout << "Enter array's size :   ";
+    int arraySize;
+    cin >> arraySize;
+    
+    double array[arraySize];
+    double min=array[0] , max=array[0];
+    
+    cout << "Enter array's components:  ";
+    for(int counter = 0 ; counter < arraySize ; counter++){
+        cin >> array[counter];
+        if(array[counter]>max){
+            max=array[counter] + 1;
         }
     }
+
     int loc;
-    for(int i=0;i<5;i++){
-        for(int j = 0;j<5;j++){
-            if(a[j]<min){
-                min=a[j];
-                loc = j;
+    double sortedArray[arraySize];
+
+    for(int outercounter = 0 ; outercounter < arraySize ; outercounter++){
+        for(int innercounter = 0  ; innercounter < arraySize ; innercounter++){
+            if(array[innercounter]<min){
+                min=array[innercounter];
+                loc = innercounter;
             }
         }
-        na[i]=min;
-        a[loc]=max;
+        sortedArray[outercounter]=min;
+        array[loc]=max;
         min=max;
     }
-    for(int i=0;i<5;i++){
-        cout << na[i] << " ";
+    for(int counter = 0 ; counter < arraySize ; counter++){
+        cout << sortedArray[counter] << " ";
     }
 
 };
-
-
