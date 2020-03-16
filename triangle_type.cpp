@@ -5,7 +5,7 @@ int main(){
     while(true){
         
         for ( int i = 0 ; i < 3 ; i++ ){
-            cout << "Enter side #" << i+1 ": ";
+            cout << "Enter side #" << i+1 << ": ";
             cin >> trig_sides[i];
         }
         
