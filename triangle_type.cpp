@@ -3,8 +3,9 @@ using namespace std;
 int main(){
     double trig_sides[3];
     while(true){
-        cout << "Enter three sides lengths: ";
+        
         for ( int i = 0 ; i < 3 ; i++ ){
+            cout << "Enter side #" << i+1 ": ";
             cin >> trig_sides[i];
         }
         
