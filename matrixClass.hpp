@@ -154,10 +154,11 @@ private:
     double det(int rows, std::vector<std::vector<double>> mainMatrix){ //wondering why called mainMatrix
         int cols = rows; // for readablity                 //scroll down to see some messed up blin 
         double answer = 0;
+        // pre-finally determinant of 2*2 matrix
         if(rows == 2){
             return ( mainMatrix[0][0] * mainMatrix[1][1] ) - ( mainMatrix[1][0] * mainMatrix[0][1] );
         }
-            
+        // here the fun biggens 
         else if (rows > 2){
 
             int newRows, newCols;
@@ -174,7 +175,8 @@ private:
                 for(int newRow = 0; newRow < newRows - 1; newRow++){
                     // temporary vector to store columns
                     std::vector<double> tempVector;
-                    
+                    // generate a submatrix that has elements from rows and columns that are not 
+                    // the current ones i.e. "mainCol"
                     for(int newCol = 0; newCol < newCols; newCol++){
                         
                         if( newCol != mainCol ){
