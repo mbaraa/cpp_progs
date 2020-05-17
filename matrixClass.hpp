@@ -4,11 +4,11 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
-
+using namespace std;
 //this whole thing deals with square matrices so rows = columns
 class Matrix{
 public:
-    // overloaded constructors
+    // constructors
     Matrix(int order){
         setRows(order);
         setCols(order);
@@ -16,6 +16,10 @@ public:
     Matrix(){
         setRows(1);
         setCols(1);
+    }
+    // copy constructor
+    Matrix(vector< vector< double > > sourceMatrix){
+        Matrix::matrix = sourceMatrix;
     }
     // lame setters & getters
     void setRows(int rows){
@@ -38,7 +42,10 @@ public:
         return this->columns;
     }
     //
-    std::vector< std::vector<double> > getMatrix(){
+    void setMatrix(vector< vector<double> > mtrx){
+        Matrix::matrix = mtrx;
+    }
+    vector< vector<double> > getMatrix(){
         return matrix;
     }
     ////////
@@ -51,7 +58,7 @@ public:
         int cols = Matrix::rows; // for readablity
         for(int row = 0 ; row < rows ; row++){
             // temporary vector to store columns
-            std::vector<double> tempVector;
+            vector<double> tempVector;
             for(int col = 0 ; col < cols ; col++){
                 // temporary variable to store element
                 double temp;
@@ -61,6 +68,8 @@ public:
                 tempVector.push_back(temp);
 
             }
+            // new line for better formatting
+            printf("\n");
             // add the temporary vector to the current row of the main 2D vector
             Matrix::matrix.push_back(tempVector);   
             // and roll over if condition is true :) 
@@ -81,7 +90,8 @@ public:
         }
         printf("\n");
     }
-    void add(std::vector< std::vector<double> > anotherMatrix){
+    // add an another matrix to the current matrix
+    void add(vector< vector<double> > anotherMatrix){
         int order = Matrix::matrix.size();
         int order2 = anotherMatrix.size();
         
@@ -96,6 +106,33 @@ public:
             }
         }
 
+    }
+    // multiply an another matrix to the current matrix an returns the new matrix
+    vector< vector<double> >  multiply(vector< vector<double> >  anotherMatrix){
+        vector< vector<double> > newMatrix;
+        int newRows, newCols;
+        // reminder: when multiplying two matrices the answer is a matrix
+        // with number of rows from the first and number of columns from the second
+        newRows = Matrix::rows;
+        newCols = anotherMatrix.front().size();
+        initMatrix(newMatrix, newRows, newCols);
+        
+        for(int row = 0; row < newRows; row++)
+            for(int col = 0; col < newCols; col++)
+                for(int shared = 0; shared < Matrix::rows; shared++){
+                    newMatrix[row][col] += Matrix::matrix[row][shared] * anotherMatrix[shared][col];
+                }
+
+        return newMatrix;
+
+    }
+    // matrix trace finder
+    double findTrace(){
+        int trace = 0;
+        for(int diag = 0; diag < Matrix::rows; diag++){
+            trace += matrix[diag][diag];
+        }
+        return trace;
     }
     
     // find determinant of a matrix
@@ -113,13 +150,11 @@ private:
     int columns;
 
     // determinant finder, it's private so the object function call is not parameterized :)
-    // otherwise it'll get messy like a bee kingdom
+    // otherwise it'll get messy like a bee hive
     double det(int rows, std::vector<std::vector<double>> mainMatrix){ //wondering why called mainMatrix
         int cols = rows; // for readablity                 //scroll down to see some messed up blin 
         double answer = 0;
         if(rows == 2){
-            //answer += ( mainMatrix[0][0] * mainMatrix[1][1] ) - ( mainMatrix[1][0] * mainMatrix[0][1] );
-            //return answer;
             return ( mainMatrix[0][0] * mainMatrix[1][1] ) - ( mainMatrix[1][0] * mainMatrix[0][1] );
         }
             
@@ -162,5 +197,39 @@ private:
     
     }
 
+    // initialize a matrix with zeros
+    void initMatrix(vector< vector<double> > &mtrx, int rows, int cols){
+        for(int row = 0; row < rows; row++){
+            // temporary array to store columns
+            std::vector<double> tempVector;
+            for(int col = 0; col < cols; col++){
+                // temporary variable to store element
+                double temp;
+                temp = 0;
+                // add the temporary variable to the temporary array
+                tempVector.push_back(temp);
+            }
+            // add the temporary array to the current row of the main 2D array
+            mtrx.push_back(tempVector);   
+            // and roll over if condition is true :) 
+        }
+    }
+    // find sum of a row
+    double rowSum(vector< vector<double> > mtrx, int desiredRow){
+        double sum = 0;
+        for(int col = 0; col < mtrx.front().size(); col++){
+            sum += mtrx[desiredRow][col];
+        }
+        return sum;
+    }
+    // find sum of a column
+    double columnSum(vector< vector<double> > mtrx, int desiredColumn){
+        double sum = 0;
+        for(int row = 0; row < mtrx.size(); row++){
+            sum += mtrx[row][desiredColumn];
+        }
+        return sum;
+    }
 
 };
+
