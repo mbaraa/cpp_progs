@@ -1,4 +1,3 @@
-// C
 #include <stdio.h>  // C library to perform Input/Output operations
 #include <time.h>   // C Time Library
 #include <unistd.h> // UNIX Process management API 
