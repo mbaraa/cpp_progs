@@ -1,4 +1,3 @@
-// this is a C program but what ever
 #include <stdio.h>
 // test functions
 void *f1(){
