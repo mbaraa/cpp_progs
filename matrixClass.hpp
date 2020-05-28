@@ -1,144 +1,192 @@
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 //matrix class by Baraa Al-Masri
 #include <cstdio>
 #include <vector>
 #include <cmath>
 #include <cstdlib>
+#include <ctype.h>
 #include <iostream>
 using namespace std;
 //this whole thing deals with square matrices so rows = columns
-class Matrix{
+class SquareMatrix{
 public:
-    // constructors
-    Matrix(int order){
+    // overloaded constructors
+    SquareMatrix(int order, string matrixName){
         setRows(order);
         setCols(order);
+        initMatrix(SquareMatrix::matrix, order, order);
+        setMatrixName(matrixName);
     }
-    Matrix(){
+    SquareMatrix(){
         setRows(1);
         setCols(1);
+        initMatrix(SquareMatrix::matrix, 1, 1);
+        
     }
-    // copy constructor
-    Matrix(vector< vector< double > > sourceMatrix){
-        Matrix::matrix = sourceMatrix;
-    }
+    /*squareMatrix(vector< vector<double> > otherMatrix, int order){
+        squareMatrix(order);
+        squareMatrix::matrix = otherMatrix;
+    }*/
     // lame setters & getters
-    void setRows(int rows){
+    SquareMatrix setRows(int rows){
         if(rows < 0)
             rows = 1;
         else
             this->rows = rows;
+        // return object of the same class
+        return *this;
     }    
     int getRows(){
         return this->rows;
     }
     
-    void setCols(int cols){
+    SquareMatrix setCols(int cols){
         if(cols < 0)
             cols = 1;
         else
             this->columns = cols;
+        // return object of the same class
+        return *this;
     }    
     int getCols(){
         return this->columns;
     }
     //
-    void setMatrix(vector< vector<double> > mtrx){
-        Matrix::matrix = mtrx;
+    SquareMatrix setMatrix(vector< vector<double> > matrix){
+        this->matrix = matrix;
+        return *this;
     }
-    vector< vector<double> > getMatrix(){
-        return matrix;
+    std::vector< std::vector<double> > getMatrix(){
+        return SquareMatrix::matrix;
+    }
+    //
+    SquareMatrix setMatrixName(string matrixName){
+        this->matrixName = matrixName;
+        return *this;
+    }
+    string getMatrixName(){
+        return this->matrixName;
     }
     ////////
 
-    // action functions :)
+    
     // read values into the matrix
     void readMatrix(){
-        printf("Enter matrix's elements:\n");
+        printf("Enter matrix %s elements:\n", matrixName.c_str());
 
-        int cols = Matrix::rows; // for readablity
+        int cols = SquareMatrix::rows; // for readablity
         for(int row = 0 ; row < rows ; row++){
-            // temporary vector to store columns
-            vector<double> tempVector;
             for(int col = 0 ; col < cols ; col++){
-                // temporary variable to store element
-                double temp;
-                printf("m%i%i = ", row+1,col+1);
-                scanf("%lf", &temp);
-                // add the temporary variable to the temporary vector
-                tempVector.push_back(temp);
-
+                printf("element%d%d = ", row+1, col+1);
+                scanf("%lf", &matrix[row][col]);               
             }
-            // new line for better formatting
             printf("\n");
-            // add the temporary vector to the current row of the main 2D vector
-            Matrix::matrix.push_back(tempVector);   
-            // and roll over if condition is true :) 
         }
     }
+
     // well it's a printing function no comments needed :)
     void printMatrix(){
-        printf("\nM = | ");
-        int cols = Matrix::rows; // for readablity
+        //printf("\nMatrix's elements:");
+        printf("\n%s = | ", matrixName.c_str());
+        int cols = SquareMatrix::rows; // for readablity
         for(int row = 0 ; row < rows ; row++){
             for(int col = 0 ; col < cols ; col++){
-                std::cout << Matrix::matrix[row][col] << "";
+                std::cout << SquareMatrix::matrix[row][col] << "";
                 std::cout << (col == cols-1 ? " |" : " ");
             }
             printf("\n");
-            std::cout << (row != rows - 1 ? "    | " : "");
-            
+            if( row != rows - 1){
+                printSpaces(matrixName); // print some spaces for formatting :)
+                printf("   | ");
+            }            
         }
         printf("\n");
     }
-    // add an another matrix to the current matrix
-    void add(vector< vector<double> > anotherMatrix){
-        int order = Matrix::matrix.size();
-        int order2 = anotherMatrix.size();
-        
+
+    // action functions :)
+
+    // this function adds a matrix to the current matrix & returns the added matrix
+    vector< vector<double> > add(SquareMatrix *anotherMatrix){
+        // orders check
+        int order = this->matrix.size();
+        int order2 = anotherMatrix->getMatrix().size();
         if(order != order2 ){
             printf("Hold up different orders no sum for you!\n");
             exit(0);
         }
+        // another matrix's 2D array
+        vector< vector<double> > otherMatrix;
+        otherMatrix = anotherMatrix->getMatrix();
+        // new matrix
+        string newMatrixName =  matrixName + " + " + anotherMatrix->getMatrixName();
+        SquareMatrix *newMatrix = new SquareMatrix(order, newMatrixName);
+        vector< vector<double> > newMatrixsArray;
+        initMatrix(newMatrixsArray, order, order);
 
         for(int row = 0; row < order; row++){
             for(int col = 0; col < order; col++){
-                Matrix::matrix[row][col] += anotherMatrix[row][col];
+                newMatrixsArray[row][col] = otherMatrix[row][col] + this->matrix[row][col];
             }
         }
-
-    }
-    // multiply an another matrix to the current matrix an returns the new matrix
-    vector< vector<double> >  multiply(vector< vector<double> >  anotherMatrix){
-        vector< vector<double> > newMatrix;
-        int newRows, newCols;
-        // reminder: when multiplying two matrices the answer is a matrix
-        // with number of rows from the first and number of columns from the second
-        newRows = Matrix::rows;
-        newCols = anotherMatrix.front().size();
-        initMatrix(newMatrix, newRows, newCols);
-        
-        for(int row = 0; row < newRows; row++)
-            for(int col = 0; col < newCols; col++)
-                for(int shared = 0; shared < Matrix::rows; shared++){
-                    newMatrix[row][col] += Matrix::matrix[row][shared] * anotherMatrix[shared][col];
-                }
-
-        return newMatrix;
-
-    }
-    // matrix trace finder
-    double findTrace(){
-        int trace = 0;
-        for(int diag = 0; diag < Matrix::rows; diag++){
-            trace += matrix[diag][diag];
-        }
-        return trace;
+        newMatrix->setMatrix(newMatrixsArray);
+        return newMatrix->getMatrix();
     }
     
-    // find determinant of a matrix
+    // find the determinant of the matrix
     double findDeterminant(){
         return det(rows, matrix);
     }
+    
+    // find the trace of the matrix
+    double find_trace(){
+        double trace = 0;
+        for(int diagonal = 0; diagonal < rows; diagonal++){
+            trace += matrix[diagonal][diagonal];
+        }
+        return trace;
+    }
+
+    // find the transpose matrix
+    vector< vector<double> > transpose(){
+        int new_rows = SquareMatrix::columns;
+        int new_columns = SquareMatrix::rows;
+        
+        vector< vector<double> > transposed_matrix;
+        initMatrix(transposed_matrix, new_rows, new_columns);
+        
+        for(int row = 0; row < new_rows; row++){
+            for(int col = 0; col < new_columns; col++){
+                transposed_matrix[row][col] = matrix[col][row];
+            }
+                
+        }
+
+        return transposed_matrix;
+
+    }
+    // multiply the matrix with a given matrix and put the result in a new matrix
+    vector< vector<double> > multiply( vector< vector< double> > otherMatrix){
+        // rows & columns of the other matrix
+        int otherRows = otherMatrix.size();
+        int otherColumns = otherMatrix.front().size();
+        // rows & columns of the resulting matrix
+        int newRows = SquareMatrix::rows;
+        int newColumns = otherColumns;
+        // new matrix
+        vector< vector<double> > newMatrix;
+        initMatrix(newMatrix, newRows, newColumns);
+        // Multiplying matrix a and b and storing in array mult.
+        for(int i = 0; i < SquareMatrix::rows; ++i)
+            for(int j = 0; j < otherColumns; ++j)
+                for(int k = 0; k < SquareMatrix::columns; ++k){
+                    newMatrix[i][j] += SquareMatrix::matrix[i][k] * otherMatrix[k][j];
+                }
+        // finally get the resulting matrix
+        return newMatrix;
+    }
+ 
+
     // end of functions, well I lied :)    
     ////////////////
 
@@ -148,91 +196,101 @@ private:
     // rows & columns blyat
     int rows;
     int columns;
+    string matrixName;
 
     // determinant finder, it's private so the object function call is not parameterized :)
-    // otherwise it'll get messy like a bee hive
+    // otherwise it'll get messy like a bee kingdom
     double det(int rows, std::vector<std::vector<double>> mainMatrix){ //wondering why called mainMatrix
         int cols = rows; // for readablity                 //scroll down to see some messed up blin 
         double answer = 0;
-        // pre-finally determinant of 2*2 matrix
         if(rows == 2){
             return ( mainMatrix[0][0] * mainMatrix[1][1] ) - ( mainMatrix[1][0] * mainMatrix[0][1] );
         }
-        // here the fun biggens 
-        else if (rows > 2){
+            
+        
 
-            int newRows, newCols;
-            int cols = rows; // for readablity
-            newRows = rows - 0; // those two where "rows - 1" then I realised that
-            newCols = cols - 0; // this moo ain't working so....
+        int newRows, newCols;
+        newRows = rows - 0; // those two where "rows - 1" then I realised that
+        newCols = cols - 0; // this moo ain't working so....
 
 
-            // first row, alternating columns
-            for(int mainCol = 0; mainCol < cols; mainCol++){
-                std::vector< std::vector<double> > newMatrix;
-                // for future reads :)
-                // I had to stop @ newRows - 1 so the index won't be out of range in the main matrix
-                for(int newRow = 0; newRow < newRows - 1; newRow++){
-                    // temporary vector to store columns
-                    std::vector<double> tempVector;
-                    // generate a submatrix that has elements from rows and columns that are not 
-                    // the current ones i.e. "mainCol"
-                    for(int newCol = 0; newCol < newCols; newCol++){
+        // first row, alternating columns
+        for(int mainCol = 0; mainCol < cols; mainCol++){
+            std::vector< std::vector<double> > newMatrix;
+            // for future reads :)
+            // I had to stop @ newRows - 1 so the index won't be out of range in the main matrix
+            for(int newRow = 0; newRow < newRows - 1; newRow++){
+                // temporary vector to store columns
+                std::vector<double> tempVector;
+                    
+                for(int newCol = 0; newCol < newCols; newCol++){
                         
-                        if( newCol != mainCol ){
-                            double temp;
-                            temp = mainMatrix[newRow+1][newCol];
-                            tempVector.push_back(temp);
+                    if( newCol != mainCol ){
+                        double temp;
+                        temp = mainMatrix[newRow+1][newCol];
+                        tempVector.push_back(temp);
 
-                        }
                     }
-                    // add the temporary vector to the current row of the main 2D vector
-                    newMatrix.push_back(tempVector);
-
                 }
-                answer += pow(-1, mainCol) * mainMatrix[0][mainCol] * (det(newRows-1, newMatrix));
+                // add the temporary vector to the current row of the main 2D vector
+                newMatrix.push_back(tempVector);
+
             }
-            //printf("LOL Cyka\n");
+            answer += pow(-1, mainCol) * mainMatrix[0][mainCol] * (det(newRows-1, newMatrix));
         }
+        //printf("LOL Cyka\n");
+    
         // finally return the answer when the recieved matrix is 1*1
         return answer;
     
     }
 
-    // initialize a matrix with zeros
-    void initMatrix(vector< vector<double> > &mtrx, int rows, int cols){
-        for(int row = 0; row < rows; row++){
-            // temporary array to store columns
+    // initialse a matrix with zeros
+    void initMatrix(vector< vector<double> > &mtrx, int rows, int columns){
+
+        for(int row = 0 ; row < rows ; row++){
+            // temporary vector to store columns
             std::vector<double> tempVector;
-            for(int col = 0; col < cols; col++){
-                // temporary variable to store element
-                double temp;
-                temp = 0;
-                // add the temporary variable to the temporary array
-                tempVector.push_back(temp);
+            for(int col = 0 ; col < columns ; col++){
+                // add the temporary variable to the temporary vector
+                tempVector.push_back(0);
             }
-            // add the temporary array to the current row of the main 2D array
+            // add the temporary vector to the current row of the main 2D vector
             mtrx.push_back(tempVector);   
             // and roll over if condition is true :) 
         }
+        //return mtrx; //blyat what was I thinking :)
     }
-    // find sum of a row
-    double rowSum(vector< vector<double> > mtrx, int desiredRow){
-        double sum = 0;
-        for(int col = 0; col < mtrx.front().size(); col++){
-            sum += mtrx[desiredRow][col];
+    // print spaces as same as matrix name
+    void printSpaces(string matrixName){
+        int length = matrixName.length();
+        for (int i = 0; i < length; i++ ){
+            printf(" ");
         }
-        return sum;
-    }
-    // find sum of a column
-    double columnSum(vector< vector<double> > mtrx, int desiredColumn){
-        double sum = 0;
-        for(int row = 0; row < mtrx.size(); row++){
-            sum += mtrx[row][desiredColumn];
-        }
-        return sum;
-    }
 
+    }
 
 };
+// end of class
 
+// some sort of linear search function
+
+// returns memory address of the matching matrix name
+// note that it need excepyiopn handelling in the main function :)
+SquareMatrix *findMatrix(char matrixName[], SquareMatrix **array, int SIZE){ // pointer to pointer i.e pointer to the
+                                                                            // array of pointers(objects)
+    for(int i = 0; i < SIZE; i++)
+        //try{
+            if(array[i]->getMatrixName() == matrixName)
+                return array[i];
+        /*}
+        catch (std::logic_error){
+            printf(RED);
+            printf("no such matrix found!\t re-choose!\n");
+            printf(RESET);
+            continue;
+        }*/
+        
+}
+
+#endif 
