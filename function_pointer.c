@@ -33,6 +33,9 @@ int main(void){
     
     // declaring array of functions from the function pointer type :)
     funcPtr arrayOfFunctions[3] = {&f1, &f2};
+    // or this
+    // void (*arrayOfFunctions[3]) = {&f1, &f2}; 
+
 
     // invoking each function by its index 
     arrayOfFunctions[0](); 
