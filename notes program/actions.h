@@ -25,36 +25,49 @@ void listDir(char *directoryName){
     closedir(directoryPtr); 
 }
 
+// create new file
+void touch(char fileName[99]){
+    FILE *newFile;
+    newFile = fopen(fileName, "w");
+}
+
+// file existence checker
+int checkFile(FILE *filePtr){
+    return (filePtr == NULL)? 0 : 1;
+}
+
 // view an existing note
 void viewNote(char noteName[99]){
     FILE *noteFile;
+    if(checkFile(noteFile)){
+        puts("no such file found!");
+        puts("creating new file with the provided name....");
+        touch(noteName);
+    }
     // open file in read mode to see the current note
     noteFile = fopen(noteName, "r");
-    
+    puts("current note contents:");
     while(!feof(noteFile)){
         printf("%c", fgetc(noteFile));
     }
     fclose(noteFile);
 }
 
-// add to existing note
-void addToNote(char noteName[99]){
+// append to an existing file
+void appendToFile(char fileName[99]){
     FILE *noteFile;
-    
-    viewNote(noteName); 
-    // reopen file in append mode
-    noteFile = fopen(noteName, "a");
+    noteFile = fopen(fileName, "a");
     puts("\nenter your note type 'qq' when you are done(type '\\n' to jump a line)");
     char note[99];
     while(1){
-        scanf("%s", &note);
+        scanf("%s", note);
         if(note[0] == 'q' && note[1] == 'q')
             break;
         // if there's a return escape sequence
         if(note[0] == '\\' && (note[1] == 'n' || note[1] == 'r') ){
             fputc('\n', noteFile);
         }
-                                            
+        // add every othe fucking string
         else{    
             // append a space to the string for better formatting in the file
             strcat(note, " ");
@@ -65,11 +78,16 @@ void addToNote(char noteName[99]){
     fclose(noteFile);
 }
 
+// add to existing note
+void addToNote(char noteName[99]){
+    viewNote(noteName);
+    appendToFile(noteName);
+}
+
 // create new note
 void addNote(char noteName[99]){
-    FILE *noteFile;
-    noteFile = fopen(noteName, "w");
-    addToNote(noteName);
+    touch(noteName);
+    appendToFile(noteName);
 }
 
 // delete a note
