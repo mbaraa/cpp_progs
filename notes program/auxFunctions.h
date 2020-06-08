@@ -79,7 +79,7 @@ void actionChooser(){
             quit();
         else
             continue;
-        // for some fucking reason I had to put the loop after the function call :(
+        // for some ******* reason I had to put the loop after the function call :(
         hold();
         while(getchar() != '\n');
     }

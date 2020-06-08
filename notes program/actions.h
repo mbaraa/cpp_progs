@@ -67,7 +67,7 @@ void appendToFile(char fileName[99]){
         if(note[0] == '\\' && (note[1] == 'n' || note[1] == 'r') ){
             fputc('\n', noteFile);
         }
-        // add every othe fucking string
+        // add every othe string
         else{    
             // append a space to the string for better formatting in the file
             strcat(note, " ");
