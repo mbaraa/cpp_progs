@@ -65,10 +65,8 @@ void quit(){
 void actionChooser(){
     while(1){
         int choice = menu();
-        
-
         void  (*functions[])(char noteName[99]) = {&addNote, &addToNote, &deleteNote, &viewNote};
-
+        
         if(choice < 5){
             printf("\nenter note name:  ");
             char noteName[99];

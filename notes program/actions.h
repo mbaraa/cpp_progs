@@ -8,20 +8,12 @@
 // list files in current directory
 void listDir(char *directoryName){
     puts("Available files:\n");
-    struct dirent *directoryEntry;  // Pointer for directory entry 
-    // opendir() returns a pointer of DIR type.  
+    struct dirent *directoryEntry;
     DIR *directoryPtr = opendir(directoryName); 
-    // opendir returns NULL if couldn't open directory
-    if (directoryPtr == NULL){ 
-        printf("Could not open current directory" ); 
-        return; 
-    } 
-    // Refer http://pubs.opengroup.org/onlinepubs/7990989775/xsh/readdir.html 
-    // for readdir() 
     while ((directoryEntry = readdir(directoryPtr)) != NULL)
         if( directoryEntry->d_name[0] != '.' ) 
             printf("%s\n", directoryEntry->d_name); 
-    // close directory after being done with it
+    
     closedir(directoryPtr); 
 }
 
@@ -61,9 +53,10 @@ void appendToFile(char fileName[99]){
     char note[99];
     while(1){
         scanf("%s", note);
+        // quit checker
         if(note[0] == 'q' && note[1] == 'q')
             break;
-        // if there's a return escape sequence
+        // if there's a return escape sequence do it :)
         if(note[0] == '\\' && (note[1] == 'n' || note[1] == 'r') ){
             fputc('\n', noteFile);
         }
@@ -74,7 +67,6 @@ void appendToFile(char fileName[99]){
             fputs(note, noteFile);
         }
     }
-
     fclose(noteFile);
 }
 
