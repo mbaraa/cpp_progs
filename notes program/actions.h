@@ -26,69 +26,54 @@ void listDir(char *directoryName){
 }
 
 // view an existing note
-void viewNote(){
-    printf("\nenter note name:  ");
-    char noteName[99];
-    scanf("%s", &noteName);
+void viewNote(char noteName[99]){
     FILE *noteFile;
-    
     // open file in read mode to see the current note
     noteFile = fopen(noteName, "r");
-    puts("\ncurrent file content:");    
+    
     while(!feof(noteFile)){
         printf("%c", fgetc(noteFile));
     }
     fclose(noteFile);
 }
 
-// create new note
-void addNote(){
-    printf("\nenter note name:  ");
-    char noteName[99];
-    scanf("%s", &noteName);
-    FILE *noteFile;
-    noteFile = fopen(noteName, "w");
-    puts("enter your note type 'qq' when you are done");
-    char note[99];
-    while(1){
-        scanf("%s", &note);
-        if(note[0] == 'q' && note[1] == 'q')
-            break;
-        // append a space to the string for better formatting in the file
-        strcat(note, " ");
-        fputs(note, noteFile);
-    }
-}
-
 // add to existing note
-void addToNote(){
-    printf("\nenter note name:  ");
-    char noteName[99];
-    scanf("%s", &noteName);
+void addToNote(char noteName[99]){
     FILE *noteFile;
     
-    viewNote(); 
+    viewNote(noteName); 
     // reopen file in append mode
     noteFile = fopen(noteName, "a");
-    puts("\nenter your note type 'qq' when you are done");
+    puts("\nenter your note type 'qq' when you are done(type '\\n' to jump a line)");
     char note[99];
     while(1){
         scanf("%s", &note);
         if(note[0] == 'q' && note[1] == 'q')
             break;
-        // append a space to the string for better formatting in the file
-        strcat(note, " ");
-        fputs(note, noteFile);
+        // if there's a return escape sequence
+        if(note[0] == '\\' && (note[1] == 'n' || note[1] == 'r') ){
+            fputc('\n', noteFile);
+        }
+                                            
+        else{    
+            // append a space to the string for better formatting in the file
+            strcat(note, " ");
+            fputs(note, noteFile);
+        }
     }
 
     fclose(noteFile);
 }
 
+// create new note
+void addNote(char noteName[99]){
+    FILE *noteFile;
+    noteFile = fopen(noteName, "w");
+    addToNote(noteName);
+}
+
 // delete a note
-void deleteNote(){
-    printf("\nenter note name:  ");
-    char noteName[99];
-    scanf("%s", &noteName);
+void deleteNote(char noteName[99]){
     remove(noteName);
 }
 

@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "AuxFunctions.h"
+#include "auxFunctions.h"
 
 int main(){
     welcome();
