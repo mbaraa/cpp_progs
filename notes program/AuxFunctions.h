@@ -3,13 +3,15 @@
 #include <string.h>
 #include <dirent.h>
 #include <stdio.h>
+#include <stdlib.h>
 // red color output
 #define RED "\033[31m"
 // reset color output
 #define RESET "\033[0m"
-
+typedef void (*function)(void);
 // list files in current directory
 void listDir(char *directoryName){
+    puts("Available files:");
     struct dirent *directoryEntry;  // Pointer for directory entry 
     // opendir() returns a pointer of DIR type.  
     DIR *directoryPtr = opendir(directoryName); 
@@ -104,9 +106,11 @@ void clear(){
 
 // welcome screen
 void welcome(){
+    clear();
     puts("\n\tTerminal notes taking program!!\n");
     puts("\tBy Baraa Al-Masri . version 0.001");
     hold();
+    clear();
 }
 
 // menu
@@ -115,7 +119,7 @@ int menu(){
     listDir(".");
     puts("\n----------------------");
     puts("Available actions:");
-    puts("1. Add new note");
+    puts("1. Add a new note");
     puts("2. Add to existing note");
     puts("3. Delete note");
     puts("4. Exit");
@@ -125,38 +129,24 @@ int menu(){
 
     return choice;
 }
-
+// 
+void quit(){
+    puts(RED);
+    puts("have a nice day!");
+    puts(RESET);
+    exit(0);
+}
 // action taker
 void actionChooser(){
-    int quit = 0;
     while(1){
         int choice = menu();
-        switch (choice){
-        case 1:
-            addNote();
-            break;
-        case 2:
-            addToNote();
-            break;
-        case 3:
-            deleteNote();
-            break;
-        case 4:
-            puts(RED);
-            puts("have a nice day!");
-            puts(RESET);
-            quit = 1;
-            break;
-        
-        default:
-            puts(RED);
-            puts("Invalid choice!!");
-            puts(RESET);
+        function functions[] = {&addNote, &addToNote, &deleteNote, &quit};
+
+        if(choice <= 4) 
+            functions[choice - 1]();
+        else
             continue;
-        }
-        
-        if(quit)
-            return;
+
         hold();
         
     }
