@@ -18,7 +18,7 @@
 #include "auxFunctions.h"
 
 int main(){
-    welcome();
+    printWelcomeScreen();
     actionChooser();
     return 0;
 }

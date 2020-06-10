@@ -27,7 +27,7 @@ void clear(){
 }
 
 // welcome screen
-void welcome(){
+void printWelcomeScreen(){
     clear();
     puts("\n\tTerminal notes taking program!!\n");
     puts("\tBy Baraa Al-Masri . version 0.001");
