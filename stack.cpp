@@ -17,20 +17,13 @@ public:
 
 private:
 
-    static int size;
-    type top;
+    int size;
     type *stackElements = (type*)malloc(sizeof(type)*size);
-    static int topIndex;// = -1;
+    int topIndex = -1;
 
     bool checkCapacity();
 
 };
-
-// iso requirements
-temp
-int StackMimic<type>::size = 0;
-temp
-int StackMimic<type>::topIndex = -1;
 
 // rest of the thing
 temp
