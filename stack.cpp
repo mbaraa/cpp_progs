@@ -1,4 +1,4 @@
-include <stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
 // for typo
 #define temp template<typename type>
@@ -17,9 +17,9 @@ public:
 private:
 
     int size;
-    type *stackElements = (type*)malloc(sizeof(type)*size);
+    type *stackElements;
     int topIndex = -1;
-
+    
     bool checkCapacity();
 
 };
@@ -28,6 +28,7 @@ private:
 temp
 StackMimic<type>::StackMimic(int size){
     this->size = size;
+    this->stackElements = (type*)malloc(sizeof(type)*size);
 }
 temp
 StackMimic<type>::StackMimic() : StackMimic(0){
