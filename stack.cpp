@@ -1,4 +1,4 @@
-#include <stdlib.h>
+include <stdlib.h>
 #include <stdio.h>
 // for typo
 #define temp template<typename type>
@@ -12,8 +12,7 @@ public:
     bool isEmpty();
     bool isFull();
     void push(type element);
-    type show();
-    void pop();
+    type pop();
 
 private:
 
@@ -59,16 +58,10 @@ void StackMimic<type>::push(type e){
 }
 
 temp
-void StackMimic<type>::pop(){
+type StackMimic<type>::pop(){
     if(!isEmpty()){
         this->topIndex -= 1;
-    }
-}
-
-temp
-type StackMimic<type>::show(){
-    if(!isEmpty()){
-        return this->stackElements[this->topIndex];
+        return stackElements[topIndex+1];
     }
 }
 
@@ -83,8 +76,8 @@ int main(){
     stk->push(420);
 
     for (int lol = 0; lol < 5; lol++ ){
-        printf("element %d: %d\n", lol+1, stk->show());
-        stk->pop();
+        printf("element %d: %d\n", lol+1, stk->pop());
+        
     }
     
     return 0;
