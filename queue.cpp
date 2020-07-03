@@ -26,7 +26,7 @@ QueueMimic<type>::QueueMimic(int size){
     tailIndex = -1;
     headIndex = 0;
     //queueElements = new type[queueSize];
-    queueElements = (char*)malloc(sizeof(type)*queueSize);
+    queueElements = (type*)malloc(sizeof(type)*queueSize);
 }
 
 temp
