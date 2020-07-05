@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+// template macro
 #define temp template<typename type>
 
 temp
@@ -11,6 +12,7 @@ public:
     int topIndex;
     bool isFull();
     bool isEmpty();
+    void copy(QueueMimic*);
 
 private:
     type *queueElements;
@@ -21,6 +23,7 @@ private:
 };
 
 temp
+// constructor initializes variables and updates the queue size with the given value
 QueueMimic<type>::QueueMimic(int size){
     this->size = size;
     tailIndex = -1;
@@ -31,13 +34,23 @@ QueueMimic<type>::QueueMimic(int size){
 
 temp
 void QueueMimic<type>::enqueue(type element){
-    tailIndex++;
-    queueElements[tailIndex] = element;
+    // post increament of the tail index while adding the new element
+    queueElements[++tailIndex] = element;
 }
 
 temp
 type QueueMimic<type>::dequeue(){
-    return queueElements[headIndex++];
+    // temp variable to hold the value of the head of the queue
+    type head;
+    head = this->queueElements[headIndex];
+    // shifting queue's elements one step back
+    for(int k = 0; k < this->tailIndex ; k++){
+        this->queueElements[k] = this->queueElements[k+1];
+    }
+    // decrease the tail index
+    this->tailIndex--;
+    // return the value of the head before shifting     
+    return head;
 }
 
 temp
@@ -49,10 +62,17 @@ temp
 bool QueueMimic<type>::isFull(){
     return this->tailIndex == this->size - 1;
 }
+
+temp
+void QueueMimic<type>::copy(QueueMimic *anotherQueue){
+    this->size = anotherQueue->getSize();
+    this->queueElements;
+}
+
 // driver
 int main(){
     QueueMimic<char> *queue = new QueueMimic<char>(4);
-    
+
     printf("isEmpty : %d\n", queue->isEmpty());
     printf("isFull : %d\n\n", queue->isFull());
 
@@ -60,8 +80,11 @@ int main(){
         queue->enqueue(k + 65);
     }
     
+    printf("\nisEmpty : %d\n", queue->isEmpty());
+    printf("isFull : %d\n\n", queue->isFull());
+    
     for(int k = 0; k < 4; k++){
-        printf("element %d: %c\n",k ,queue->dequeue());
+        printf("element %d: %c\n",k+1 ,queue->dequeue());
     }
 
     printf("\nisEmpty : %d\n", queue->isEmpty());
