@@ -23,7 +23,7 @@ private:
 };
 
 temp
-// constructor initializes variables and updates the queue size with the given value
+// constructor 
 QueueMimic<type>::QueueMimic(int size){
     this->size = size;
     tailIndex = -1;
@@ -33,12 +33,14 @@ QueueMimic<type>::QueueMimic(int size){
 }
 
 temp
+// push new element to the tail of the stack
 void QueueMimic<type>::enqueue(type element){
     // post increament of the tail index while adding the new element
     queueElements[++tailIndex] = element;
 }
 
 temp
+// remove element from the head of the stack
 type QueueMimic<type>::dequeue(){
     // temp variable to hold the value of the head of the queue
     type head;
@@ -54,19 +56,15 @@ type QueueMimic<type>::dequeue(){
 }
 
 temp
+// returns true is the queue is empty
 bool QueueMimic<type>::isEmpty(){
     return this->headIndex == 0 && this->tailIndex == -1;
 }
 
 temp
+// returns true is the queue is full
 bool QueueMimic<type>::isFull(){
     return this->tailIndex == this->size - 1;
-}
-
-temp
-void QueueMimic<type>::copy(QueueMimic *anotherQueue){
-    this->size = anotherQueue->getSize();
-    this->queueElements;
 }
 
 // driver
