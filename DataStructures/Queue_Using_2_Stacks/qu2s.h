@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <stack>
 // template macro
@@ -55,19 +54,4 @@ type QueueUsingStacks<type>::dequeue(){
     }
     // return the top value of stack2
     return top;
-}
-
-// driver
-int main(){
-    QueueUsingStacks<char> *queue = new QueueUsingStacks<char>(4);
-
-    for(int k = 0; k < 4; k++){
-        queue->enqueue(k + 65);
-    }
-     
-    for(int k = 0; k < 4; k++){
-        printf("element %d: %c\n",k+1 ,queue->dequeue());
-    }
-
-    return 0;
 }

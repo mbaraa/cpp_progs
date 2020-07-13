@@ -35,15 +35,21 @@ LinkedList<type>::LinkedList(type head) {
 
 TEMP
 // add a new element to the linked list
+// note that elements are added to linked list at head
 void LinkedList<type>::addElement(type element) {
-    Node<type> *newHead = new Node<type>(element);
-
+    // taking values from the current head
     Node<type> *tmp = new Node<type>( this->head->getValue() );    
-    
+    tmp->setNext( this->head->getNext() );
+
+    // the new head
+    Node<type> *newHead = new Node<type>(element);
+    // add the new head before the current head
+    tmp->setPrev(  newHead );
+    // add the current head after the new head
     newHead->setNext( tmp );
-
-    newHead->setPrev( NULL );
-
+    // set new head's previous to null
+    newHead->setPrev( nullptr );
+    // update the head
     this->head = newHead;
 
     /*
