@@ -1,4 +1,6 @@
-#include <stdio.h>
+#ifndef LINKDEDLIST_H
+#define LINKDEDLIST_H
+
 #include <stdlib.h>
 #include "Node.h"
 
@@ -7,12 +9,21 @@
 TEMP
 class LinkedList {
 public:
-    // constructor
+    // constructors
     LinkedList(type);
+    LinkedList();
     // add new element
     void addElement(type);
+    // delete an element
+    void deleteElement(type);
+    // find element with given key
+    Node<type> *findElement(type);
+    // check if element is found or not
+    bool isElementFound(type);
     // get head's value
-    Node<type> *getHead();    
+    Node<type> *getHead();
+    // set head's node
+    void setHead(Node<type> *);
     // get tail's value
     Node<type> *getTail();
     // search the linked list
@@ -24,13 +35,30 @@ private:
     // tail's value
     Node<type> *tail;
 
+    // go to tail
+    Node<type> *goToTail();
+
 };
 
 TEMP
-// constructor
+// constructors
 LinkedList<type>::LinkedList(type head) {
     this->head = new Node<type>(head);
     this->head->setPrev(NULL);
+}
+TEMP
+LinkedList<type>::LinkedList(): LinkedList(0) {
+}
+
+TEMP
+// go to tail
+Node<type> *LinkedList<type>::goToTail() {
+    Node<type> *tmp = new Node<type>;
+    tmp = this->head;
+    while( tmp->getNext() != nullptr ) {
+        tmp = tmp->getNext();
+    }
+    return tmp;
 }
 
 TEMP
@@ -40,7 +68,6 @@ void LinkedList<type>::addElement(type element) {
     // taking values from the current head
     Node<type> *tmp = new Node<type>( this->head->getValue() );    
     tmp->setNext( this->head->getNext() );
-
     // the new head
     Node<type> *newHead = new Node<type>(element);
     // add the new head before the current head
@@ -52,24 +79,49 @@ void LinkedList<type>::addElement(type element) {
     // update the head
     this->head = newHead;
 
-    /*
-    // set new element as the new head
-    newHead->setNext(this->head);
-    // check whether if the list is empty
-    if( this->head != NULL) {
-        this->head->setPrev(newHead);        
-    }
-    // update head's value
-    //this->head->setValue( newHead->getValue() );
-    
-    head = newHead;
-    // ensure that head.prev = NULL
-    head->setPrev(NULL);
+    // update tail
+    this->tail = this->goToTail();
+}
 
-    delete newHead;
-    // update tail's value
-    //this->tail->setPrev();
-    */
+TEMP
+// delete an element
+void LinkedList<type>::deleteElement(type key) {
+    this->findElement( key )->setPrev( this->findElement( key )->getNext() );
+    Node<type> *tmp = this->head;
+    while(tmp->getValue() != key) {
+        
+    }
+
+}
+
+TEMP
+// find element with given key
+Node<type> *LinkedList<type>::findElement(type key) {
+    
+    Node<type> *tmp = new Node<type>;
+    // start with head
+    tmp = this->head;
+    // go through the elements until element is found or reached end of LL
+    while ( tmp->getValue() != key && tmp->getNext() != nullptr ) {
+        tmp = tmp->getNext();
+    }
+    // returns the found element, if not found return the tail
+    return tmp; 
+
+}
+
+TEMP
+// check whether the element if found in the linked list
+bool LinkedList<type>::isElementFound(type key) {
+    Node<type> *tmp = new Node<type>;
+    // start with head
+    tmp = this->head;
+    // go through the elements until element is found or reached end of LL
+    while ( tmp->getValue() != key && tmp->getNext() != nullptr ) {
+        tmp = tmp->getNext();
+    }
+    // returns true if a matching element is found
+    return ( tmp->getValue() == key ); 
 }
 
 TEMP
@@ -83,3 +135,10 @@ TEMP
 Node<type> *LinkedList<type>::getTail() {
     return tail;
 }
+
+TEMP
+// set head's node
+void LinkedList<type>::setHead(Node<type> *newHead) {
+    this->head = newHead;
+}
+#endif // LINKEDLIST_H

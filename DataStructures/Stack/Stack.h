@@ -1,4 +1,7 @@
-#include <stdio.h>
+#ifndef STACK_H
+#define STACK_H
+
+#include <stdlib.h>
 // for typo
 #define temp template<typename type>
 
@@ -81,3 +84,4 @@ type StackMimic<type>::show(){
     }
 }
 
+#endif

@@ -1,3 +1,6 @@
+#ifndef QU2S_H
+#define QU2S_H
+
 #include <stdlib.h>
 #include <stack>
 // template macro
@@ -55,3 +58,4 @@ type QueueUsingStacks<type>::dequeue(){
     // return the top value of stack2
     return top;
 }
+#endif

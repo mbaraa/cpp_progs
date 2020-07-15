@@ -1,3 +1,6 @@
+#ifndef QUEUE_H
+#define QUEUE_H
+
 #include <stdlib.h>
 // template macro
 #define temp template<typename type>
@@ -67,3 +70,4 @@ bool QueueMimic<type>::isFull(){
     return this->tailIndex == this->size - 1;
 }
 
+#endif
