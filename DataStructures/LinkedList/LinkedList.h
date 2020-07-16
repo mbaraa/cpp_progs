@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include "Node.h"
+#include <vector>
 
 #define TEMP template<typename type>
 
@@ -17,9 +18,7 @@ public:
     // delete an element
     void deleteElement(type);
     // find element with given key
-    Node<type> *findElement(type);
-    // check if element is found or not
-    bool isElementFound(type);
+    int findElement(type);
     // get head's value
     Node<type> *getHead();
     // set head's node
@@ -29,23 +28,36 @@ public:
     // search the linked list
     
 
-private:
+//private:
     // head's value
     Node<type> *head;
     // tail's value
     Node<type> *tail;
-
+    
+    // elements counter
+    int counter;
     // go to tail
     Node<type> *goToTail();
+
+    // lookup table
+    std::vector< Node<type> * > *indexs;
 
 };
 
 TEMP
 // constructors
 LinkedList<type>::LinkedList(type head) {
+    // initalize head
     this->head = new Node<type>(head);
     this->head->setPrev(NULL);
-}
+    // initalize counter
+    this->counter = 1; // starts with one because of the first element
+    // initalize index table
+    this->indexs = new std::vector< Node<type> * >;
+    // add head to index table
+    this->indexs->push_back(this->head);
+
+}   
 TEMP
 LinkedList<type>::LinkedList(): LinkedList(0) {
 }
@@ -81,47 +93,36 @@ void LinkedList<type>::addElement(type element) {
 
     // update tail
     this->tail = this->goToTail();
+    // update counter
+    this->counter++;
+    // update lookUp table
+    this->indexs->push_back(this->head);
 }
 
 TEMP
-// delete an element
+// delete an element // BROKEN!!
 void LinkedList<type>::deleteElement(type key) {
-    this->findElement( key )->setPrev( this->findElement( key )->getNext() );
-    Node<type> *tmp = this->head;
-    while(tmp->getValue() != key) {
-        
-    }
+    
+    int index = this->findElement(key);
 
+    if(index > -1) {    
+        this->indexs->at(key)->getPrev();
+    }
 }
 
 TEMP
 // find element with given key
-Node<type> *LinkedList<type>::findElement(type key) {
+int LinkedList<type>::findElement(type key) {
     
-    Node<type> *tmp = new Node<type>;
-    // start with head
-    tmp = this->head;
-    // go through the elements until element is found or reached end of LL
-    while ( tmp->getValue() != key && tmp->getNext() != nullptr ) {
-        tmp = tmp->getNext();
+    for(int kounter = 0; kounter < this->counter; kounter++) {
+        if( this->indexs->at(this->counter - 1 - kounter)->getValue() == key ) {
+            return kounter;
+        }
     }
-    // returns the found element, if not found return the tail
-    return tmp; 
+    
+    // if element is not found return -1
+    return -1;
 
-}
-
-TEMP
-// check whether the element if found in the linked list
-bool LinkedList<type>::isElementFound(type key) {
-    Node<type> *tmp = new Node<type>;
-    // start with head
-    tmp = this->head;
-    // go through the elements until element is found or reached end of LL
-    while ( tmp->getValue() != key && tmp->getNext() != nullptr ) {
-        tmp = tmp->getNext();
-    }
-    // returns true if a matching element is found
-    return ( tmp->getValue() == key ); 
 }
 
 TEMP

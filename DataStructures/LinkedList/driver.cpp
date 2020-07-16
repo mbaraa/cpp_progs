@@ -10,11 +10,9 @@ int main() {
     ll->addElement(7);
     ll->addElement(88);
 
-    int xoo = ll->getTail()->getValue();
-    printf("\n%d\n", xoo);
+    printf("\nfound at: %d\n", ll->findElement(88));
 
     ll->deleteElement(88);
-
     int hoo = ll->getHead()->getValue();
     int moo = ll->getHead()->getNext()->getValue();
     int foo = ll->getHead()->getNext()->getNext()->getValue(); 
