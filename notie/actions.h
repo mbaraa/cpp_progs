@@ -80,6 +80,7 @@ void appendToFile(char fileName[99]){
     char note[99];
     inputStringsWithSpaces(note);
     fputs(note, noteFile);
+    fflush(noteFile);
     fclose(noteFile);
 }
 
