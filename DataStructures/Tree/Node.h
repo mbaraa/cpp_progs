@@ -37,7 +37,7 @@ Node<type>::Node(type value) {
 TEMP
 // set left child
 Node<type> Node<type>::setLeft(Node<type> *left) {
-    this->leftChild = leftChild;
+    this->leftChild = left;
 
     return *this;
 }
@@ -50,7 +50,7 @@ Node<type> *Node<type>::getLeft() {
 TEMP
 // set right child
 Node<type> Node<type>::setRight(Node<type> *right) {
-    this->rightChild = rightChild;
+    this->rightChild = right;
 
     return *this;
 }
