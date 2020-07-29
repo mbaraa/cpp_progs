@@ -9,9 +9,9 @@ public:
     BinaryTree<type>(type);
 
     // traversals
-    void traversePreOrder();
-    void traversePostOrder();
-    void traverseInOrder();
+    BinaryTree<type> traversePreOrder();
+    BinaryTree<type> traversePostOrder();
+    BinaryTree<type> traverseInOrder();
 
 private: // variables
     Node<type> *root;
@@ -49,29 +49,35 @@ BinaryTree<type>::BinaryTree(type value) {
 
 TEMP
 // print tree traversal in preorder
-void BinaryTree<type>::traversePreOrder() {
+BinaryTree<type> BinaryTree<type>::traversePreOrder() {
     // 
     BinaryTree::preOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
+
+    return *this;
 }
 
 TEMP
 // print tree traversal in preorder
-void BinaryTree<type>::traversePostOrder() {
+BinaryTree<type> BinaryTree<type>::traversePostOrder() {
     // 
     BinaryTree::postOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
+
+    return *this;
 }
 
 TEMP
 // print tree traversal in preorder
-void BinaryTree<type>::traverseInOrder() {
+BinaryTree<type> BinaryTree<type>::traverseInOrder() {
     // 
     BinaryTree::inOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
+
+    return *this;
 }
 
 TEMP
@@ -114,7 +120,7 @@ void BinaryTree<type>::postOrderTraversal(Node<type> *root) {
     if(currentRight) {
         BinaryTree::postOrderTraversal(currentRight);
     }
-
+    // print current node's value
     std::cout << current->getValue() << " ";
 }
 
