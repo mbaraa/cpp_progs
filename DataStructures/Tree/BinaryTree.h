@@ -19,6 +19,10 @@ private: // variables
 private: // functions
     // the dark side version of pre order traversal 
     static void preOrderTraversal(Node<type> *);
+    // the dark side version of pre order traversal 
+    static void postOrderTraversal(Node<type> *);
+    // the dark side version of pre order traversal 
+    static void inOrderTraversal(Node<type> *);
 };
 
 TEMP
@@ -53,8 +57,28 @@ void BinaryTree<type>::traversePreOrder() {
 }
 
 TEMP
-// the dark side version of pre order traversal 
+// print tree traversal in preorder
+void BinaryTree<type>::traversePostOrder() {
+    // 
+    BinaryTree::postOrderTraversal(this->root);
+    // stdout flush
+    std::cout << std::endl;
+}
+
+TEMP
+// print tree traversal in preorder
+void BinaryTree<type>::traverseInOrder() {
+    // 
+    BinaryTree::inOrderTraversal(this->root);
+    // stdout flush
+    std::cout << std::endl;
+}
+
+TEMP
+// the dark side version of preorder traversal 
 void BinaryTree<type>::preOrderTraversal(Node<type> *root) {
+    // preorder <root><left><right>
+    
     // current node in the tree
     Node<type> *current = root;
     Node<type> *currentLeft = root->getLeft();
@@ -71,4 +95,50 @@ void BinaryTree<type>::preOrderTraversal(Node<type> *root) {
         BinaryTree::preOrderTraversal(currentRight);
     }
 
+}
+
+TEMP
+// the dark side version of postorder traversal 
+void BinaryTree<type>::postOrderTraversal(Node<type> *root) {
+    // postorder <left><root><right>
+    
+    // current node in the tree
+    Node<type> *current = root;
+    Node<type> *currentLeft = root->getLeft();
+    Node<type> *currentRight = root->getRight();
+    
+    // now traverse left and right children
+    if(currentLeft) {
+        BinaryTree::postOrderTraversal(currentLeft);
+    }
+    if(currentRight) {
+        BinaryTree::postOrderTraversal(currentRight);
+    }
+
+    std::cout << current->getValue() << " ";
+}
+
+TEMP
+// the dark side version of inorder traversal 
+void BinaryTree<type>::inOrderTraversal(Node<type> *root) {
+    // inorder <left><right><root>
+    
+    // current node in the tree
+    Node<type> *current = root;
+    Node<type> *currentLeft = root->getLeft();
+    Node<type> *currentRight = root->getRight();
+     
+    // traverse left child
+    if(currentLeft) {
+        BinaryTree::inOrderTraversal(currentLeft);
+    }
+    
+    // print current node's value
+    std::cout << current->getValue() << " ";
+    
+    // traverse right child
+    if(currentRight) {
+        BinaryTree::inOrderTraversal(currentRight);
+    }
+    
 }
