@@ -16,15 +16,22 @@ public:
     Node<type> setRight(Node<type> *);
     Node<type> *getRight();
     
+    Node<type> setSibling(Node<type> *);
+    Node<type> *getSibling();
+    
     Node<type> setValue(type);
     type getValue();
 
+    // check capacity
+    bool isFull();
+    bool isEmpty();
 
 private:
     type value;
     Node<type> *parent;
     Node<type> *leftChild;
     Node<type> *rightChild;
+    Node<type> *rightSibling;
 
 };
 
@@ -74,6 +81,19 @@ Node<type> *Node<type>::getParent() {
 }
 
 TEMP
+// set right sibling
+Node<type> Node<type>::setSibling(Node<type> *sibling) {
+    this->rightSibling = sibling;
+
+    return *this;
+}
+TEMP
+// get right sibling
+Node<type> *Node<type>::getSibling() {
+    return this->rightSibling;
+}
+
+TEMP
 // set value
 Node<type> Node<type>::setValue(type value) {
     this->value = value;
@@ -84,4 +104,16 @@ TEMP
 // get value
 type Node<type>::getValue() {
     return this->value;
+}
+
+TEMP
+// check if the node is empty
+bool Node<type>::isEmpty() {
+    return (!leftChild && !rightChild);
+}
+
+TEMP
+// check if the node is full
+bool Node<type>::isFull() {
+    return (leftChild && rightChild);
 }
