@@ -99,6 +99,16 @@ BinaryTree<type> BinaryTree<type>::traverseInOrder() {
 }
 
 TEMP
+// print tree elements in level order
+BinaryTree<type> BinaryTree<type>::traverseLevelOrder() {
+    //
+    BinaryTree::levelOrderTraversal(this->root);
+    // stdout flush
+    std::cout << std::endl;
+
+    return *this;
+}
+TEMP
 // the dark side version of preorder traversal 
 void BinaryTree<type>::preOrderTraversal(Node<type> *root) {
     // preorder <root><left><right>
@@ -172,7 +182,7 @@ TEMP
 void BinaryTree<type>::printLevel(Node<type> *someNode, int level) {
     // print value when root is reached
     if(level == 1) {
-        std::cout << someNode->getValue << " ";
+        std::cout << someNode->getValue() << " ";
     } 
     // there must be an else, because the function is a void returning type
     else {
@@ -180,8 +190,12 @@ void BinaryTree<type>::printLevel(Node<type> *someNode, int level) {
         leftHeight = BinaryTree::getNodeHeight(someNode->getLeft());
         rightHeight = BinaryTree::getNodeHeight(someNode->getRight());
 
-        BinaryTree::printLevel(someNode->getLeft(), level - 1); 
-        BinaryTree::printLevel(someNode->getRight(), level - 1);
+        if(someNode->getLeft()) {
+            BinaryTree::printLevel(someNode->getLeft(), level - 1); 
+        }
+        if(someNode->getRight()){
+                BinaryTree::printLevel(someNode->getRight(), level - 1);
+        }
         // -1 so it prints L & R of the current level
     }
 
