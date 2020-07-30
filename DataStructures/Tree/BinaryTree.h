@@ -1,3 +1,6 @@
+#ifndef BINARYTREE_H
+#define BINARYTREE_H 1
+
 #include <stdlib.h>
 #include "Node.h"
 #include <iostream>
@@ -9,9 +12,15 @@ public:
     BinaryTree<type>(type);
 
     // traversals
+    
+    // traverse the tree in preorder
     BinaryTree<type> traversePreOrder();
+    // traverse the tree in postrder
     BinaryTree<type> traversePostOrder();
+    // traverse the tree in inorder
     BinaryTree<type> traverseInOrder();
+    // traverse the tree in level order
+    BinaryTree<type> traverseLevelOrder();
 
 private: // variables
     Node<type> *root;
@@ -23,6 +32,15 @@ private: // functions
     static void postOrderTraversal(Node<type> *);
     // the dark side version of pre order traversal 
     static void inOrderTraversal(Node<type> *);
+    // the dark side version of level order traversal
+    static void levelOrderTraversal(Node<type> *);
+
+    // get a node's height
+    static int getNodeHeight(Node<type> *);
+
+    // print a specified level
+    static void printLevel(Node<type> *, int);
+
 };
 
 TEMP
@@ -148,3 +166,52 @@ void BinaryTree<type>::inOrderTraversal(Node<type> *root) {
     }
     
 }
+
+TEMP 
+// print a specified level
+void BinaryTree<type>::printLevel(Node<type> *someNode, int level) {
+    // print value when root is reached
+    if(level == 1) {
+        std::cout << someNode->getValue << " ";
+    } 
+    // there must be an else, because the function is a void returning type
+    else {
+        int rightHeight, leftHeight;
+        leftHeight = BinaryTree::getNodeHeight(someNode->getLeft());
+        rightHeight = BinaryTree::getNodeHeight(someNode->getRight());
+
+        BinaryTree::printLevel(someNode->getLeft(), level - 1); 
+        BinaryTree::printLevel(someNode->getRight(), level - 1);
+        // -1 so it prints L & R of the current level
+    }
+
+
+}
+
+TEMP
+// get node's height
+int BinaryTree<type>::getNodeHeight(Node<type> *someNode) {
+    if(!someNode){
+        return 0;
+    }
+    int leftHeight;
+    int rightHeight;
+    
+    leftHeight = BinaryTree::getNodeHeight(someNode->getLeft());
+    rightHeight = BinaryTree::getNodeHeight(someNode->getRight());
+
+    return leftHeight > rightHeight? leftHeight + 1: rightHeight + 1; // +1 for root
+}
+
+TEMP
+// the dark side version of level order traversal
+void BinaryTree<type>::levelOrderTraversal(Node<type> *root) {
+    int height;
+    height = (BinaryTree::getNodeHeight(root));
+    int tmp = height;
+    while(height--) {
+        BinaryTree::printLevel(root,tmp - height );
+    }
+}
+
+#endif // BINARYTREE_H

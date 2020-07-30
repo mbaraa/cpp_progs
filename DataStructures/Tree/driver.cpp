@@ -1,6 +1,14 @@
 #include <iostream>
 #include "BinaryTree.h"
-#define print(s) std::cout<<s
+TEMP
+void printNode(Node<type> *someNode) {
+
+    puts("\t\t----");
+    std::cout << "\t\t| " << someNode->getValue() << " |\n" ;
+    puts("\t\t----");
+
+}
+
 int main() {
     using std::cout;
     
@@ -12,6 +20,8 @@ int main() {
     T1->traversePostOrder();
     cout << "InOrder: \n";
     T1->traverseInOrder();
+
+    print
 
     return 0;
 }
