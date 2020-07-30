@@ -22,6 +22,10 @@ public:
     // traverse the tree in level order
     BinaryTree<type> traverseLevelOrder();
 
+    // add an element to the tree
+    BinaryTree<type> insertItem(type);
+
+
 private: // variables
     Node<type> *root;
 
@@ -41,6 +45,9 @@ private: // functions
     // print a specified level
     static void printLevel(Node<type> *, int);
 
+    // append an element to where null is found
+    static void appendToNullNode(Node<type> *, type);
+
 };
 
 TEMP
@@ -51,7 +58,7 @@ BinaryTree<type>::BinaryTree(type value) {
     // set root parent to null
     root->setParent(NULL);
     // trail tree will be removed in the future
-    root->setLeft(new Node<type>('B'));
+    /*root->setLeft(new Node<type>('B'));
     root->getLeft()->setLeft(new Node<type>('D'));
 
     root->setRight(new Node<type>('C'));
@@ -61,7 +68,7 @@ BinaryTree<type>::BinaryTree(type value) {
     root->getRight()->setRight(new Node<type>('F'));
     root->getRight()->getRight()->setLeft(new Node<type>('H'));
     root->getRight()->getRight()->setRight(new Node<type>('I'));
-
+*/
 
 }
 
@@ -221,11 +228,55 @@ TEMP
 // the dark side version of level order traversal
 void BinaryTree<type>::levelOrderTraversal(Node<type> *root) {
     int height;
-    height = (BinaryTree::getNodeHeight(root));
+    height = BinaryTree::getNodeHeight(root);
     int tmp = height;
     while(height--) {
         BinaryTree::printLevel(root,tmp - height );
     }
+}
+
+TEMP
+// append an element to where null is found
+void BinaryTree<type>::appendToNullNode(Node<type> *someNode, type valueToAppend) {
+    int height;
+    height = BinaryTree::getNodeHeight(someNode);
+    int tmp = height;
+
+    if(!someNode->getLeft()) {
+        someNode->setLeft(new Node<type>(valueToAppend));
+
+        // your job is over lord Tyranus
+        return;
+    }
+    if(!someNode->getRight()) {
+        someNode->setRight(new Node<type>(valueToAppend));
+        // your job is over lord Tyranus
+        return;
+    }
+
+    while(height--) {
+        if(someNode->getLeft()) {
+            //someNode->setLeft(new Node<type>(valueToAppend));
+            BinaryTree::appendToNullNode(someNode->getLeft(), valueToAppend);
+
+            // your job is over lord Tyranus
+            return;
+        }
+        if(someNode->getRight()) {
+            BinaryTree::appendToNullNode(someNode->getRight(), valueToAppend);
+
+            // your job is over lord Tyranus
+            return;
+        }
+    }
+}
+
+TEMP
+// insert an item to the binary tree
+BinaryTree<type> BinaryTree<type>::insertItem(type value) {
+    BinaryTree::appendToNullNode(this->root, value);
+
+    return *this;
 }
 
 #endif // BINARYTREE_H
