@@ -1,7 +1,7 @@
 #ifndef BINARYTREE_H
 #define BINARYTREE_H 1
 
-#include <stdlib.h>
+#include <queue> // needed a queue for the insert operation
 #include "Node.h"
 #include <iostream>
 
@@ -238,37 +238,36 @@ void BinaryTree<type>::levelOrderTraversal(Node<type> *root) {
 TEMP
 // append an element to where null is found
 void BinaryTree<type>::appendToNullNode(Node<type> *someNode, type valueToAppend) {
-    int height;
-    height = BinaryTree::getNodeHeight(someNode);
-    int tmp = height;
 
-    if(!someNode->getLeft()) {
-        someNode->setLeft(new Node<type>(valueToAppend));
+    std::queue<Node<type> *> *q = new std::queue<Node<type> *>;
+    // add current node to the queue
+    q->push(someNode);
 
-        // your job is over lord Tyranus
-        return;
-    }
-    if(!someNode->getRight()) {
-        someNode->setRight(new Node<type>(valueToAppend));
-        // your job is over lord Tyranus
-        return;
-    }
+    while(!q->empty()) {
+        Node<type> *tmp = q->front();
+        // remove the front node from the queue to emplacer an another one
+        q->pop();
 
-    while(height--) {
-        if(someNode->getLeft()) {
-            //someNode->setLeft(new Node<type>(valueToAppend));
-            BinaryTree::appendToNullNode(someNode->getLeft(), valueToAppend);
-
-            // your job is over lord Tyranus
-            return;
+        // if there isn't a left add one
+        if( !tmp->getLeft() ) {
+            tmp->setLeft(new Node<type>(valueToAppend));
+            break;
+        } // if there is add it to the queue
+        else {
+            q->push(tmp->getLeft());
         }
-        if(someNode->getRight()) {
-            BinaryTree::appendToNullNode(someNode->getRight(), valueToAppend);
-
-            // your job is over lord Tyranus
-            return;
+        
+        // if there isn't a right add one
+        if( !tmp->getRight() ) {
+            tmp->setRight(new Node<type>(valueToAppend));
+            break;
+        } // if there is add it to the queue
+        else {
+            q->push(tmp->getRight());
         }
+
     }
+
 }
 
 TEMP
