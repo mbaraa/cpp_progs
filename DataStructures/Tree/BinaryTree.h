@@ -14,16 +14,16 @@ public:
     // traversals
     
     // traverse the tree in preorder
-    BinaryTree<type> traversePreOrder();
+    BinaryTree<type> *traversePreOrder();
     // traverse the tree in postrder
-    BinaryTree<type> traversePostOrder();
+    BinaryTree<type> *traversePostOrder();
     // traverse the tree in inorder
-    BinaryTree<type> traverseInOrder();
+    BinaryTree<type> *traverseInOrder();
     // traverse the tree in level order
-    BinaryTree<type> traverseLevelOrder();
+    BinaryTree<type> *traverseLevelOrder();
 
     // add an element to the tree
-    BinaryTree<type> insertItem(type);
+    BinaryTree<type> *insertItem(type);
 
 
 private: // variables
@@ -57,64 +57,61 @@ BinaryTree<type>::BinaryTree(type value) {
     root = new Node<type>(value);
     // set root parent to null
     root->setParent(NULL);
-    // trail tree will be removed in the future
-    /*root->setLeft(new Node<type>('B'));
-    root->getLeft()->setLeft(new Node<type>('D'));
-
-    root->setRight(new Node<type>('C'));
-    root->getRight()->setLeft(new Node<type>('E'));
-    root->getRight()->getLeft()->setRight(new Node<type>('G'));
-
-    root->getRight()->setRight(new Node<type>('F'));
-    root->getRight()->getRight()->setLeft(new Node<type>('H'));
-    root->getRight()->getRight()->setRight(new Node<type>('I'));
-*/
-
 }
 
 TEMP
-// print tree traversal in preorder
-BinaryTree<type> BinaryTree<type>::traversePreOrder() {
+// print tree's elements in preorder traversal
+BinaryTree<type> *BinaryTree<type>::traversePreOrder() {
     // 
     BinaryTree::preOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
 
-    return *this;
+    return this;
 }
 
 TEMP
-// print tree traversal in preorder
-BinaryTree<type> BinaryTree<type>::traversePostOrder() {
+// print tree's elements in postorder traversal
+BinaryTree<type> *BinaryTree<type>::traversePostOrder() {
     // 
     BinaryTree::postOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
 
-    return *this;
+    return this;
 }
 
 TEMP
-// print tree traversal in preorder
-BinaryTree<type> BinaryTree<type>::traverseInOrder() {
+// print tree's elements in inorder traversal
+BinaryTree<type> *BinaryTree<type>::traverseInOrder() {
     // 
     BinaryTree::inOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
 
-    return *this;
+    return this;
 }
 
 TEMP
-// print tree elements in level order
-BinaryTree<type> BinaryTree<type>::traverseLevelOrder() {
+// print tree's elements in level order traversal
+BinaryTree<type> *BinaryTree<type>::traverseLevelOrder() {
     //
     BinaryTree::levelOrderTraversal(this->root);
     // stdout flush
     std::cout << std::endl;
 
-    return *this;
+    return this;
 }
+
+TEMP
+// insert an item to the binary tree
+BinaryTree<type> *BinaryTree<type>::insertItem(type value) {
+    BinaryTree::appendToNullNode(this->root, value);
+
+    return this;
+}
+
+// static functions
 TEMP
 // the dark side version of preorder traversal 
 void BinaryTree<type>::preOrderTraversal(Node<type> *root) {
@@ -269,13 +266,6 @@ void BinaryTree<type>::appendToNullNode(Node<type> *someNode, type valueToAppend
     }
 
 }
-
-TEMP
-// insert an item to the binary tree
-BinaryTree<type> BinaryTree<type>::insertItem(type value) {
-    BinaryTree::appendToNullNode(this->root, value);
-
-    return *this;
-}
+// end of static functions
 
 #endif // BINARYTREE_H
