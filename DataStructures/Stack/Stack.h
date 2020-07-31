@@ -8,9 +8,11 @@
 temp
 class StackMimic{
 public:
-    
+    // constructors & destructor
     StackMimic(int size);
     StackMimic();
+    ~StackMimic();
+
     bool isEmpty();
     bool isFull();
     void push(type element);
@@ -30,7 +32,7 @@ private:
 // rest of the thing
 
 temp
-// constructor
+// constructors
 StackMimic<type>::StackMimic(int size){
     this->size = size;
     this->stackElements = (type*)malloc(sizeof(type)*size);
@@ -38,6 +40,11 @@ StackMimic<type>::StackMimic(int size){
 temp
 StackMimic<type>::StackMimic() : StackMimic(0){
 
+}
+
+temp
+StackMimic<type>::~StackMimic() {
+    free(stackElements);
 }
 
 temp

@@ -4,7 +4,8 @@ TEMP
 class Node {
 public:
     // constructor
-    Node<type>(type);
+    Node(type);
+    // destructor causes problems if declared for node so no destructor :)
 
     // setters & getters
     Node<type> setParent(Node<type> *);

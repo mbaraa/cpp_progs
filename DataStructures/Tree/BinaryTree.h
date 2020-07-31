@@ -9,7 +9,9 @@ TEMP
 class BinaryTree {
 public:
     // constructor
-    BinaryTree<type>(type);
+    BinaryTree(type);
+    // destructor
+    ~BinaryTree();
 
     // traversals
     
@@ -57,6 +59,12 @@ BinaryTree<type>::BinaryTree(type value) {
     root = new Node<type>(value);
     // set root parent to null
     root->setParent(NULL);
+}
+
+TEMP
+// destructor
+BinaryTree<type>::~BinaryTree() {
+    delete root;
 }
 
 TEMP
@@ -154,6 +162,7 @@ void BinaryTree<type>::postOrderTraversal(Node<type> *root) {
     }
     // print current node's value
     std::cout << current->getValue() << " ";
+
 }
 
 TEMP
@@ -179,6 +188,7 @@ void BinaryTree<type>::inOrderTraversal(Node<type> *root) {
         BinaryTree::inOrderTraversal(currentRight);
     }
     
+
 }
 
 TEMP 
@@ -202,7 +212,6 @@ void BinaryTree<type>::printLevel(Node<type> *someNode, int level) {
         }
         // -1 so it prints L & R of the current level
     }
-
 
 }
 

@@ -9,6 +9,8 @@ temp
 class QueueMimic{
 public:
     QueueMimic(int);
+    ~QueueMimic();
+
     void enqueue(type);
     type dequeue();
     int topIndex;
@@ -33,6 +35,12 @@ QueueMimic<type>::QueueMimic(int size){
     headIndex = 0;
     //queueElements = new type[queueSize];
     queueElements = (type*)malloc(sizeof(type)*queueSize);
+}
+
+temp 
+// destructor
+QueueMimic<type>::~QueueMimic() {
+    free(queueElements);
 }
 
 temp

@@ -10,6 +10,10 @@ public:
     // constructors
     Node(type);
     Node();
+    // destructor causes problems if declared for node so no destructor :)
+
+    // destructor
+    ~Node();
     // set next element pointer
     void setNext(Node *);
     // get next element object
@@ -44,6 +48,12 @@ Node<type>::Node() {
     
 }
 
+TEMP
+// destructor
+Node<type>::~Node() {
+    delete next;
+    delete prev;
+}
 
 TEMP
 // set node's value

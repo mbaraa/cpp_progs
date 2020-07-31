@@ -10,6 +10,8 @@ temp
 class QueueUsingStacks{
 public:
     QueueUsingStacks(int size);
+    ~QueueUsingStacks();
+
     void enqueue(type element);
     type dequeue();
     bool isEmpty();// if stack1 is empty
@@ -29,6 +31,13 @@ QueueUsingStacks<type>::QueueUsingStacks(int size){
 
     stk1 = new std::stack<type>;
     stk2 = new std::stack<type>;
+}
+
+temp
+// destructor
+QueueUsingStacks<type>::~QueueUsingStacks() {
+    delete stk1;
+    delete stk2;
 }
 
 temp

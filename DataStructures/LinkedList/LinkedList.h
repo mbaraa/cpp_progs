@@ -13,6 +13,8 @@ public:
     // constructors
     LinkedList(type);
     LinkedList();
+    // destructor
+    ~LinkedList();
     // add new element
     void addElement(type);
     // delete an element
@@ -28,7 +30,7 @@ public:
     // search the linked list
     
 
-//private:
+private:
     // head's value
     Node<type> *head;
     // tail's value
@@ -61,7 +63,15 @@ LinkedList<type>::LinkedList(type head) {
 TEMP
 LinkedList<type>::LinkedList(): LinkedList(0) {
 }
-
+/*
+TEMP
+// destructor
+LinkedList<type>::~LinkedList() {
+    delete indexs;
+    delete head;
+    delete tail;
+}
+*/
 TEMP
 // go to tail
 Node<type> *LinkedList<type>::goToTail() {
