@@ -1,8 +1,8 @@
-#include<cstdio>
-#include<cmath>
-using namespace std;
+#include<stdio.h>
+#include<math.h>
+
 int main(){
-    //just learned scanf & printf in c++
+    //just learned scanf & printf 
     printf("Note that this program is terminated by EOF only\n");
     while(true){
         printf("Enter a number: ");
