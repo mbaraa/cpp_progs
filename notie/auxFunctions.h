@@ -45,7 +45,8 @@ int menu(){
     puts("2. Add to existing note");
     puts("3. Delete note");
     puts("4. View a note");
-    puts("5. Exit");
+    puts("5. Remove last n chars from a note");
+    puts("6. Exit");
     printf("\nenter a choice:  ");
     int choice;
     scanf("%d", &choice);
@@ -65,15 +66,15 @@ void quit(){
 void actionChooser(){
     while(1){
         int choice = menu();
-        void  (*functions[])(char noteName[99]) = {&addNote, &addToNote, &deleteNote, &viewNote};
+        void  (*functions[])(char noteName[300]) = {&addNote, &addToNote, &deleteNote, &viewNote, &deleteNChars};
         
-        if(choice < 5){
+        if(choice < 6){
             printf("\nenter note name:  ");
             char noteName[99];
             scanf("%s", &noteName);
             functions[choice - 1](noteName);
         }
-        else if(choice == 5)
+        else if(choice == 6)
             quit();
         else
             continue;

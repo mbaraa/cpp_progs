@@ -4,6 +4,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // list files in current directory
 void listDir(char *directoryName){
@@ -18,7 +19,7 @@ void listDir(char *directoryName){
 }
 
 // create new file
-void touch(char fileName[99]){
+void touch(char fileName[300]){
     FILE *newFile;
     newFile = fopen(fileName, "w");
     fclose(newFile);
@@ -30,7 +31,7 @@ int checkFile(FILE *filePtr){
 }
 
 // view an existing note
-void viewNote(char noteName[99]){
+void viewNote(char noteName[300]){
     FILE *noteFile;
     noteFile = fopen(noteName, "r");
     if(!checkFile(noteFile)){
@@ -51,9 +52,9 @@ void inputStringsWithSpaces(char str[]){
     // future alternate
     // scanf("%[^\n]", &lol);
 
-    char string[99] = "";
+    char string[300] = "";
     while(1){
-        char temp[99];
+        char temp[300];
         scanf("%s", temp);
         // quit checker
         if(temp[0] == 'q' && temp[1] == 'q')
@@ -62,7 +63,7 @@ void inputStringsWithSpaces(char str[]){
         if(temp[0] == '\\' && (temp[1] == 'n' || temp[1] == 'r') ){
             strcat(temp, "\n");
         }
-        // add every othe string
+        // add every other string
         else{    
             // append a space to the string for better formatting in the file
             strcat(temp, " ");
@@ -73,7 +74,7 @@ void inputStringsWithSpaces(char str[]){
 }
 
 // append to an existing file
-void appendToFile(char fileName[99]){
+void appendToFile(char fileName[300]){
     FILE *noteFile;
     noteFile = fopen(fileName, "a");
     puts("\nenter your note type 'qq' when you are done(type '\\n' to jump a line)");
@@ -84,20 +85,44 @@ void appendToFile(char fileName[99]){
     fclose(noteFile);
 }
 
+// delete the previous n lines from a file
+void deletePreviousNChars(int numberOfLines, FILE *filePtr) {
+    // to jump to the previous line
+    fprintf(filePtr, "\b");
+    // delete n lines 
+    while(numberOfLines--){
+        fprintf(filePtr, "\b");
+        
+    }
+    
+    printf("\n");
+
+}
+void deleteNChars(char fileName[300]) {
+    FILE *noteFile;
+    noteFile = fopen(fileName, "a");
+    printf("\nenter number of lines you want to remove:");
+    int numberOfRemovedChars;
+    scanf("%d", &numberOfRemovedChars);
+    deletePreviousNChars(numberOfRemovedChars, noteFile);
+    fflush(noteFile);
+    fclose(noteFile);
+}
+
 // add to existing note
-void addToNote(char noteName[99]){
+void addToNote(char noteName[300]){
     viewNote(noteName);
     appendToFile(noteName);
 }
 
 // create new note
-void addNote(char noteName[99]){
+void addNote(char noteName[300]){
     touch(noteName);
     appendToFile(noteName);
 }
 
 // delete a note
-void deleteNote(char noteName[99]){
+void deleteNote(char noteName[300]){
     remove(noteName);
 }
 
