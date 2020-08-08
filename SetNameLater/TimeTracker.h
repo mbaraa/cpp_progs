@@ -8,23 +8,23 @@ class TimeTracker {
 public:
 
     TimeTracker() {
-        sessions = new std::map<char*, TimeCapsule>;
+        sessions = new std::map<char*, TimeCapsule*>;
     }
 
     ~TimeTracker() {
         delete sessions;
     }
     // add a session
-    void addSession(char *sessionName) {
-        (*this->sessions)[sessionName] = TimeCapsule();
+    void addSession(char sessionName[99]) {
+        (*this->sessions)[sessionName] = new TimeCapsule();
     }
-    // 
-    long long getSessionTime(char *sessionName) {
-        return (*this->sessions)[sessionName].getSpentTime();
+    // get session's spent time
+    long long getSessionTime(char sessionName[99]) {
+        return (*this->sessions)[sessionName]->getSpentTime();
     }
 
 private:
-    std::map<char *, TimeCapsule> *sessions;
+    std::map<char *, TimeCapsule*> *sessions;
     
 };
 
