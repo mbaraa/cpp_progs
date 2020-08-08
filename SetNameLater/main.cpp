@@ -1,7 +1,12 @@
-#include "AuxFunctions.h"
+#include "Menu.h"
 
 int main() {
-    printOptionsMenu();
+
+/*    TimeTracker *timeSessions = new TimeTracker();
+    printOptionsMenu(timeSessions);
+*/
+    Menu m; 
+    m.printOptionsMenu();
 
     return 0;
 }
