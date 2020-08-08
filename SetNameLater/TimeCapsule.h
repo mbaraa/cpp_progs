@@ -7,29 +7,36 @@ class TimeCapsule {
 public:
     // constructor sets time to current machine time
     TimeCapsule() {
-        time(&this->rawtime);
+        time(&this->currentRawTime);
+        time(&this->initialRawTime);
     }
 
     // convert the raw time into a readable format and return it
     char *getCurrentTime() {
-        return ctime(&this->rawtime);
+        return ctime(&this->currentRawTime);
     }
     // get raw time for time calculations
     time_t getRawTime() {
-        return this->rawtime;
+        return this->currentRawTime;
     }
-    // set time to current machine time and returns time difference
-    long long setTime() {
-        time_t tmp = this->rawtime;
-        time(&this->rawtime);
-        return this->rawtime - tmp;
+    // set time to current machine time
+    void updateCurrentTime() {
+        time(&this->currentRawTime);
+    }
+
+    // return spent time since the initial time
+    long long getSpentTime() {
+        updateCurrentTime();
+        this->spentRawTime = this->currentRawTime - this->initialRawTime;
+        return this->spentRawTime;
     }
     // 
 
 
 private:
-    time_t rawtime;
-
+    time_t currentRawTime;
+    time_t initialRawTime;
+    time_t spentRawTime;
 };
 
 #endif //SETTIME_H
