@@ -13,6 +13,7 @@ public:
         puts("\npress enter to continue....");
         // getchar is used to input a character
         while(getchar() != '\n');
+        while(getchar() != '\n');
     }
 
     // clear screen
