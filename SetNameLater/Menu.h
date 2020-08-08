@@ -34,11 +34,7 @@ public:
                     endSession();
                     break;
                 case 4:
-                    this->sessionsSet->closeFile();
-                    puts(RED);
-                    puts("Have a nice day!");
-                    puts(RESET);
-                    exit(0);
+                    GTFOH();
                 default:
                     puts(RED);
                     puts("Yo choose right next time....");
@@ -92,6 +88,15 @@ private: // functions
         printf("enter session's name: ");
         scanf("%s", sessionName);
         this->sessionsSet->endSession(sessionName);
+    }
+
+    // exit 
+    void GTFOH() {
+        this->sessionsSet->closeFile();
+        puts(RED);
+        puts("Have a nice day!");
+        puts(RESET);
+        exit(0);
     }
 
 };
