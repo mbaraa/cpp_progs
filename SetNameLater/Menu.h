@@ -14,41 +14,31 @@ public:
         delete this->sessionsSet;
     }
 
-
     //
     void printOptionsMenu() {
 
         while(true) {
             OutputControl::clear();
-            
             // list sessions
             this->sessionsSet->listSessions();
             int choice = Menu::chooseFromMenu();
 
             switch(choice) {
-
                 case 1:
                     addSession();
                     break;
-
                 case 2:
                     getSessionTime();
                     break;
-
                 case 3:
-
+                    endSession();
                     break;
-
                 case 4:
-
-                    break;
-
-                case 5:
+                    this->sessionsSet->closeFile();
                     puts(RED);
                     puts("Have a nice day!");
                     puts(RESET);
                     exit(0);
-
                 default:
                     puts(RED);
                     puts("Yo choose right next time....");
@@ -72,8 +62,7 @@ private: // functions
         puts("1. Add a session");
         puts("2. Get a session's spent time");
         puts("3. End a session");
-        puts("4. Save sessions to file and exit");
-        puts("5. Exit\n");
+        puts("4. Exit\n");
         printf("Select sth: ");
         int choice;
         scanf("%d", &choice);
@@ -95,6 +84,14 @@ private: // functions
         printf("enter session's name: ");
         scanf("%s", sessionName);
         printf("You've spent %d seconds on %s\n", sessionsSet->getSessionTime(sessionName), sessionName);
+    }
+
+    // end a session
+    void endSession() {
+        char sessionName[99];
+        printf("enter session's name: ");
+        scanf("%s", sessionName);
+        this->sessionsSet->endSession(sessionName);
     }
 
 };
