@@ -104,7 +104,6 @@ private: // functions
     // exit
     void _66() {
 
-        //this->sessionsSet->closeFile();
         puts(RED);
         puts("Have a nice day!");
         puts(RESET);

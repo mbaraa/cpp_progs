@@ -40,7 +40,9 @@ private: // functions
     void openFile(std::string fileName) {
 
         // if file exists overwrite it
-        this->file.open(fileName, ios::in);
+        this->file.open(fileName, ios::out);
+        this->file.close();
+        // reopen the file in appending mode
         this->file.open(fileName, ios::app);
 
     }

@@ -21,7 +21,7 @@ public:
     }
 
     // convert the raw time into a readable format and return it
-    char *getCurrentTime() {
+    char *getFinalTime() {
 
         time(&this->finalRawTime);
         return ctime(&this->finalRawTime);
