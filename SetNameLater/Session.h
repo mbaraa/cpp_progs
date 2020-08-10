@@ -1,15 +1,15 @@
-#ifndef TIMECAPSULE_H
-#define TIMECAPSULE_H
+#ifndef SESSION_H
+#define SESSION_H
 
 #include <time.h>
 #include <string>
-class TimeCapsule {
+
+class Session {
 public:
     // constructor sets time to current machine time
-    TimeCapsule(std::string sessionName) {
+    Session(std::string sessionName) {
 
-        time(&this->currentRawTime);
-        time(&this->initialRawTime);
+        time(&this->startRawTime);
         this->sessionName = sessionName;
     
     }
@@ -17,54 +17,46 @@ public:
     // convert the raw time into a readable format and return it
     char *getCurrentTime() {
     
-        return ctime(&this->currentRawTime);
+        time(&this->finalRawTime);
+        return ctime(&this->finalRawTime);
     
     } // char *getCurrentTime
 
     // get initial time in a realable form
-    char *getInitialTime() {
+    char *getStartTime() {
 
-        return ctime(&this->initialRawTime);
+        return ctime(&this->startRawTime);
 
     } // char *getInitialTime
 
     // get raw time for time calculations
     time_t getRawTime() {
     
-        return this->currentRawTime;
+        return this->finalRawTime;
     
     } // time_t getRawTime
 
-    // set time to current machine time
-    void updateCurrentTime() {
-    
-        time(&this->currentRawTime);
-    
-    } // void updateCurrentTime
-    
     // reset initial time
-    void setInitialTime() {
+    void resetStartTime() {
     
-        time(&this->initialRawTime);
+        time(&this->startRawTime);
     
     } // void setInitialTime
 
     // return spent time since the initial time
     time_t getSpentTime() {
     
-        updateCurrentTime();
-        this->spentRawTime = this->currentRawTime - this->initialRawTime;
-        return this->spentRawTime;
+        return time(&this->finalRawTime) - this->startRawTime;
 
     } // time_t getSpentTime
 
-    // set & get session's name
+/*    // set & get session's name
     void setSessionName(std::string sessionName) {
  
         this->sessionName = sessionName;
  
     } // void setSessionName
- 
+*/
     std::string getSessionName() {
  
         return this->sessionName;
@@ -74,9 +66,10 @@ public:
 
 private:
     std::string sessionName;
-    time_t currentRawTime;
-    time_t initialRawTime;
-    time_t spentRawTime;
-};
+    time_t finalRawTime;
+    time_t startRawTime;
 
-#endif //SETTIME_H
+
+}; // class Session
+
+#endif // SESSION_H

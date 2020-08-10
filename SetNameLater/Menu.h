@@ -3,14 +3,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "TimeTracker.h"
+#include "SessionManager.h"
 #include "OutputControl.h"
 
 class Menu {
 public:
     // constructor
     Menu() {
-        this->sessionsSet = new TimeTracker();
+        this->sessionsSet = new SessionManager();
     }
     // destructor
     ~Menu() {
@@ -53,7 +53,7 @@ public:
     } // void printOptionsMenu()
 
 private: // variables
-    TimeTracker *sessionsSet;
+    SessionManager *sessionsSet;
 
 private: // functions
     // select an option from menu

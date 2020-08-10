@@ -1,30 +1,25 @@
-#ifndef TIMETRACKER_H
-#define TIMETRACKER_H
+#ifndef SESSIONMANAGER_H
+#define SESSIONMANAGER_H
 
-#include "TimeCapsule.h"
+#include "Session.h"
 #include <stdio.h>
 #include <map>
 #include <vector>
 #include <iostream>
 #include <string>
-#include <fstream>
-using std::fstream;
-using std::ifstream;
-using std::ofstream;
+#include "FileManager.h"
 
-class TimeTracker {
+class SessionManager {
 public:
     // constructor
-    TimeTracker() {
+    SessionManager() {
 
-        this->sessions = new std::map<std::string, TimeCapsule*>;
+        this->sessions = new std::map<std::string, Session*>;
         this->sessionsNames = new std::vector<std::string>;
-        // open file in appending mode
-        logFile.open("log.txt", std::ios::app);
     
     }
     // destructor
-    ~TimeTracker() {
+    ~SessionManager() {
     
         delete this->sessions;
         delete this->sessionsNames;
@@ -35,11 +30,11 @@ public:
     void addSession(std::string sessionName) {
 
         // update the map and the holding array
-        (*this->sessions)[sessionName] = new TimeCapsule( sessionName );
+        (*this->sessions)[sessionName] = new Session( sessionName );
         this->sessionsNames->push_back(sessionName);
         // add data to the file
         this->logFile << "Session " << sessionName << ":" << std::endl;
-        this->logFile << "\tstarted at: " << (*this->sessions)[sessionName]->getInitialTime() << std::endl;
+        this->logFile << "\tstarted at: " << (*this->sessions)[sessionName]->getStartTime() << std::endl;
 
     } // void addSession
 
@@ -51,7 +46,7 @@ public:
         this->logFile << "\tended at: " << (*this->sessions)[sessionName]->getCurrentTime() << std::endl;
 
         // reset session's time
-        (*this->sessions)[sessionName]->setInitialTime();
+        (*this->sessions)[sessionName]->resetStartTime();
 
     } // void endSession
 
@@ -69,7 +64,7 @@ public:
         for(std::string session : *this->sessionsNames) {
 
             printf("Session %s\n", session.c_str());
-            printf("started at %s\n", (*this->sessions)[session]->getInitialTime() );;
+            printf("started at %s\n", (*this->sessions)[session]->getStartTime() );;
             
         } // for
         puts("");
@@ -98,11 +93,11 @@ private:
 
 private:
     // sessions' map
-    std::map<std::string, TimeCapsule*> *sessions;
+    std::map<std::string, Session*> *sessions;
     // sessions' names
     std::vector<std::string> *sessionsNames;
     // file to store sessions' details in it
-    ofstream logFile;
+    FileManager logFile;
 
 }; // class TimeTracker
 
