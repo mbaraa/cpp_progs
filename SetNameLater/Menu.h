@@ -1,5 +1,5 @@
 #ifndef MENU_H
-#define MENU_H 
+#define MENU_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,11 +23,10 @@ public:
         while(true) {
             OutputControl::clear();
             // list sessions
-            this->sessionsSet->listSessions();
             int choice = Menu::chooseFromMenu();
 
             switch(choice) {
-                
+
                 case 1:
                     addSession();
                     break;
@@ -45,9 +44,9 @@ public:
                     puts(RESET);
 
             } // switch
-        
+
             OutputControl::hold();
-        
+
         } //while
 
     } // void printOptionsMenu()
@@ -58,7 +57,7 @@ private: // variables
 private: // functions
     // select an option from menu
     int chooseFromMenu() {
-    
+
         puts("Menu:");
         puts("1. Add a session");
         puts("2. Get a session's spent time");
@@ -73,44 +72,44 @@ private: // functions
 
     // add a session to the given session set
     void addSession() {
-    
+
         char sessionName[99];
         printf("enter session's name: ");
         scanf("%s", sessionName);
         sessionsSet->addSession(sessionName);
-    
+
     }   // void addSession
 
     // print spent time of a session
     void getSessionTime() {
-    
+
         char sessionName[99];
         printf("enter session's name: ");
         scanf("%s", sessionName);
-        printf("You've spent %d seconds on %s\n", sessionsSet->getSessionTime(sessionName), sessionName);
-    
+        printf("You've spent %s on %s\n", sessionsSet->getSessionTime(sessionName).c_str(), sessionName);
+
     } // void getSessionTime
 
     // end a session
     void endSession() {
-    
+
         char sessionName[99];
         printf("enter session's name: ");
         scanf("%s", sessionName);
         this->sessionsSet->endSession(sessionName);
-    
+
     } // void endSession
 
 
-    // exit 
+    // exit
     void _66() {
-    
-        this->sessionsSet->closeFile();
+
+        //this->sessionsSet->closeFile();
         puts(RED);
         puts("Have a nice day!");
         puts(RESET);
         exit(0);
-    
+
     } // void execOrder66
 
 }; // class Menu

@@ -3,27 +3,47 @@
 
 #include <string>
 #include <fstream>
-using std::fstream;
-using std::ifstream;
+
 using std::ofstream;
-#include <stdio.h> // for file managment
-#include <stdlib.h> // for some mangaments
+using std::string;
+using std::ios;
 
 class FileManager {
 public:
 
     FileManager(std::string fileName) {
-        
+
         this->fileName = fileName;
-        file.open(fileName, std::ios::in);
+        openFile(fileName);
 
     }
 
-private:
+    void append(std::string dataToAppend) {
 
-    
+        this->file << dataToAppend << std::endl;
+
+    }
+
+    void close() {
+
+        this->file.close();
+
+    }
+
+private: // variables
+
     ofstream file;
     std::string fileName;
+
+private: // functions
+
+    void openFile(std::string fileName) {
+
+        // if file exists overwrite it
+        this->file.open(fileName, ios::in);
+        this->file.open(fileName, ios::app);
+
+    }
 
 };
 
