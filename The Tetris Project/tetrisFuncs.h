@@ -24,9 +24,9 @@ void initCompletedLines(bool *completedLines) {
 
 void initCheckList(bool (*checkList)[COLUMNS]) {
 
-    for(int row = 0; row < 20; row++) {
+    for(int row = 0; row < ROWS; row++) {
         
-        for(int col = 0; col < 10; col++){
+        for(int col = 0; col < COLUMNS; col++){
 
             checkList[row][col] = 0;
         }
@@ -57,12 +57,13 @@ void updateTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS]) {
             if( checkList[row][col] == 1 ) {
                 matrix[row][col] = '#';
             }
+            
         }
     }
 
 }
 
-// replace #s true in tetris map with trues
+// replace #s in tetris map with trues
 void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int *lengths) {
 
     // reversed checker to prevent stacked areas
@@ -74,7 +75,7 @@ void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int *le
                 
                 checkList[row][col] = 1;
                 lengths[col]--;
-                break;
+                //break;
                 
             }
         }
@@ -82,46 +83,79 @@ void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int *le
 
 }
 
-void markDoneLines(bool (*tetrisBooleanMap)[COLUMNS], bool *completedLines) {
+void markDoneLines(bool (*tetrisBooleanMap)[COLUMNS],
+                   bool *completedLines) {
 
     for(int row = 0; row < ROWS; row++) {
         
         // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
-        if( tetrisBooleanMap[row][0] == 1 ) {
-
-            for(int col = 0; col < COLUMNS; col++){
+        if( tetrisBooleanMap[row][0] == 1 && 
+            tetrisBooleanMap[row][1] == 1 && 
+            tetrisBooleanMap[row][2] == 1 && 
+            tetrisBooleanMap[row][3] == 1 && 
+            tetrisBooleanMap[row][4] == 1 && 
+            tetrisBooleanMap[row][5] == 1 && 
+            tetrisBooleanMap[row][6] == 1 && 
+            tetrisBooleanMap[row][7] == 1 && 
+            tetrisBooleanMap[row][8] == 1 &&
+            tetrisBooleanMap[row][9] == 1 ) {
+            
+            // I fucked up here not gonna lie
+            completedLines[row] = 1;
+            /*for(int col = 0; col < COLUMNS; col++){
  
                if( tetrisBooleanMap[row][col] != 1 ) {
                    break;
                }
                if( tetrisBooleanMap[row][9] == 1 ) {
-                   completedLines[row] = 1;
+                   
                }
             
-           }
+           }*/
         }
     }
 
 }
 
-void eliminateLines(char (*tetrisMap)[COLUMNS], bool (*tetrisBooleanMap)[COLUMNS], bool *completedLines) {
+void eliminateLines(char (*tetrisMap)[COLUMNS],
+                    bool (*tetrisBooleanMap)[COLUMNS],
+                    bool *completedLines,
+                    int *columnsLengths) {
 
-    for(int row = 0; row < ROWS; row++) {
+    
+    for(int row = ROWS - 1; row >= 0; row--) {
         
         // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
         if( completedLines[row] == 1 ) {
-
+            
+            // set completion state to false
+            completedLines[row] = 0;
+            
             // reset line
             for(int col = 0; col < COLUMNS; col++) {
                 tetrisMap[row][col] = '.';
                 tetrisBooleanMap[row][col] = 0;
+                // since there's an eleminated line so lengths are increased
+                columnsLengths[col]++;
             }
 
             //updateTetrisMap(tetrisMap, tetrisBooleanMap);
 
             // shift rows down
             // remeber we're going downnnn to up
-            for(int rowEL =  row ; rowEL > 0; rowEL--) {
+            for(int col = 0; col < COLUMNS; col++) {
+                
+                for(int rowEL = row ; rowEL > 0; rowEL--) {
+
+                    tetrisMap[rowEL][col] = tetrisMap[rowEL-1][col];
+                    tetrisBooleanMap[rowEL][col] = tetrisBooleanMap[rowEL-1][col];
+                    
+
+                }                
+
+            }
+         
+       /*     for(int rowEL =  row ; rowEL > 0; rowEL--) {
 
                 for(int col = 0; col < COLUMNS; col++) {
                     
@@ -129,9 +163,10 @@ void eliminateLines(char (*tetrisMap)[COLUMNS], bool (*tetrisBooleanMap)[COLUMNS
                     tetrisBooleanMap[rowEL][col] = tetrisBooleanMap[rowEL-1][col];
 
                 }
+                
 
-            }
-
+            }*/
+            
         }
         
     }

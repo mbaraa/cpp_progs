@@ -31,20 +31,16 @@ int main() {
 
         // overlapping checker
         if( droppingRow == colsLengths[col]) {
+            initLengths(colsLengths);
             checkTetrisMap(tetrisMainMap, checkList, colsLengths);
         }
 
         if( tetrisMainMap[0][col] == '#' && tetrisMainMap[1][col] == '#') {
-            for(int col = 0; col < ROWS; col++){
-                
-                printf("%d ", completedLines[col]);
-            
-           }
             printGameOverAndGTFOH();
         }
         
         // replace dropped character with a dot
-        if( droppingRow <= colsLengths[col] ) {
+        if( droppingRow < colsLengths[col] ) {
             tetrisMainMap[droppingRow++][col] = '.';
         }
         // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
@@ -71,7 +67,7 @@ int main() {
         }
 
         // add the dropping chararecter
-        if( droppingRow <= colsLengths[col] + 1) {
+        if( droppingRow <= colsLengths[col] ) {
             tetrisMainMap[droppingRow][col] = '#';
         }
             
@@ -79,11 +75,26 @@ int main() {
         clear();
         
         markDoneLines(checkList, completedLines);
-        eliminateLines(tetrisMainMap, checkList, completedLines);
+        eliminateLines(tetrisMainMap, checkList,
+         completedLines, colsLengths);
         updateTetrisMap(tetrisMainMap, checkList);
         // print current tetris map
         printMatrix(tetrisMainMap, ROWS, COLUMNS);
 
+        //// exists for debugging
+        puts("lines completed:");
+        for(int col = 0; col < ROWS; col++){
+                
+            printf("%d ", completedLines[col]);
+            
+        }
+        puts("\nlines lengths:");
+        for(int col = 0; col < COLUMNS; col++){
+                
+            printf("%d ", colsLengths[col]);
+            
+        }
+        //// debugging budies
         
     }
 
