@@ -12,7 +12,7 @@ int main() {
 
     initLengths(colsLengths);
     initCheckList(checkList);
-    initTetrisMap(*tetrisMainMap, ROWS, COLUMNS);
+    initTetrisMap(tetrisMainMap);
 
     //dropOverColumn(m, 20, 10);
 
@@ -21,17 +21,18 @@ int main() {
     // dropping starts from the middle
     int col = COLUMNS / 2;
     // print current tetris
-    printMatrix(*tetrisMainMap, ROWS, COLUMNS);
+    printMatrix(tetrisMainMap, ROWS, COLUMNS);
 
     while( true ) {
 
         // overlapping checker
         if( droppingRow == colsLengths[col]) {
-            checkTetrisMap(*tetrisMainMap, *checkList, ROWS, COLUMNS, colsLengths);
+            checkTetrisMap(tetrisMainMap, checkList, colsLengths);
         }
 
-        
-
+        if( tetrisMainMap[0][col] == '#' && tetrisMainMap[1][col] == '#') {
+            printGameOverAndGTFOH();
+        }
         
         // replace dropped character with a dot
         if( droppingRow <= colsLengths[col] ) {
@@ -61,16 +62,16 @@ int main() {
         }
 
         // add the dropping chararecter
-        if( droppingRow <= colsLengths[col] ) {
+        if( droppingRow <= colsLengths[col] + 1) {
             tetrisMainMap[droppingRow][col] = '#';
         }
             
 
         clear();
         
-        updateTetrisMap(*tetrisMainMap, *checkList, ROWS, COLUMNS);
+        updateTetrisMap(tetrisMainMap, checkList);
         // print current tetris map
-        printMatrix(*tetrisMainMap, ROWS, COLUMNS);
+        printMatrix(tetrisMainMap, ROWS, COLUMNS);
 
         
     }

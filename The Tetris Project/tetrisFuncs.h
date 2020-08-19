@@ -2,13 +2,14 @@
 #define TETRISFUNCS_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
 #include "kbInput.h"
 #include "ioFuncs.h"
 #include "Constants.h"
 
-
+// initializers
 void initLengths(int lengths[]) {
     for(int i = 0; i < 10; i++) {
         lengths[i] = 19;
@@ -27,10 +28,10 @@ void initCheckList(bool (*checkList)[COLUMNS]) {
     }
 }
 
-void initTetrisMap(char (*matrix)[COLUMNS], int rows, int columns){
+void initTetrisMap(char (*matrix)[COLUMNS]){
 
-    for(int row = 0; row < rows; row++) {
-        for(int col = 0; col < columns; col++){
+    for(int row = 0; row < ROWS; row++) {
+        for(int col = 0; col < COLUMNS; col++){
             
             matrix[row][col] = '.';
 
@@ -39,30 +40,29 @@ void initTetrisMap(char (*matrix)[COLUMNS], int rows, int columns){
     }
 }
 
-void updateTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int rows, int columns) {
+// replace true in boolean tetris map with #s
+void updateTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS]) {
 
-
-    for(int row = 0; row < rows; row++) {
+    for(int row = 0; row < ROWS; row++) {
         
-        for(int col = 0; col < columns; col++){
+        for(int col = 0; col < COLUMNS; col++){
 
             // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
             if( checkList[row][col] == 1 ) {
                 matrix[row][col] = '#';
-                
             }
-
         }
-    
     }
 
 }
 
-void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int rows, int columns, int lengths[]) {
+// replace #s true in tetris map with trues
+void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int lengths[]) {
 
-    for(int col = 0; col < columns; col++) {
+    // reversed checker to prevent stacked areas
+    for(int col = 0; col < COLUMNS; col++) {
         
-        for(int row = 0; row < rows; row++){
+        for(int row = 0; row < ROWS; row++){
 
             if( matrix[row][col] == '#' ) {
                 
@@ -71,14 +71,19 @@ void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int row
                 break;
                 
             }
-
         }
-    
     }
 
 }
 
+void printGameOverAndGTFOH() {
+    clear();
 
+    puts(RED);
+    puts("GAME OVER !!!!");
+    puts(RESET);
+    exit(0);
+}
 
 
 /* not needed for now :)
