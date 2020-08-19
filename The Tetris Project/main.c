@@ -1,5 +1,6 @@
 #include "tetrisFuncs.h"
 
+
 int main() {
     int rows = 20;
     int columns = 10;
@@ -11,7 +12,7 @@ int main() {
     int colsLengths[columns];//
 
     initLengths(colsLengths);
-
+    initCheckList(checkList);
     initMatrix(*tetrisMainMap, rows, columns);
 
     //dropOverColumn(m, 20, 10);
@@ -31,21 +32,25 @@ int main() {
     while( true ) {//droppingRow < rows - 1 ) {
 
         // overlapping checker
-        if( droppingRow == colsLengths[col] ) {
+        if( droppingRow == colsLengths[col]) {
             checkMap(*tetrisMainMap, *checkList, rows, columns, colsLengths);
         }
 
         
 
-        // get current character from keyboard
-        char chr = getch();
-        // replace dropped character with a dot
-        tetrisMainMap[droppingRow++][col] = '.';
         
-        if( checkList[droppingRow ][col] ){
+        // replace dropped character with a dot
+        if( droppingRow <= colsLengths[col] ) {
+            tetrisMainMap[droppingRow++][col] = '.';
+        }
+        // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
+        if( checkList[droppingRow][col] == 1){
             droppingRow = 0;
             continue;
         }
+        
+        // get current character from keyboard
+        char chr = getch();
 
         // move left / right
         if(chr == 'A' || chr == 'a'){
@@ -62,11 +67,14 @@ int main() {
         }
 
         // add the dropping chararecter
-        tetrisMainMap[droppingRow][col] = '#';
+        if( droppingRow <= colsLengths[col] ) {
+            tetrisMainMap[droppingRow][col] = '#';
+        }
+            
 
         clear();
         
-        
+        updateTetrisMap(*tetrisMainMap, *checkList, rows, columns);
         // print current tetris map
         printMatrix(*tetrisMainMap, rows, columns);
 

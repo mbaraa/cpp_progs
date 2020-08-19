@@ -14,8 +14,57 @@
 void initLengths(int *lengths0) {
     int (*lengths)[10] = lengths0;
     for(int i = 0; i < 10; i++) {
-        (*lengths)[i] = 9;
+        (*lengths)[i] = 19;
     }
+}
+
+void initCheckList(bool *checkList0) {
+    bool (*checkList)[10] = checkList0;
+
+    for(int row = 0; row < 20; row++) {
+        
+        for(int col = 0; col < 10; col++){
+
+            checkList[row][col] = 0;
+
+        }
+    
+    }
+}
+
+void initMatrix(char *matrix0, int rows, int columns){
+
+    char (*matrix)[columns] = matrix0;
+
+    for(int row = 0; row < rows; row++) {
+        for(int col = 0; col < columns; col++){
+            
+            matrix[row][col] = '.';
+
+        }
+    
+    }
+}
+
+void updateTetrisMap(char *matrix0, bool *checkList0, int rows, int columns) {
+
+    char (*matrix)[columns] = matrix0;
+    bool (*checkList)[columns] = checkList0;
+
+    for(int row = 0; row < rows; row++) {
+        
+        for(int col = 0; col < columns; col++){
+
+            // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
+            if( checkList[row][col] == 1 ) {
+                matrix[row][col] = '#';
+                
+            }
+
+        }
+    
+    }
+
 }
 
 void checkMap(char *matrix0, bool *checkList0, int rows, int columns, int *lengths0) {
@@ -24,20 +73,36 @@ void checkMap(char *matrix0, bool *checkList0, int rows, int columns, int *lengt
     bool (*checkList)[columns] = checkList0;
     int (*lengths)[columns] = lengths0;
 
-    for(int row = 0; row < rows; row++) {
+    for(int col = 0; col < columns; col++) {
         
-        for(int col = 0; col < columns; col++){
+        for(int row = 0; row < rows; row++){
 
-            if( matrix[row][col] != '.' ) {
+            if( matrix[row][col] == '#' ) {
                 checkList[row][col] = 1;
                 (*lengths)[col]--;
+                break;
                 
             }
 
         }
     
     }
+/*
+    for(int row = 0; row < rows; row++) {
+        
+        for(int col = 0; col < columns; col++){
 
+            if( matrix[row][col] == '#' ) {
+                checkList[row][col] = 1;
+                (*lengths)[col]--;
+                break;
+                
+            }
+
+        }
+    
+    }
+*/
 }
 
 void dropOverColumn(char *matrix0, int rows, int columns) {

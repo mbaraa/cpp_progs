@@ -23,18 +23,5 @@ void printMatrix(char *matrix0, int rows, int columns){
     }
 }
 
-void initMatrix(char *matrix0, int rows, int columns){
-
-    char (*matrix)[columns] = matrix0;
-
-    for(int row = 0; row < rows; row++) {
-        for(int col = 0; col < columns; col++){
-            
-            matrix[row][col] = '.';
-
-        }
-    
-    }
-}
 
 #endif //IOFUNCS_H
