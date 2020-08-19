@@ -2,38 +2,32 @@
 
 
 int main() {
-    int rows = 20;
-    int columns = 10;
 
-    char tetrisMainMap[rows][columns];
+
+    char tetrisMainMap[ROWS][COLUMNS];
     // mark each taken place with true(1)
-    bool checkList[rows][columns];
+    bool checkList[ROWS][COLUMNS];
     // columns lengths
-    int colsLengths[columns];//
+    int colsLengths[COLUMNS];//
 
     initLengths(colsLengths);
-    initCheckList(checkList);
-    initMatrix(*tetrisMainMap, rows, columns);
+    initCheckList(*checkList);
+    initMatrix(*tetrisMainMap, ROWS, COLUMNS);
 
     //dropOverColumn(m, 20, 10);
 
     // start dropping from the first row
     int droppingRow = -1;
     // dropping starts from the middle
-    int col = columns / 2;
+    int col = COLUMNS / 2;
     // print current tetris
-    printMatrix(*tetrisMainMap, rows, columns);
-    
-/*    for(int i = 0; i < 10; i++) {
-        printf("%d ", colsLengths[i]);
+    printMatrix(*tetrisMainMap, ROWS, COLUMNS);
 
-    }
-*/
-    while( true ) {//droppingRow < rows - 1 ) {
+    while( true ) {
 
         // overlapping checker
         if( droppingRow == colsLengths[col]) {
-            checkMap(*tetrisMainMap, *checkList, rows, columns, colsLengths);
+            checkTetrisMap(*tetrisMainMap, *checkList, ROWS, COLUMNS, colsLengths);
         }
 
         
@@ -74,9 +68,9 @@ int main() {
 
         clear();
         
-        updateTetrisMap(*tetrisMainMap, *checkList, rows, columns);
+        updateTetrisMap(*tetrisMainMap, *checkList, ROWS, COLUMNS);
         // print current tetris map
-        printMatrix(*tetrisMainMap, rows, columns);
+        printMatrix(*tetrisMainMap, ROWS, COLUMNS);
 
         
     }
