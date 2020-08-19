@@ -10,9 +10,15 @@
 #include "Constants.h"
 
 // initializers
-void initLengths(int lengths[]) {
-    for(int i = 0; i < 10; i++) {
+void initLengths(int *lengths) {
+    for(int i = 0; i < COLUMNS; i++) {
         lengths[i] = 19;
+    }
+}
+
+void initCompletedLines(bool *completedLines) {
+    for(int i = 0; i < ROWS; i++) {
+        completedLines[i] = 0;
     }
 }
 
@@ -57,7 +63,7 @@ void updateTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS]) {
 }
 
 // replace #s true in tetris map with trues
-void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int lengths[]) {
+void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int *lengths) {
 
     // reversed checker to prevent stacked areas
     for(int col = 0; col < COLUMNS; col++) {
@@ -76,8 +82,64 @@ void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int len
 
 }
 
+void markDoneLines(bool (*tetrisBooleanMap)[COLUMNS], bool *completedLines) {
+
+    for(int row = 0; row < ROWS; row++) {
+        
+        // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
+        if( tetrisBooleanMap[row][0] == 1 ) {
+
+            for(int col = 0; col < COLUMNS; col++){
+ 
+               if( tetrisBooleanMap[row][col] != 1 ) {
+                   break;
+               }
+               if( tetrisBooleanMap[row][9] == 1 ) {
+                   completedLines[row] = 1;
+               }
+            
+           }
+        }
+    }
+
+}
+
+void eliminateLines(char (*tetrisMap)[COLUMNS], bool (*tetrisBooleanMap)[COLUMNS], bool *completedLines) {
+
+    for(int row = 0; row < ROWS; row++) {
+        
+        // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
+        if( completedLines[row] == 1 ) {
+
+            // reset line
+            for(int col = 0; col < COLUMNS; col++) {
+                tetrisMap[row][col] = '.';
+                tetrisBooleanMap[row][col] = 0;
+            }
+
+            //updateTetrisMap(tetrisMap, tetrisBooleanMap);
+
+            // shift rows down
+            // remeber we're going downnnn to up
+            for(int rowEL =  row ; rowEL > 0; rowEL--) {
+
+                for(int col = 0; col < COLUMNS; col++) {
+                    
+                    tetrisMap[rowEL][col] = tetrisMap[rowEL-1][col];
+                    tetrisBooleanMap[rowEL][col] = tetrisBooleanMap[rowEL-1][col];
+
+                }
+
+            }
+
+        }
+        
+    }
+
+}
+
 void printGameOverAndGTFOH() {
-    clear();
+    //clear();
 
     puts(RED);
     puts("GAME OVER !!!!");

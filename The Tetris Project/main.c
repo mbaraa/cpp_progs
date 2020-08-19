@@ -8,11 +8,14 @@ int main() {
     // mark each taken place with true(1)
     bool checkList[ROWS][COLUMNS];
     // columns lengths
-    int colsLengths[COLUMNS];//
+    int colsLengths[COLUMNS];
+    // completed rows
+    bool completedLines[ROWS];
 
     initLengths(colsLengths);
     initCheckList(checkList);
     initTetrisMap(tetrisMainMap);
+    initCompletedLines(completedLines);
 
     //dropOverColumn(m, 20, 10);
 
@@ -20,6 +23,7 @@ int main() {
     int droppingRow = -1;
     // dropping starts from the middle
     int col = COLUMNS / 2;
+    
     // print current tetris
     printMatrix(tetrisMainMap, ROWS, COLUMNS);
 
@@ -31,6 +35,11 @@ int main() {
         }
 
         if( tetrisMainMap[0][col] == '#' && tetrisMainMap[1][col] == '#') {
+            for(int col = 0; col < ROWS; col++){
+                
+                printf("%d ", completedLines[col]);
+            
+           }
             printGameOverAndGTFOH();
         }
         
@@ -69,6 +78,8 @@ int main() {
 
         clear();
         
+        markDoneLines(checkList, completedLines);
+        eliminateLines(tetrisMainMap, checkList, completedLines);
         updateTetrisMap(tetrisMainMap, checkList);
         // print current tetris map
         printMatrix(tetrisMainMap, ROWS, COLUMNS);
