@@ -6,7 +6,7 @@
 #include <math.h>
 #include "kbInput.h"
 #include "ioFuncs.h"
-#include "GlobalsAndConstants.h"
+#include "Constants.h"
 
 
 void initLengths(int lengths[]) {
@@ -15,32 +15,31 @@ void initLengths(int lengths[]) {
     }
 }
 
-void initCheckList(bool *checkList) {
-    //bool (*checkList)[10] = checkList0;
+void initCheckList(bool (*checkList)[COLUMNS]) {
 
     for(int row = 0; row < 20; row++) {
         
         for(int col = 0; col < 10; col++){
 
-            *((checkList + row*COLUMNS ) + col) = 0;
+            checkList[row][col] = 0;
         }
     
     }
 }
 
-void initMatrix(char *matrix, int rows, int columns){
+void initTetrisMap(char (*matrix)[COLUMNS], int rows, int columns){
 
     for(int row = 0; row < rows; row++) {
         for(int col = 0; col < columns; col++){
             
-            *( (matrix + row*COLUMNS ) +col ) = '.';
+            matrix[row][col] = '.';
 
         }
     
     }
 }
 
-void updateTetrisMap(char *matrix, bool *checkList, int rows, int columns) {
+void updateTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int rows, int columns) {
 
 
     for(int row = 0; row < rows; row++) {
@@ -48,8 +47,8 @@ void updateTetrisMap(char *matrix, bool *checkList, int rows, int columns) {
         for(int col = 0; col < columns; col++){
 
             // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
-            if( *(( checkList + row*COLUMNS) + col) == 1 ) {
-                *(( matrix + row*COLUMNS) + col) = '#';
+            if( checkList[row][col] == 1 ) {
+                matrix[row][col] = '#';
                 
             }
 
@@ -59,15 +58,15 @@ void updateTetrisMap(char *matrix, bool *checkList, int rows, int columns) {
 
 }
 
-void checkTetrisMap(char *matrix, bool *checkList, int rows, int columns, int lengths[]) {
+void checkTetrisMap(char (*matrix)[COLUMNS], bool (*checkList)[COLUMNS], int rows, int columns, int lengths[]) {
 
     for(int col = 0; col < columns; col++) {
         
         for(int row = 0; row < rows; row++){
 
-            if( *((matrix + row*COLUMNS ) + col) == '#' ) {
+            if( matrix[row][col] == '#' ) {
                 
-                *((checkList + row*COLUMNS ) + col) = 1;
+                checkList[row][col] = 1;
                 lengths[col]--;
                 break;
                 
@@ -78,6 +77,9 @@ void checkTetrisMap(char *matrix, bool *checkList, int rows, int columns, int le
     }
 
 }
+
+
+
 
 /* not needed for now :)
 void dropOverColumn(char *matrix0, int rows, int columns) {

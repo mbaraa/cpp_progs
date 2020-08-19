@@ -1,5 +1,5 @@
 #include "tetrisFuncs.h"
-
+#include "Constants.h"
 
 int main() {
 
@@ -11,8 +11,8 @@ int main() {
     int colsLengths[COLUMNS];//
 
     initLengths(colsLengths);
-    initCheckList(*checkList);
-    initMatrix(*tetrisMainMap, ROWS, COLUMNS);
+    initCheckList(checkList);
+    initTetrisMap(*tetrisMainMap, ROWS, COLUMNS);
 
     //dropOverColumn(m, 20, 10);
 

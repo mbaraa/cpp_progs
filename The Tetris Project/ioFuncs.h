@@ -2,7 +2,7 @@
 #define IOFUNCS_H
 
 #include <stdio.h>
-#include "GlobalsAndConstants.h"
+#include "Constants.h"
 
 void clear() {
     printf("\033c");
