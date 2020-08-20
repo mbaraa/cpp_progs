@@ -191,6 +191,47 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
                      //int rotation) {
 
     
+    // pi/2 rad rotation
+
+    int *x = &block->x;
+    int *y = &block->y;
+    
+    // draw equivalent empty block on the tetris map
+    for(int shapeCol = 0; shapeCol < block->width; shapeCol++) {
+        
+        for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
+            
+            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeCol][shapeRow];
+            //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeRow][shapeCol];
+            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> eqNone[shapeRow][shapeCol];
+
+        } //
+
+    } //
+
+    // update coordinates
+    block -> x = destX;
+    block -> y++; // drop one block
+    
+    // draw block on the tetris map
+    for(int shapeCol = 0; shapeCol < block->width; shapeCol++) {
+        
+        for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
+            
+            //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeCol][shapeRow];
+            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeCol][shapeRow];
+            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> shape[shapeRow][shapeCol];
+
+        } //
+
+    } //
+
+    // pi/2 rad rotation
+
+
+/*
+    // 0 rad rotation
+
     int *x = &block->x;
     int *y = &block->y;
     
@@ -219,7 +260,23 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
         } //
 
     } //
-            
+   // 0 rad rotation
+*/            
+
+} // void dropBlockOneRow
+
+// hypothetical function
+void rotateTetromino() {
+
+    // given a point p(x,y)
+
+    /*
+     * then p'(x',y')
+     * i.e.
+     * x' = x*cos(t) - y*sin(t)
+     * y' = x*sin(t) + y*cos(t)
+     * 
+     */
 
 } // void dropBlockOneRow
 

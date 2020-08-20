@@ -3,41 +3,6 @@
 #include "Tetrominos.h"
 
 int main() {
-/*
-    Tetromino square;
-
-    square.height = 2;
-    square.width = 2;
-    square.shape[0][0] = '#';
-    square.shape[0][1] = '#';
-    
-    square.shape[1][0] = '#';
-    square.shape[1][1] = '#';
-
-    /////
-    square.eqNone[0][0] = '.';
-    square.eqNone[0][1] = '.';
-
-    square.eqNone[1][0] = '.';
-    square.eqNone[1][1] = '.';
-
-    Tetromino stick;
-
-    stick.height = 4;
-    stick.width = 1;
-    stick.shape[0][0] = '#';
-    stick.shape[1][0] = '#';
-    
-    stick.shape[2][0] = '#';
-    stick.shape[3][0] = '#';
-
-    /////
-    stick.eqNone[0][0] = '.';
-    stick.eqNone[1][0] = '.';
-
-    stick.eqNone[2][0] = '.';
-    stick.eqNone[3][0] = '.';
-*/
 
     char tetrisMainMap[ROWS][COLUMNS];
     // mark each taken place with true(1)
@@ -64,19 +29,19 @@ int main() {
     // print current tetris
     printMatrix(tetrisMainMap, ROWS, COLUMNS);
 
-    square.x = 4;
-    square.y = 0;
-    
-    straight.x = 4;
-    straight.y = 0;
 
     int newCol = col;
     
+    Tetromino *block;
+    block = &skew;
+
+    block->x = 4;
+    block->y = 0;
+
     while( true ) {
 
-        square.y = droppingRow - square.height - 1; // height - 1 
-        straight.y = droppingRow - 3;//stick.height - 1;
-        lShape.y = droppingRow - 2;
+        block->y = droppingRow - (block->height - 1); // height - 1 
+        
 
         // overlapping checker
         if( droppingRow == colsLengths[col]) {
@@ -109,10 +74,19 @@ int main() {
         // debugging budies
 
         // move left / right
-        if(chr == 'A' || chr == 'a'){
+        if(chr == 'A' || chr == 'a') {
             newCol--;
-        } else if(chr == 'D' || chr == 'd'){
+        } 
+        else if(chr == 'D' || chr == 'd') {
             newCol++;
+        } 
+        else if(chr == 'W' || chr == 'w') {
+            if(block->rotation >= 3) {
+                block->rotation = 0;
+            }
+            else {
+                block->rotation++;
+            }
         }
 
         // setting boundaries
@@ -123,7 +97,7 @@ int main() {
         }
 
 
-        dropBlockOneRow(tetrisMainMap, &lShape, col, droppingRow++, newCol);
+        dropBlockOneRow(tetrisMainMap, block, col, droppingRow++, newCol);
         
         col = newCol;
         /*// add the dropping chararecter

@@ -123,7 +123,7 @@ Tetromino tShape = {
                 
 };
 
-Tetromino tShapeInverse = {
+Tetromino skew = {
     // height
     3,
     // width
@@ -131,7 +131,7 @@ Tetromino tShapeInverse = {
     // shape
     { {'.', '#'}, 
       {'#', '#'},
-      {'.', '#'},
+      {'#', '.'},
       {'\0', '\0'}},
     // eqNone
     { {'.', '.'}, 
@@ -143,19 +143,19 @@ Tetromino tShapeInverse = {
     // y
     0,
     // rotation
-    1
+    0
                 
 };
 
-Tetromino skew = {
+Tetromino skewInverse = {
     // height
     3,
     // width
     2, 
     // shape
-    { {'.', '#'}, 
+    { {'#', '.'}, 
       {'#', '#'},
-      {'#', '.'},
+      {'.', '#'},
       {'\0', '\0'}},
     // eqNone
     { {'.', '.'}, 
