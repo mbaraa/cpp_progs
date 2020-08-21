@@ -31,14 +31,23 @@ int main() {
 
 
     int newCol = col;
-    
-    Tetromino *block;
-    block = &skew;
 
+
+    Tetromino tetrominos[] = {square, straight,
+                         lShape, lShapeInverse,
+                         tShape, skew, skewInverse};
+    
+    int counter = 0;
+        
+    Tetromino *block;
+    //block = &tetrominos[counter];
+        
+    block = &skew;
     block->x = 4;
     block->y = 0;
 
     while( true ) {
+
 
         block->y = droppingRow - (block->height - 1); // height - 1 
         
@@ -61,6 +70,12 @@ int main() {
 
         // (== 1) because for some reason the "if" fucks with the array and assigns some garbage values
         if( checkList[droppingRow][col] == 1){
+            if(counter >= 6) {
+            counter = 0;
+        }
+        else {
+            counter++;
+        }
             droppingRow = 0;
             continue;
         }
@@ -83,6 +98,7 @@ int main() {
         else if(chr == 'W' || chr == 'w') {
             if(block->rotation >= 3) {
                 block->rotation = 0;
+                block->rotationsCounter = 0;
             }
             else {
                 block->rotation++;
@@ -97,8 +113,10 @@ int main() {
         }
 
 
+
         dropBlockOneRow(tetrisMainMap, block, col, droppingRow++, newCol);
         
+
         col = newCol;
         /*// add the dropping chararecter
         if( droppingRow <= colsLengths[col] ) {
@@ -130,7 +148,10 @@ int main() {
         }
         printf("\nLine: %d", lines);
         //// debugging budies
+
+
         
+
     }
 
     return 0;

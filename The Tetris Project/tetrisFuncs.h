@@ -184,6 +184,13 @@ void printGameOverAndGTFOH() {
 } // void printGameOverAndGTFOH
 
 
+char **transposeTetromino(Tetromino block) {
+    
+}
+
+char transposedShape[2][3];
+    char eqNoneTransposedShape[2][3];
+
 void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
                      Tetromino *block,
                      int currX, int currY,
@@ -193,42 +200,114 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
     
     // pi/2 rad rotation
 
+    // swapping height and width is really reallly important trust me
+    //swap(&block->height, &block->width);
+    
+    
+
+    for(; block->rotationsCounter <= block->rotation; block->rotationsCounter++) {
+
+ 
+    for(int row = 0; row < block->width; row++) {
+        
+        for(int col = 0; col < block->height; col++) {
+
+            eqNoneTransposedShape[row][col] = block->eqNone[col][row];
+
+        }
+    }
+
+    for(int row = 0; row < block->width; row++) {
+        
+        for(int col = 0; col < block->height; col++) {
+
+            transposedShape[row][col] = block->shape[col][row];
+
+        }
+    }
+    
+    swap(&block->height, &block->width);
+
+    }
+   /* int tmp = block->width;
+    block->width = block->height;
+    block->height = tmp;
+    */
     int *x = &block->x;
     int *y = &block->y;
-    
+
     // draw equivalent empty block on the tetris map
-    for(int shapeCol = 0; shapeCol < block->width; shapeCol++) {
+    for(int shapeRow = 0; shapeRow < block -> height; shapeRow++) {
         
-        for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
+        for(int shapeCol = 0; shapeCol < block -> width; shapeCol++) {
             
-            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeCol][shapeRow];
-            //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeRow][shapeCol];
+            if(block->rotation > 0) {
+                tetrisMap[*y + shapeRow][*x + shapeCol] = eqNoneTransposedShape[shapeRow][shapeCol];
+            }
+            
+            else {
+                tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeRow][shapeCol];
+            }
+        } //
+
+    } //
+
+    // update coordinates
+    *x = destX;
+    (*y)++; // drop one block
+    
+    // draw block on the tetris map
+    for(int shapeRow = 0; shapeRow < block -> height; shapeRow++) {
+        
+        for(int shapeCol = 0; shapeCol < block->width; shapeCol++) {
+            
+            if(block->rotation > 0) {
+                tetrisMap[*y + shapeRow][*x + shapeCol] = transposedShape[shapeRow][shapeCol];
+            }
+            else {
+                tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeRow][shapeCol];
+            }
+        } //
+
+    } //
+   // 0 rad rotation
+    
+/*    // draw equivalent empty block on the tetris map
+    for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
+        
+        for(int shapeCol = block->width - 1; shapeCol >= 0; shapeCol--) {
+            
+            //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeCol][shapeRow];
+            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeRow][shapeCol];
             //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> eqNone[shapeRow][shapeCol];
+            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> eqNone[shapeCol][shapeRow];
 
         } //
 
     } //
 
     // update coordinates
-    block -> x = destX;
-    block -> y++; // drop one block
+    *x = destX;
+    (*y)++; // drop one block
     
     // draw block on the tetris map
-    for(int shapeCol = 0; shapeCol < block->width; shapeCol++) {
+    for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
         
-        for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
+        for(int shapeCol = block->width - 1; shapeCol >= 0; shapeCol--) {
+        
             
             //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeCol][shapeRow];
-            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeCol][shapeRow];
+            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeRow][shapeCol];
             //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> shape[shapeRow][shapeCol];
+            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> shape[shapeCol][shapeRow];
 
         } //
 
     } //
-
+    
     // pi/2 rad rotation
 
-
+*/
 /*
     // 0 rad rotation
 
@@ -247,8 +326,8 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
     } //
 
     // update coordinates
-    block -> x = destX;
-    block -> y++; // drop one block
+    *x = destX;
+    (*y)++; // drop one block
     
     // draw block on the tetris map
     for(int shapeRow = 0; shapeRow < block -> height; shapeRow++) {

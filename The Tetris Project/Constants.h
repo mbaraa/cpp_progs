@@ -27,6 +27,8 @@ typedef struct {
 
     int rotation; // rotation * pi/2 rad
 
+    int rotationsCounter; //
+
 
 } Tetromino;
 

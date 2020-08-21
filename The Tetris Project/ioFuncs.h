@@ -28,5 +28,10 @@ void printMatrix(char (*matrix)[COLUMNS], int rows, int columns){
     }
 }
 
+void swap(int *x , int *y){
+	int temp = *x;
+	*x = *y;
+	*y = temp;
+}
 
 #endif //IOFUNCS_H

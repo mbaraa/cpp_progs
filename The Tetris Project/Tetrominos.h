@@ -23,6 +23,8 @@ Tetromino square = {
     // y
     0,
     // rotation
+    0,
+    //
     0
                 
 };
@@ -47,6 +49,8 @@ Tetromino straight = {
     // y
     0,
     // rotation
+    0,
+    //
     0
                 
 };
@@ -71,6 +75,8 @@ Tetromino lShape = {
     // y
     0,
     // rotation
+    0,
+    //
     0
                 
 };
@@ -95,6 +101,8 @@ Tetromino lShapeInverse = {
     // y
     0,
     // rotation
+    0,
+    //
     0
                 
 };
@@ -119,7 +127,9 @@ Tetromino tShape = {
     // y
     0,
     // rotation
-    3
+    0,
+    //
+    0
                 
 };
 
@@ -143,6 +153,8 @@ Tetromino skew = {
     // y
     0,
     // rotation
+    0,
+    //
     0
                 
 };
@@ -167,6 +179,8 @@ Tetromino skewInverse = {
     // y
     0,
     // rotation
+    0,
+    //
     0
                 
 };
