@@ -204,7 +204,7 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
     //swap(&block->height, &block->width);
     
     
-
+/*
     for(; block->rotationsCounter <= block->rotation; block->rotationsCounter++) {
 
  
@@ -229,10 +229,10 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
     swap(&block->height, &block->width);
 
     }
-   /* int tmp = block->width;
-    block->width = block->height;
-    block->height = tmp;
-    */
+    //int tmp = block->width;
+    //block->width = block->height;
+    //block->height = tmp;
+    
     int *x = &block->x;
     int *y = &block->y;
 
@@ -270,45 +270,8 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
         } //
 
     } //
-   // 0 rad rotation
-    
-/*    // draw equivalent empty block on the tetris map
-    for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
-        
-        for(int shapeCol = block->width - 1; shapeCol >= 0; shapeCol--) {
-            
-            //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeCol][shapeRow];
-            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> eqNone[shapeRow][shapeCol];
-            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> eqNone[shapeRow][shapeCol];
-            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> eqNone[shapeCol][shapeRow];
-
-        } //
-
-    } //
-
-    // update coordinates
-    *x = destX;
-    (*y)++; // drop one block
-    
-    // draw block on the tetris map
-    for(int shapeRow = 0; shapeRow < block->height; shapeRow++) {
-        
-        for(int shapeCol = block->width - 1; shapeCol >= 0; shapeCol--) {
-        
-            
-            //tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeCol][shapeRow];
-            tetrisMap[*y + shapeRow][*x + shapeCol] = block -> shape[shapeRow][shapeCol];
-            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> shape[shapeRow][shapeCol];
-            //tetrisMap[*y + shapeCol][*x + shapeRow] = block -> shape[shapeCol][shapeRow];
-
-        } //
-
-    } //
-    
-    // pi/2 rad rotation
-
 */
-/*
+
     // 0 rad rotation
 
     int *x = &block->x;
@@ -340,7 +303,7 @@ void dropBlockOneRow(char (*tetrisMap)[COLUMNS],
 
     } //
    // 0 rad rotation
-*/            
+            
 
 } // void dropBlockOneRow
 

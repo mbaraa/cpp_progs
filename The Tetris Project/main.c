@@ -51,7 +51,7 @@ int main() {
 
         block->y = droppingRow - (block->height - 1); // height - 1 
         
-
+        
         // overlapping checker
         if( droppingRow == colsLengths[col]) {
             initLengths(colsLengths);
@@ -81,7 +81,8 @@ int main() {
         }
         
         // get current character from keyboard
-        char chr = getch();
+        char chr = '\0'; 
+        getch();
 
         // for debugging
         //usleep(100000);
@@ -132,6 +133,8 @@ int main() {
         updateTetrisMap(tetrisMainMap, checkList);
         // print current tetris map
         printMatrix(tetrisMainMap, ROWS, COLUMNS);
+
+        printf("%d %d\n", droppingRow, colsLengths[col]);
 
         //// exists for debugging
         puts("lines completed:");

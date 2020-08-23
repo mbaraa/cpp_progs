@@ -10,7 +10,7 @@
 #define RESET "\033[0m"
 
 void clear() {
-    printf("\033c");
+    printf("\033[H\033[2J");
 }
 
 void printMatrix(char (*matrix)[COLUMNS], int rows, int columns){
