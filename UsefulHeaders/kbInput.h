@@ -1,3 +1,6 @@
+#ifndef KBINPUT_H
+#define KBINPUT_H
+
 #include <termios.h>
 #include <stdio.h>
 
@@ -41,3 +44,5 @@ char getch(void) {
 char getche(void)  {
     return getch_(1);
 }
+
+#endif //KBINPUT_H
