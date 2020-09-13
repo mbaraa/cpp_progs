@@ -8,7 +8,7 @@ using std::string; // typo
 using std::to_string; // typo typo typo
 #include "Option.h" // a menu consists of options of course
 #include <stdio.h>  // will nothing
-#include "kbInput.h" // getch()
+#include "../Headers/kbInput.h" // getch()
 #include "shared.h" // clear()
 #include <stdlib.h> // exit
 
