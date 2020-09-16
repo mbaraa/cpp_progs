@@ -23,6 +23,7 @@ public:
     ~FileManager() {
 
         this->close();
+        puts("FUCKING DESTRUCTED!!");
         
     }
 
@@ -30,7 +31,12 @@ public:
     virtual void append(std::string dataToAppend) = 0; 
 
     // delete file
-    virtual void del() = 0;
+    void del() {
+
+        remove(this->fileName.c_str());
+        printf("FILE (%s) DELETED!!\nRECOMENDDED TO DELETE OBJECT", this->fileName.c_str() );
+
+    }
     
     // get file data as a string
     virtual string getData() = 0;
@@ -42,20 +48,20 @@ protected:
 
     string fileName;
 
-private:
+private: // shady functions used only in constructor and destructor
 
     // open file in reading/writing modes
     void openFile(string fileName) {
 
-        // if file exists overwrite it
-        this->fileW.open(fileName, ios::out);
+        // opern in appending mode to prevent file overwriting
+        this->fileW.open(fileName, ios::app);
         // open file in reading mode
         this->fileR.open(fileName, ios::in);
 
     }
 
     // close file, already called in the destructor :)
-    virtual void close() {
+    void close() {
 
         this->fileR.close();
         this->fileW.close();

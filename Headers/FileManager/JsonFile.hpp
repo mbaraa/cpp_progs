@@ -18,22 +18,25 @@ class JsonFile: FileManager {
 public:
 
 	// hmm
-	JsonFile(json *jsonData, string jsonName): FileManager(jsonName) {
+	JsonFile(json *jsonData, string jsonName): FileManager(jsonName + ".json") {
 
-		this->actualJson = jsonData;
+		this->jsonData = jsonData;
 
 	}
 
 	~JsonFile() {}
 
-	// put json data into a json file, replacing old data
-	void append() {
+	// put json data into a json file, REPLACING OLD DATA
+	void append(string dummyString = "nullptr") {
+
+		this->fileW.close();
 
 		// json files must be treated as binary files
-		this->fileW.open(this->fileName + ".json", ifstream::binary); 
+		this->fileW.open(this->fileName, ifstream::binary); 
 
 		this->fileW << 
-				(*this->actualJson).dump();
+				(*this->jsonData).dump();
+
 
 	}
 
@@ -42,14 +45,27 @@ public:
 		string data;
 		this->fileR >> data;
 
-		(*this->actualJson) = json::parse(data); 
+		try {
+			(*this->jsonData) = json::parse(data); 
+		
+		} catch(nlohmann::detail::parse_error pe) {
+
+			puts("\033[31m");
+			puts("ZERO FILE!!");
+			puts("\033[0m");
+		}
+	}
+
+	string getData() {
+
+		this->jsonData->dump();
 
 	}
 
 private:
 
-	json *actualJson;
-    +
+	json *jsonData;
+
 };
 
 #endif // JSONFILE_HPP

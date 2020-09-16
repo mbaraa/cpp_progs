@@ -26,15 +26,7 @@ public:
         this->fileW << dataToAppend << std::endl;
 
     }
-
-    // delete file, and destruct object
-    void del() {
-
-        remove(this->fileName.c_str());
-        printf("FILE (%s) DELETED!!\n RECOMENDDED TO DELETE OBJECT", this->fileName.c_str() );
-
-    }
-    
+   
     // get file data as a string
     string getData() {
 
