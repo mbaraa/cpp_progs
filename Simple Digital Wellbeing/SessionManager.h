@@ -6,7 +6,7 @@
 #include <map>
 #include <iostream>
 #include <string>
-#include "../Headers/FileManager.h"
+#include "../Headers/FileManager/TextFile.hpp"
 #include "OutputControl.h"
 
 class SessionManager {
@@ -15,7 +15,7 @@ public:
     SessionManager() {
 
         this->sessions = new std::map<std::string, Session*>;
-        this->logFiles = new std::map<std::string, FileManager*>;
+        this->logFiles = new std::map<std::string, TextFile*>;
 
     }
     // destructor
@@ -41,7 +41,7 @@ public:
         // update maps
         (*this->sessions)[sessionName] = new Session( sessionName );
         // add data to the file
-        (*this->logFiles)[sessionName] = new FileManager( sessionName + ".csv" );
+        (*this->logFiles)[sessionName] = new TextFile( sessionName + ".csv" );
         
         (*this->logFiles)[sessionName]->append( 
                 sessionName 
@@ -88,7 +88,7 @@ private:
     // sessions' map
     std::map<std::string, Session*> *sessions;
     // file to store sessions' details in it
-    std::map<std::string, FileManager*> *logFiles;
+    std::map<std::string, TextFile*> *logFiles;
 
 
 }; // class TimeTracker

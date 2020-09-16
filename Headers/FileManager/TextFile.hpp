@@ -22,7 +22,8 @@ public:
 
         this->fileW.close();
 
-        this->fileW.open(this->fileName, ios::out);
+        this->fileW.open(this->fileName, ios::app);
+        this->fileW << dataToAppend << std::endl;
 
     }
 
