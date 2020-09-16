@@ -23,7 +23,6 @@ public:
     ~FileManager() {
 
         this->close();
-        puts("FUCKING DESTRUCTED!!");
         
     }
 
