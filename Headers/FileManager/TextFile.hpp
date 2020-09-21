@@ -19,17 +19,25 @@ public:
 
     // append to file
     void append(std::string dataToAppend) {
-
+        // tmp
+        this->open();
+        //
         this->fileW.close();
 
         this->fileW.open(this->fileName, ios::app);
         this->fileW << dataToAppend << std::endl;
 
+        // tmp
+        this->close();
+        //
     }
    
     // get file data as a string
     string getData() {
+        string data;
+        this->fileR >> data;
 
+        return data;
     }
 
 };

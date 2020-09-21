@@ -31,9 +31,7 @@ public:
 
     // delete file
     void del() {
-
         remove(this->fileName.c_str());
-        printf("FILE (%s) DELETED!!\nRECOMENDDED TO DELETE OBJECT", this->fileName.c_str() );
 
     }
     
@@ -47,7 +45,7 @@ protected:
 
     string fileName;
 
-private: // shady functions used only in constructor and destructor
+protected: // shady functions used only in constructor and destructor
 
     // open file in reading/writing modes
     void openFile(string fileName) {
@@ -57,6 +55,10 @@ private: // shady functions used only in constructor and destructor
         // open file in reading mode
         this->fileR.open(fileName, ios::in);
 
+    }
+
+    void open() {
+        this->openFile(this->fileName);
     }
 
     // close file, already called in the destructor :)
