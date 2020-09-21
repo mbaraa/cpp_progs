@@ -2,15 +2,16 @@
 #define MENU_H
 
 #include <vector> // for options list
-using std::vector; // for typo
 #include <string>
+#include <stdio.h>
+#include <stdlib.h> // exit
+#include "Option.h" // a menu consists of options of course
+#include "../Headers/kbInput.h" // getch
+#include "OutputControl.h" // clear
+
+using std::vector; // for typo
 using std::string; // typo
 using std::to_string; // typo typo typo
-#include "Option.h" // a menu consists of options of course
-#include <stdio.h>  // will nothing
-#include "../Headers/kbInput.h" // getch()
-#include "shared.h" // clear()
-#include <stdlib.h> // exit
 
 class Menu {
 public:
@@ -35,8 +36,9 @@ public:
 
     }
 
-    int chooseOption() {
+    int selectOption() {
 
+        OutputControl::clear();
         // default option is the first one
         int nCurrentOption = 1;
         // to hold the pressed key
@@ -51,26 +53,18 @@ public:
 
             // key handeling:
             /* 
-             * (q) for quit program
              * (j) to move down, vim keys
              * (k) to move up, vim keys
-             * (g) for selecting
+             * (return'\n') for selecting
              */
 
-    		if( cKeyStrokeVal == 'q' ){
-    			
-               	exit(0);
-    			
-            } else if( cKeyStrokeVal == 'j' ){
-
+    		if( cKeyStrokeVal == 'j' ){
    				nCurrentOption++;
 
    			} else if( cKeyStrokeVal == 'k' ){
-
    				nCurrentOption--;
 
-   			} else if( cKeyStrokeVal == 'g' ) {
-
+   			} else if( cKeyStrokeVal == '\n' ) {
                 return nCurrentOption;
 
             }
@@ -81,18 +75,17 @@ public:
              *
              */
     		if( nCurrentOption > this->noOfOptions ){
-    		
             	nCurrentOption = 1;
 
     		} else if( nCurrentOption < 1 ){
-
     			nCurrentOption = this->noOfOptions;
 
     		}
-    		clear();
+    		OutputControl::clear();
 		
         }        
 
+        // exit code
         return 0;
 
     } // int chooseOption()
