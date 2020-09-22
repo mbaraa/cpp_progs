@@ -74,11 +74,11 @@ public:
         this->combinedData[this->juiceDateOutMMDDYYYY()]
             [reason][this->newBalance] = this->fuckingBalance;
         
-        this->finalData->append( this->juiceDateOutMMDDYYYY() + ", " // Date
-            + reason + ", " // Item
-            + to_string(money) + ", " // Price
-            + to_string(this->fuckingBalance) + ", " // New Balance
-            + to_string(this->getSafeRemaining()) + ", " // Safe Remaining
+        this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
+            + reason + "," // Item
+            + to_string(money) + "," // Price
+            + to_string(this->fuckingBalance) + "," // New Balance
+            + to_string(this->getSafeRemaining()) + "," // Safe Remaining
 
         );
         this->permanentCombinedData->append();
@@ -94,11 +94,11 @@ public:
         this->combinedData[this->juiceDateOutMMDDYYYY()]
             [reason][this->newBalance] = this->fuckingBalance;
 
-        this->finalData->append( this->juiceDateOutMMDDYYYY() + ", " // Date
-            + reason + ", " // Item
-            + to_string(money) + ", " // Price
-            + to_string(this->fuckingBalance) + ", " // New Balance
-            + to_string(this->getSafeRemaining()) + ", " // Safe Remaining
+        this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
+            + reason + "," // Item
+            + to_string(money) + "," // Price
+            + to_string(this->fuckingBalance) + "," // New Balance
+            + to_string(this->getSafeRemaining()) + "," // Safe Remaining
 
         );
 
@@ -179,13 +179,13 @@ private: // functions
         /*if(this->permanentCombinedData->load() == 1) {
             return;
         }*/
-        this->finalData->append("Name," + 
+       /* this->finalData->append("Name," + 
             (string)this->combinedData[this->spenderName] );
         
         this->finalData->append("Starting Balance," + 
             to_string(this->fuckingBalance) + "\n");
-        
-        this->finalData->append("Date, Item, Price, New Balance, Safe Remaining\n");
+        */
+        this->finalData->append("Date, Item, Price, New Balance, Safe Remaining");
 
         // this->finalData->close();
 
