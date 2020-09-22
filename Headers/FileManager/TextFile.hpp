@@ -20,7 +20,7 @@ public:
     // append to file
     void append(std::string dataToAppend) {
         // tmp
-        this->open();
+        //this->open();
         //
         this->fileW.close();
 
@@ -28,7 +28,7 @@ public:
         this->fileW << dataToAppend << std::endl;
 
         // tmp
-        this->close();
+        //this->close();
         //
     }
    

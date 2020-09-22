@@ -113,19 +113,26 @@ private: // functions
 
         printf("Enter session name: ");
         cin >> this->sessionName;
-        
+        // move to constructor or do something non idiot with it because when 
+        // a new obect is created balance becomes 0 lol
         this->tracker1 = new NoIncrease(sessionName);
 
         Menu subMenu1;
         subMenu1.addOption("put money");
         subMenu1.addOption("draw money");
+        subMenu1.selectOption();
+
+        int option;
+        printf("select something: ");
+        scanf("%d", &option);
 
         double money;
         string reason;
     
-        switch( subMenu1.selectOption() ){
+        switch( option ){
 
         case 1:
+            //std::cout << std::flush;
             printf("enter income reason: ");
             cin >> reason;
             printf("enter ammount of money added: ");
@@ -135,11 +142,10 @@ private: // functions
             break;
 
         case 2:
-            printf("enter income reason: ");
+            printf("enter outcome reason: ");
             cin >> reason;
-            printf("enter ammount of money added: ");
+            printf("enter ammount of money spent: ");
             cin >> money;
-            cin >> reason >> money;
             tracker1->drawMoney(money, reason);
 
             break;
@@ -161,7 +167,7 @@ private: // functions
 */
         this->cleanTempVars();
 
-        //delete this->tracker1;
+        delete this->tracker1;
 
     }
 

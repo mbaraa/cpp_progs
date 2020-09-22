@@ -14,7 +14,6 @@
 #include <stdio.h> // lol
 #include <time.h> // time, ctime, time_t
 #include <string> // lol
-#include <map> // lol
 #include <nlohmann/json.hpp> // github.com/nlohmann/json
 #include "../OutputControl.h"
 #include <math.h> // ceil
@@ -23,7 +22,6 @@
 
 using nlohmann::json;
 using std::string;
-using std::map;
 
 class MoneyTracker {
 public:
@@ -35,35 +33,16 @@ public:
             JsonFile(&this->combinedData, spenderName);
         this->finalData = new TextFile(spenderName + ".csv");
         
-        // resetting files ha ha ha
-        //this->finalData->del();
-        if( this->permanentCombinedData->load() == 1 ) {
-          //  this->permanentCombinedData->del();
-            printf("ENTER BALANCE: ");
-            scanf("%lf", &this->balance);
-        }
-        //
-        this->spendingLog = new map<string, double>;
-        this->spendingDates = new map<string, time_t>;
-        time(&this->rawTime);        
+        time(&this->rawTime);
 
-        //if(this->permanentCombinedData->load() == 0) {
-            this->combinedData[this->spentMoney] = 0;
-            this->combinedData[this->spenderName] = spenderName;
-            // 
-          //  this->initCSVfile();
-            this->initJSONfile();
 
-//            this->permanentCombinedData->append();
-        //}
     }
 
     ~MoneyTracker() {
-        delete this->spendingLog;
-        delete this->spendingDates;
-        delete &this->combinedData;
+        //delete &this->combinedData;
         delete this->permanentCombinedData;
         delete this->finalData;
+    
     }
 
     virtual double getOriginalMoneyAmmount() = 0;
@@ -74,32 +53,14 @@ public:
 
     virtual void listData() = 0;
 
-    //virtual void runInitSetup() = 0;
-
-    void setBalance(double balance) {
-        this->combinedData[this->balance] = balance;
-
-    }
-
     virtual void putMoney(double money, string reason) = 0;
 
     virtual void drawMoney(double money, string reason) = 0;
 
 
 protected:
-
-//    double ammountOfMoney;
-//    double spentMoney;
-
-    //  reason, ammount spent
-    map<string, double> *spendingLog;
-    //  reason, time spent
-    map<string, time_t> *spendingDates;
     
-//    string spenderName;
-    double startingBalance;
-   // double spntMoney;
-
+    double fuckingBalance;
     json combinedData; // not a pointer for iterating issues :)
     JsonFile *permanentCombinedData;
     TextFile *finalData;
@@ -115,66 +76,16 @@ protected:
     const string date = "date";
 
 
-protected:
+protected: // functions
 
-    int checkJSON() {
+    virtual void syncJSON() = 0;
 
-        // 1 is an error code
-        return (this->permanentCombinedData->load() == 1 );
-    }
-
-    void syncJSON() {
-        
-        this->permanentCombinedData->append();
-    }
-
-    void initCSVfile() {
-        if(this->permanentCombinedData->load() == 1) {
-            return;
-        }
-        this->finalData->append("Name," + 
-            (string)this->combinedData[this->spenderName] );
-        
-        this->finalData->append("Starting Balance," + 
-            to_string(this->getOriginalMoneyAmmount()) + "\n");
-        
-        this->finalData->append("Date, Item, Price, New Balance, Safe Remaining\n");
-
-        // this->finalData->close();
-
-      //  this->finalData = new TextFile((string)this->combinedData[spenderName] + "csv");
-    }
+    virtual void initCSVfile() = 0;
     
-    void initJSONfile() {
-        // memory update: weird shits moved to constructor
-        this->combinedData["starting date"] = this->juiceDateOutMMDDYYYY();
-        this->combinedData["balance"] = 123;//this->getOriginalMoneyAmmount();
-        this->combinedData["name"] = this->combinedData[this->spenderName];
-        
-        // storage update
-        this->permanentCombinedData->append();
-        // the stupid fucking shit json file has to be closed to write the data :)
-        //this->permanentCombinedData->close();
+    virtual void initJSONfile() = 0;
 
-//        this->permanentCombinedData =  new JsonFile(&this->combinedData, this->combinedData[spenderName]);
-    }
+    virtual void moveJSONdataToCSV() = 0;
 
-    /*void moveJSONdataToCSV() {
-        this->permanentCombinedData = new JsonFile(
-            &this->combinedData,
-            this->combinedData[this->spenderName]);
-
-        for(auto e: this->combinedData[dates]) {
-
-
-            
-        }
-
-        // the stupid fucking shit json file has to be closed to write the data :)
-        delete this->permanentCombinedData;
-
-    }
-*/
     string juiceDateOutMMDDYYYY() {
         int years = this->rawTime / 31536000;
 	    int months = (this->rawTime / 2629800 ) - years*12;
