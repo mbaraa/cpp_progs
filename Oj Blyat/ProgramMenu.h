@@ -27,13 +27,14 @@ public:
 
     ProgramMenu() {
         this->moneyTrackers = new Menu();
+        this->subMenu = new Menu();
         this->initProgram();
     
     }
 
     ~ProgramMenu() {
         delete this->moneyTrackers;
-        delete this->tracker1;
+        delete this->subMenu;
 
     }
 
@@ -80,7 +81,11 @@ public:
 
     void printWelcomeScreen() {
         OutputControl::clear();
-        printf("\n\nMoney tracker or something\n\n");
+        printf("\n\nSpending Logger\n\n");
+        printf("\ncreated @ well some date\n\n");
+        printf("this program uses vim controls for menu scrolling!!\n");
+        printf("'j' to move down\n'k' to move up\n");
+        printf("Happy spending!!\n");
         OutputControl::hold();
 
     }
@@ -88,7 +93,11 @@ public:
 private:
 
     Menu *moneyTrackers;
+    Menu *subMenu;
     NoIncrease *tracker1;
+    MonthlyIncrease *tracker2;
+    YearlyIncrease *tracker3;
+
     double ammountOfMoney;
     string sessionName;
 
@@ -99,16 +108,14 @@ private: // functions
 
     // initalize menu with proper options
     void initProgram() {
-
         this->moneyTrackers->addOption("Track With No Increase");
         this->moneyTrackers->addOption("Track With Monthly Increase");
         this->moneyTrackers->addOption("Track With Yearly Increase");
         this->moneyTrackers->addOption("Exit");
-    }
 
-    void cleanTempVars() {
-        this->sessionName = "";
-        this->ammountOfMoney = 0;
+        this->subMenu->addOption("Put Money");
+        this->subMenu->addOption("Draw Money");
+
     }
 
     // options, and now the smelly code begins
@@ -126,26 +133,15 @@ private: // functions
         // move to constructor or do something non idiot with it because when 
         // a new obect is created balance becomes 0 lol
         this->tracker1 = new NoIncrease(sessionName);
-
-        Menu subMenu1;
-        subMenu1.addOption("put money");
-        subMenu1.addOption("draw money");
         
-/*
-        int option;
-        printf("select something: ");
-        scanf("%d", &option);
-*/
         double money;
         string reason;
-        bool sthSelected = false;
         // it's needed, because of listener business
-        subMenu1.selectOption();
-        
-        switch( subMenu1.selectOption() ) {
+        this->subMenu->selectOption();
+
+        switch( this->subMenu->selectOption() ) {
 
         case 1:
-            //std::cout << std::flush;
             printf("enter income reason: ");
             cin >> reason;
             printf("enter ammount of money added: ");
@@ -165,31 +161,87 @@ private: // functions
 
         }
 
-        /*// the later from private vars :)
-        this->rawData = new JsonFile(&tracker1->combinedData, this->sessionName);
-        
-        if( this->rawData->load() == 1) { // 1 is an error code
-            tracker1->runInitSetup();
-            this->rawData->append();
-
-        //    return;
-        }
-        delete this->rawData;
-        this->initCSVfile(sessionName, tracker1->getOriginalMoneyAmmount());
-        //this->tracker1->listData();
-*/
-        this->cleanTempVars();
-
         delete this->tracker1;
 
     }
 
     void track2() {
+        OutputControl::clear();
 
+        printf("Enter session name: ");
+        cin >> this->sessionName;
+        // move to constructor or do something non idiot with it because when 
+        // a new obect is created balance becomes 0 lol
+        this->tracker2 = new MonthlyIncrease(sessionName);
+        
+        double money;
+        string reason;
+        bool sthSelected = false;
+        // it's needed, because of listener business
+        this->subMenu->selectOption();
+
+        switch( this->subMenu->selectOption() ) {
+
+        case 1:
+            printf("enter income reason: ");
+            cin >> reason;
+            printf("enter ammount of money added: ");
+            cin >> money;
+            tracker2->putMoney(money, reason);
+
+            break;
+
+        case 2:
+            printf("enter outcome reason: ");
+            cin >> reason;
+            printf("enter ammount of money spent: ");
+            cin >> money;
+            tracker2->drawMoney(money, reason);
+
+            break;
+
+        }
+
+        delete this->tracker2;
     }
 
     void track3() {
+        OutputControl::clear();
 
+        printf("Enter session name: ");
+        cin >> this->sessionName;
+        // move to constructor or do something non idiot with it because when 
+        // a new obect is created balance becomes 0 lol
+        this->tracker3 = new YearlyIncrease(sessionName);
+        
+        double money;
+        string reason;
+        // it's needed, because of listener business
+        this->subMenu->selectOption();
+
+        switch( this->subMenu->selectOption() ) {
+
+        case 1:
+            printf("enter income reason: ");
+            cin >> reason;
+            printf("enter ammount of money added: ");
+            cin >> money;
+            tracker3->putMoney(money, reason);
+
+            break;
+
+        case 2:
+            printf("enter outcome reason: ");
+            cin >> reason;
+            printf("enter ammount of money spent: ");
+            cin >> money;
+            tracker3->drawMoney(money, reason);
+
+            break;
+
+        }
+
+        delete this->tracker3;
     }
 
 

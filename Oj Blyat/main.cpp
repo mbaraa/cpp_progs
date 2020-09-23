@@ -5,7 +5,7 @@ int main() {
 
 	ProgramMenu *m = new ProgramMenu(); 
 	
-	//m->printWelcomeScreen();
+	m->printWelcomeScreen();
 	m->selectOption();
 
 	return 0;

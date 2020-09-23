@@ -33,6 +33,8 @@ public:
             JsonFile(&this->combinedData, spenderName);
         this->finalData = new TextFile(spenderName + ".csv");
         
+        this->combinedData[this->spenderName] = spenderName;
+
         time(&this->rawTime);
 
 
@@ -66,7 +68,7 @@ protected:
     const string balance = "balance";
     const string spentMoney = "spentMoney";
     const string dates = "dates";
-    const string date = "date";
+    const string trackerType = "type";
 
 
 protected: // functions
@@ -75,13 +77,36 @@ protected: // functions
     
     virtual void initJSONfile() = 0;
 
-    virtual double getRemaining() = 0;
+    double getRemaining() {
 
-    virtual double getSafeRemaining() = 0;
+        return this->combinedData[this->balance];
+    }
 
-    virtual void updateCSVfile(double, string) = 0;
+    double getSafeRemaining() {
+
+        // 20% is a pretty good ammount of money
+        return (80 * (double)this->combinedData[this->balance]) / 100; 
+    }
+
+    virtual void updateCSVfile(double money, string reason) = 0;
     
-    virtual void updateJSONs(double, string) = 0;
+    virtual void updateJSONs(double money, string reason) {
+        // memory update:
+
+        // money update
+        this->combinedData[this->spentMoney] = 
+            ( (double)this->combinedData[this->spentMoney] -
+            (money <= 0? money: 0 ) );
+        
+        // outcome reason
+        this->combinedData[this->juiceDateOutMMDDYYYY()]
+            [reason][this->price] = money; 
+        
+        
+        // storage update:
+        this->permanentCombinedData->append();
+
+    }
 
     string juiceDateOutMMDDYYYY() {
         int years = this->rawTime / 31536000;

@@ -16,14 +16,13 @@ public:
 
     NoIncrease(string spenderName):
         MoneyTracker(spenderName) {
-        
-        this->combinedData[this->spentMoney] = 0;
-        this->combinedData[this->spenderName] = spenderName;
 
         // let's call it first time initalizer
         if( this->permanentCombinedData->load() == 1 ) {
             printf("ENTER BALANCE: ");
             cin >> this->combinedData[this->balance];
+            this->combinedData[this->spentMoney] = 0;
+
             // 
             this->initJSONfile();
             this->initCSVfile();
@@ -38,17 +37,6 @@ public:
 
     }
 
-
-    double getRemaining() {
-
-        return this->combinedData[this->balance];
-    }
-
-    double getSafeRemaining() {
-
-        // 20% is a pretty good ammount of money
-        return (80 * (double)this->combinedData[this->balance]) / 100; 
-    }
 
     void putMoney(double money, string reason) {
         this->updateJSONs(money, reason);
@@ -68,6 +56,9 @@ public:
         // looooooooooooool
     }
 
+private:
+    // more slave const
+    const string thisType = "noIncrease";
     
 private: // functions
 
@@ -96,32 +87,24 @@ private: // functions
     void initJSONfile() {
         // memory update: weird shits moved to constructor
         this->combinedData[this->startingDate] = this->juiceDateOutMMDDYYYY();
-        
+        this->combinedData[this->trackerType] = this->thisType;
         // storage update
         this->permanentCombinedData->append();
 
     }
 
     void updateJSONs(double money, string reason) {
-        // memory update:
+        MoneyTracker::updateJSONs(money, reason);
 
-        // money update
-        this->combinedData[this->spentMoney] = 
-            ( (double)this->combinedData[this->spentMoney] -
-            (money <= 0? money: 0 ) );
         this->combinedData[this->balance] = 
             ( this->getRemaining() + money );
-        // outcome reason
-        this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->price] = money; 
+        
         this->combinedData[this->juiceDateOutMMDDYYYY()]
             [reason][this->newBalance] = this->getRemaining();
-        
-        // storage update:
-        this->permanentCombinedData->append();
 
     }
 
+    // I tried to generalize it but nothing :(
     void updateCSVfile(double money, string reason) {
         this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
             + reason + "," // Item
