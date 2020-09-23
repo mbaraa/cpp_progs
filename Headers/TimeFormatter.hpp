@@ -4,6 +4,7 @@
 #include <string>
 using std::to_string;
 #include <time.h>
+#include <math.h> // ceil
 
 class TimeFormatter {
 public:
@@ -15,6 +16,24 @@ public:
         this->seconds = 0;
         this->formatTime(noOfSeconds);
     } // TimeFormat
+
+    int getMonth() {
+        this->format1();
+        
+        return this->months;
+    }
+
+    int getDay() {
+        this->format1();        
+
+        return this->dayOfMonth;
+    }
+
+    int getYear() {
+        this->format1();
+
+        return this->years;
+    }
 
     // get formated time
     std::string getTime() {
@@ -30,6 +49,12 @@ public:
 
     } // std::string getTime
 
+    std::string getDateMMDDYYYY() {
+        return to_string(this->getMonth()) 
+            + "/"+ to_string((this->getDay()) 
+            +"/"+ to_string(this->getYear());
+    }
+
     void formatTime(time_t secs) {
 
         for(int k = 0 ;k < secs; k++) {
@@ -39,6 +64,10 @@ public:
     } // void formatTime
 
 private:
+    time_t rawTime;
+    time_t years;
+    time_t months;
+    double dayOfMonth;
     time_t days;
     time_t hours;
     time_t minutes;
@@ -70,6 +99,19 @@ private:
         } // if1
 
     } // void tick
+
+    void format1() {
+        time(&this->rawTime);
+
+        this->years = this->rawTime / 31536000;
+	    this->months = (this->rawTime / 2629800 ) - years*12;
+	    this->dayOfMonth = (this->rawTime / 86400) - years*365.25 - months*30.5;
+
+	    this->years += 1970;
+	    this->months += 1;
+	    this->dayOfMonth = ceil(this->dayOfMonth) + 1;
+
+    }
 
 }; // class TimeFormatter
 
