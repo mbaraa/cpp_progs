@@ -51,7 +51,7 @@ public:
 
     std::string getDateMMDDYYYY() {
         return to_string(this->getMonth()) 
-            + "/"+ to_string((this->getDay()) 
+            + "/"+ to_string(this->getDay()) 
             +"/"+ to_string(this->getYear());
     }
 

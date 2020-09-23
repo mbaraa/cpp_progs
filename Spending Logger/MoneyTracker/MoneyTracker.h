@@ -19,6 +19,7 @@
 #include <math.h> // ceil
 #include "../../Headers/FileManager/JsonFile.hpp"
 #include "../../Headers/FileManager/TextFile.hpp"
+#include "../../Headers/TimeFormatter.hpp"
 
 using nlohmann::json;
 using std::string;
@@ -32,7 +33,8 @@ public:
         this->permanentCombinedData = new 
             JsonFile(&this->combinedData, spenderName);
         this->finalData = new TextFile(spenderName + ".csv");
-        
+        this->timeCap = new TimeFormatter(0);
+
         this->combinedData[this->spenderName] = spenderName;
 
         time(&this->rawTime);
@@ -59,6 +61,7 @@ protected:
     json combinedData; // not a pointer for iterating issues :)
     JsonFile *permanentCombinedData;
     TextFile *finalData;
+    TimeFormatter *timeCap;
 
     // slave consts "DING"*8
     const string startingDate = "startingDate";
@@ -109,18 +112,8 @@ protected: // functions
     }
 
     string juiceDateOutMMDDYYYY() {
-        int years = this->rawTime / 31536000;
-	    int months = (this->rawTime / 2629800 ) - years*12;
-	    double days = (this->rawTime / 86400) - years*365.25 - months*30.5;
-
-	    years += 1970;
-	    months += 1;
-	    days = ceil(days) + 1;
-
-
-        return std::to_string(months) 
-            + "/"+ std::to_string((int)days) 
-            +"/"+ std::to_string(years);
+        
+        return this->timeCap->getDateMMDDYYYY();
     }
 
     // useless for now, will be removed if still useless

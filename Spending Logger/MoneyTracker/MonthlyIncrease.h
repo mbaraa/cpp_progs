@@ -1,12 +1,12 @@
-#ifndef MONEYTRACKER_YEARLYYNCREASE_H
-#define MONEYTRACKER_YEARLYNCREASE_H
+#ifndef MONEYTRACKER_MONTHLYNCREASE_H
+#define MONEYTRACKER_MONTHLYNCREASE_H
 
 #include "MoneyTracker.h"
 
-class YearlyIncrease: public MoneyTracker {
+class MonthlyIncrease: public MoneyTracker {
 public:
 
-    YearlyIncrease(string spenderName): 
+    MonthlyIncrease(string spenderName): 
         MoneyTracker(spenderName) {
 
         // let's call it first time initalizer
@@ -20,20 +20,24 @@ public:
             this->initJSONfile();
             this->initCSVfile();
 
+            this->startMonth = this->timeCap->getMonth();
+
         }
 
     }
 
-    ~YearlyIncrease() {}
+    ~MonthlyIncrease() {}
 
     int getMonths() {
-        
+
+        return this->startMonth - this->timeCap->getMonth();
     }
 
     void putMoney(double money, string reason) {
-        /*this->combinedData[this->balance] = (
-            this->getRemaining() + this->getMonths() * this->growth;
-        );*/
+        this->combinedData[this->balance] = (
+            this->getRemaining() 
+            + this->getMonths() * this->growth
+        );
         this->updateJSONs(money, reason);
         this->updateCSVfile(money, reason);
 
@@ -54,8 +58,8 @@ public:
 private:
 
     double growth;
-
-    const string thisType = "yearly";
+    int startMonth;
+    const string thisType = "monthly";
 
     
 private: // functions
@@ -117,5 +121,4 @@ private: // functions
 
 };
 
-
-#endif // MONEYTRACKER_YEARLYNCREASE_H
+#endif // MONEYTRACKER_MONTHLYNCREASE_H
