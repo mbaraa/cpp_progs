@@ -38,21 +38,31 @@ public:
     }
 
     void selectOption() {
- 
+
+        bool sthSelected = false;
+
         while(1) {
-  
+
+            // it's needed, because of listener business
+            if(sthSelected) {
+                this->moneyTrackers->selectOption();
+            }
+
             switch( this->moneyTrackers->selectOption() ) {
             
             case 1:
                 this->track1();
+                sthSelected = true;
                 break;
 
             case 2:
                 this->track2();
+                sthSelected = true;
                 break;
 
             case 3:
                 this->track3();
+                sthSelected = true;
                 break;
 
             case 4:
@@ -120,16 +130,19 @@ private: // functions
         Menu subMenu1;
         subMenu1.addOption("put money");
         subMenu1.addOption("draw money");
-        subMenu1.selectOption();
-
+        
+/*
         int option;
         printf("select something: ");
         scanf("%d", &option);
-
+*/
         double money;
         string reason;
-    
-        switch( option ){
+        bool sthSelected = false;
+        // it's needed, because of listener business
+        subMenu1.selectOption();
+        
+        switch( subMenu1.selectOption() ) {
 
         case 1:
             //std::cout << std::flush;

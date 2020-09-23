@@ -23,21 +23,13 @@ public:
         // let's call it first time initalizer
         if( this->permanentCombinedData->load() == 1 ) {
             printf("ENTER BALANCE: ");
-            scanf("%lf", &this->fuckingBalance);
+            cin >> this->combinedData[this->balance];
             // 
             this->initJSONfile();
-
-        
-        
             this->initCSVfile();
+
         }
         
-        //  if file exists
-        //if( this->permanentCombinedData->load() == 0 ) {
-            this->syncJSON();
-
-//        }
-
 
     }
 
@@ -46,12 +38,6 @@ public:
 
     }
 
-    double getOriginalMoneyAmmount() {
-
-        // casting required for the "+" operator
-        return this->fuckingBalance + 
-            (double)this->combinedData[this->spentMoney];
-    }
 
     double getRemaining() {
 
@@ -61,104 +47,31 @@ public:
     double getSafeRemaining() {
 
         // 20% is a pretty good ammount of money
-        return (80 * this->fuckingBalance) / 100; 
+        return (80 * (double)this->combinedData[this->balance]) / 100; 
     }
 
     void putMoney(double money, string reason) {
-        this->fuckingBalance += money;
-        this->combinedData[this->balance] = this->fuckingBalance;
-
-        this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->price] = money;
-
-        this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->newBalance] = this->fuckingBalance;
-        
-        this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
-            + reason + "," // Item
-            + to_string(money) + "," // Price
-            + to_string(this->fuckingBalance) + "," // New Balance
-            + to_string(this->getSafeRemaining()) + "," // Safe Remaining
-
-        );
-        this->permanentCombinedData->append();
+        this->updateJSONs(money, reason);
+        this->updateCSVfile(money, reason);
 
     }
 
     void drawMoney(double money, string reason) {
-        this->fuckingBalance -= money;
-        this->combinedData[this->balance] = this->fuckingBalance;
-
-        this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->price] = money; 
-        this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->newBalance] = this->fuckingBalance;
-
-        this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
-            + reason + "," // Item
-            + to_string(money) + "," // Price
-            + to_string(this->fuckingBalance) + "," // New Balance
-            + to_string(this->getSafeRemaining()) + "," // Safe Remaining
-
-        );
-
-        this->permanentCombinedData->append();
+        this->updateJSONs(-1*money, reason);
+        this->updateCSVfile(-1*money, reason);
 
     }
     
 
     // 
     void listData() {
-   /*     printf("Starting Date: %s\n", 
-                    ctime(&this->startingDate));
-        printf("Starting Ammount of Money: %lf\n",
-                    this->getOriginalMoneyAmmount());
-        printf("Remaining Money: %lf\n",
-                    this->getRemaining());
-        printf("Safe Remaining Money: %lf\n", 
-                    this->getSafeRemaining());
-
-        OutputControl::hold();
-*/    
-    }
-/*
-
-    // should have been done in the constructor but....
-    void runInitSetup() {
-        
-        printf("enter session name: ");
-        cin >> this->spenderName;
-
-        printf("enter starting balance: ");
-        cin >> this->ammountOfMoney;
-
-        time(&this->startingDate);
-
-    
-        //this->updateJSON();
-
-    }*/
-
-    NoIncrease setCombinedData(json combinedData) {
-        this->combinedData = combinedData;
-        
-        return *this;
+        // looooooooooooool
     }
 
-    json *getCombinedData() {
-        
-        return &this->combinedData;
-    }
     
 private: // functions
 
-
-    void syncJSON() {
-
-        this->fuckingBalance = this->combinedData[this->balance];
-
-    }
-
+    // useless for now, will be removed if still useless
     void moveJSONdataToCSV() {
         this->permanentCombinedData = new JsonFile(
             &this->combinedData,
@@ -176,36 +89,49 @@ private: // functions
     }
 
     void initCSVfile() {
-        /*if(this->permanentCombinedData->load() == 1) {
-            return;
-        }*/
-       /* this->finalData->append("Name," + 
-            (string)this->combinedData[this->spenderName] );
-        
-        this->finalData->append("Starting Balance," + 
-            to_string(this->fuckingBalance) + "\n");
-        */
-        this->finalData->append("Date, Item, Price, New Balance, Safe Remaining");
+        this->finalData->append("Date,Item,Balance Change,New Balance,Safe Remaining,Total Spendings");
 
-        // this->finalData->close();
-
-      //  this->finalData = new TextFile((string)this->combinedData[spenderName] + "csv");
     }
     
     void initJSONfile() {
         // memory update: weird shits moved to constructor
         this->combinedData[this->startingDate] = this->juiceDateOutMMDDYYYY();
-        this->combinedData[this->balance] = this->fuckingBalance;//->getOriginalMoneyAmmount();
         
         // storage update
         this->permanentCombinedData->append();
-        // the stupid fucking shit json file has to be closed to write the data :)
-        //this->permanentCombinedData->close();
 
-//        this->permanentCombinedData =  new JsonFile(&this->combinedData, this->combinedData[spenderName]);
     }
 
+    void updateJSONs(double money, string reason) {
+        // memory update:
 
+        // money update
+        this->combinedData[this->spentMoney] = 
+            ( (double)this->combinedData[this->spentMoney] -
+            (money <= 0? money: 0 ) );
+        this->combinedData[this->balance] = 
+            ( this->getRemaining() + money );
+        // outcome reason
+        this->combinedData[this->juiceDateOutMMDDYYYY()]
+            [reason][this->price] = money; 
+        this->combinedData[this->juiceDateOutMMDDYYYY()]
+            [reason][this->newBalance] = this->getRemaining();
+        
+        // storage update:
+        this->permanentCombinedData->append();
+
+    }
+
+    void updateCSVfile(double money, string reason) {
+        this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
+            + reason + "," // Item
+            + to_string(money) + "," // Price
+            + to_string(this->getRemaining() ) + "," // New Balance
+            + (this->getSafeRemaining() > 0? to_string(this->getSafeRemaining()): to_string(0)) + "," // Safe Remaining
+            + to_string(this->combinedData[this->spentMoney]) // total spendings
+        );
+
+    }
 
 
 };

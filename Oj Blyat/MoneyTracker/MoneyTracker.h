@@ -45,12 +45,6 @@ public:
     
     }
 
-    virtual double getOriginalMoneyAmmount() = 0;
-
-    virtual double getRemaining() = 0;
-
-    virtual double getSafeRemaining() = 0;
-
     virtual void listData() = 0;
 
     virtual void putMoney(double money, string reason) = 0;
@@ -60,7 +54,6 @@ public:
 
 protected:
     
-    double fuckingBalance;
     json combinedData; // not a pointer for iterating issues :)
     JsonFile *permanentCombinedData;
     TextFile *finalData;
@@ -78,13 +71,17 @@ protected:
 
 protected: // functions
 
-    virtual void syncJSON() = 0;
-
     virtual void initCSVfile() = 0;
     
     virtual void initJSONfile() = 0;
 
-    virtual void moveJSONdataToCSV() = 0;
+    virtual double getRemaining() = 0;
+
+    virtual double getSafeRemaining() = 0;
+
+    virtual void updateCSVfile(double, string) = 0;
+    
+    virtual void updateJSONs(double, string) = 0;
 
     string juiceDateOutMMDDYYYY() {
         int years = this->rawTime / 31536000;
@@ -100,6 +97,9 @@ protected: // functions
             + "/"+ std::to_string((int)days) 
             +"/"+ std::to_string(years);
     }
+
+    // useless for now, will be removed if still useless
+    virtual void moveJSONdataToCSV() = 0;
 
 private: 
 
