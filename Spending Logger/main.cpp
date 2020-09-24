@@ -2,12 +2,9 @@
 #include "ProgramMenu.h"
 
 int main() {
-
-	ProgramMenu *m = new ProgramMenu(); 
-	
-	m->printWelcomeScreen();
-	m->selectOption();
+	ProgramMenu *prog = ProgramMenu::getInstance();
+	prog->printWelcomeScreen();
+	prog->selectOption();
 
 	return 0;
-	
 }

@@ -25,17 +25,21 @@ using std::endl;
 class ProgramMenu {
 public:
 
-    ProgramMenu() {
-        this->moneyTrackers = new Menu();
-        this->subMenu = new Menu();
-        this->initProgram();
-    
-    }
-
     ~ProgramMenu() {
         delete this->moneyTrackers;
         delete this->subMenu;
 
+    }
+
+    static ProgramMenu *getInstance() {
+
+        if( !instance ) {
+            instance = new ProgramMenu();
+
+        }
+
+
+        return instance;
     }
 
     void selectOption() {
@@ -101,10 +105,17 @@ private:
     double ammountOfMoney;
     string sessionName;
 
-    JsonFile *rawData; // not initialized in constructor, well you'll see later
-    TextFile *finalData; // same here
+    static ProgramMenu *instance;
 
 private: // functions
+
+    // singleton reasons :)    
+    ProgramMenu() {
+        this->moneyTrackers = new Menu();
+        this->subMenu = new Menu();
+        this->initProgram();
+    
+    }
 
     // initalize menu with proper options
     void initProgram() {
@@ -176,7 +187,6 @@ private: // functions
         
         double money;
         string reason;
-        bool sthSelected = false;
         // it's needed, because of listener business
         this->subMenu->selectOption();
 
@@ -247,5 +257,8 @@ private: // functions
 
 
 };
+
+// fucking crazy C++ requires initializing statics outside the class
+ProgramMenu *ProgramMenu::instance = nullptr;
 
 #endif //PROGRAMMENU_H
