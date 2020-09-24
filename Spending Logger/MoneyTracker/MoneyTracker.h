@@ -15,7 +15,7 @@
 #include <time.h> // time, ctime, time_t
 #include <string> // lol
 #include <nlohmann/json.hpp> // github.com/nlohmann/json
-#include "../OutputControl.h"
+#include "../../Headers/OutputControl.hpp"
 #include <math.h> // ceil
 #include "../../Headers/FileManager/JsonFile.hpp"
 #include "../../Headers/FileManager/TextFile.hpp"

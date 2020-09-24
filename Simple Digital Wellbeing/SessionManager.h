@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 #include "../Headers/FileManager/TextFile.hpp"
-#include "OutputControl.h"
+#include "../Headers/OutputControl.hpp"
 
 class SessionManager {
 public:

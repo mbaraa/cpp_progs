@@ -9,7 +9,7 @@
 #include <stdio.h> // lol
 #include <string> // lol
 #include <iostream> // cin
-#include "OutputControl.h" // clear, hold
+#include "../Headers/OutputControl.hpp" // clear, hold
 #include "../Headers/FileManager/JsonFile.hpp" // hmm
 #include "../Headers/FileManager/TextFile.hpp"
 #include <iomanip>

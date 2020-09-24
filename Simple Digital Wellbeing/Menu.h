@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SessionManager.h"
-#include "OutputControl.h"
+#include "../Headers/OutputControl.hpp"
 
 class Menu {
 public:

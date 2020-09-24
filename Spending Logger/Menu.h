@@ -7,7 +7,7 @@
 #include <stdlib.h> // exit
 #include "Option.h" // a menu consists of options of course
 #include "../Headers/kbInput.h" // getch
-#include "OutputControl.h" // clear
+#include "../Headers/OutputControl.hpp" // clear
 
 using std::vector; // for typo
 using std::string; // typo

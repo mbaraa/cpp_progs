@@ -2,6 +2,7 @@
 #define OUTPUTCONTROL_H
 
 #include <stdio.h>
+#include <iostream>
 
 // red color output
 #define RED "\033[31m"
@@ -15,21 +16,14 @@ public:
     static void hold(){
 
         puts("\npress enter to continue....");
-        // getchar is used to input a character
-        while(getchar() != '\n');
-        while(getchar() != '\n');
+        std::cin.ignore();
 
     } // static void hold
 
     // clear screen
-    static void clear(){
-
-        int counter = 0;
-        while(counter < 100){
-            puts("\n");
-            counter++;
-        }
-
+    static void clear() {
+        printf("\033[H\033[2J");
+    
     } // static void clear
 
 }; // class OutputControl
