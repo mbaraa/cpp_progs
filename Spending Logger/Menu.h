@@ -19,6 +19,8 @@ public:
         this->options = new vector<Option*>;
         this->optionIndex = 1;
         this->noOfOptions = 0;
+        this->setIsVisited(false);
+
     }
 
     ~Menu() {
@@ -39,6 +41,7 @@ public:
     int selectOption() {
 
         OutputControl::clear();
+        this->setIsVisited(true);
         // default option is the first one
         int nCurrentOption = 1;
         // to hold the pressed key
@@ -90,10 +93,22 @@ public:
 
     } // int chooseOption()
 
+    Menu *setIsVisited(bool isVisited) {
+        this->isVisited = isVisited;
+
+
+        return this;
+    }
+
+    bool getIsVisited() {
+
+        return this->isVisited;
+    }
+
 private: 
     int noOfOptions;
     int optionIndex;
-
+    bool isVisited;
     vector<Option*> *options;
     
 private: // functions:

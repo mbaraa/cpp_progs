@@ -51,11 +51,6 @@ public:
     }
     
 
-    // 
-    void listData() {
-        // looooooooooooool
-    }
-
 private:
     // more slave const
     const string thisType = "noIncrease";

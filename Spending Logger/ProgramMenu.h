@@ -102,9 +102,6 @@ private:
     MonthlyIncrease *tracker2;
     YearlyIncrease *tracker3;
 
-    double ammountOfMoney;
-    string sessionName;
-
     static ProgramMenu *instance;
 
 private: // functions
@@ -139,8 +136,10 @@ private: // functions
     void track1() {
         OutputControl::clear();
 
+        string sessionName;
+        
         printf("Enter session name: ");
-        cin >> this->sessionName;
+        std::getline(cin, sessionName);
         // move to constructor or do something non idiot with it because when 
         // a new obect is created balance becomes 0 lol
         this->tracker1 = new NoIncrease(sessionName);
@@ -148,7 +147,10 @@ private: // functions
         double money;
         string reason;
         // it's needed, because of listener business
-        this->subMenu->selectOption();
+        if( this->subMenu->getIsVisited() ) {
+            this->subMenu->selectOption();
+        
+        }
 
         switch( this->subMenu->selectOption() ) {
 
@@ -179,8 +181,10 @@ private: // functions
     void track2() {
         OutputControl::clear();
 
+        string sessionName;
+        
         printf("Enter session name: ");
-        cin >> this->sessionName;
+        std::getline(cin, sessionName);
         // move to constructor or do something non idiot with it because when 
         // a new obect is created balance becomes 0 lol
         this->tracker2 = new MonthlyIncrease(sessionName);
@@ -218,8 +222,10 @@ private: // functions
     void track3() {
         OutputControl::clear();
 
+        string sessionName;
+        
         printf("Enter session name: ");
-        cin >> this->sessionName;
+        std::getline(cin, sessionName);
         // move to constructor or do something non idiot with it because when 
         // a new obect is created balance becomes 0 lol
         this->tracker3 = new YearlyIncrease(sessionName);

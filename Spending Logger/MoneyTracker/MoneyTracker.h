@@ -49,8 +49,6 @@ public:
     
     }
 
-    virtual void listData() = 0;
-
     virtual void putMoney(double money, string reason) = 0;
 
     virtual void drawMoney(double money, string reason) = 0;
