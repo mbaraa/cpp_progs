@@ -61,17 +61,21 @@ public:
              * (return'\n') for selecting
              */
 
-    		if( cKeyStrokeVal == 'j' ){
+    		if( cKeyStrokeVal == '\n' ) {
+                return nCurrentOption;
+
+            } 
+            
+            nCurrentOption = (cKeyStrokeVal == 'j'? nCurrentOption + 1: (cKeyStrokeVal == 'k'? nCurrentOption - 1: nCurrentOption ) );
+
+            /*else if( cKeyStrokeVal == 'j' ){
    				nCurrentOption++;
 
    			} else if( cKeyStrokeVal == 'k' ){
    				nCurrentOption--;
 
-   			} else if( cKeyStrokeVal == '\n' ) {
-                return nCurrentOption;
-
-            }
-
+   			} else 
+*/
             // menu boundries
             /*
              * expected a comment didn't ya :)

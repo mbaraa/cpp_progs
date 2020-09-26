@@ -45,6 +45,7 @@ public:
     void selectOption() {
 
         bool sthSelected = false;
+        string sessionName;
 
         while(1) {
 
@@ -56,17 +57,36 @@ public:
             switch( this->moneyTrackers->selectOption() ) {
             
             case 1:
-                this->track1();
+                
+        
+                printf("Enter session name: ");
+                std::getline(cin, sessionName);
+                // move to constructor or do something non idiot with it because when 
+                // a new obect is created balance becomes 0 lol
+                this->trackMoney(new NoIncrease(sessionName));
+
                 sthSelected = true;
                 break;
 
             case 2:
-                this->track2();
+        
+                printf("Enter session name: ");
+                std::getline(cin, sessionName);
+                // move to constructor or do something non idiot with it because when 
+                // a new obect is created balance becomes 0 lol
+                this->trackMoney(new MonthlyIncrease(sessionName));
+
                 sthSelected = true;
                 break;
 
             case 3:
-                this->track3();
+        
+                printf("Enter session name: ");
+                std::getline(cin, sessionName);
+                // move to constructor or do something non idiot with it because when 
+                // a new obect is created balance becomes 0 lol
+                this->trackMoney(new YearlyIncrease(sessionName));
+
                 sthSelected = true;
                 break;
 
@@ -95,12 +115,9 @@ public:
     }
 
 private:
-
     Menu *moneyTrackers;
     Menu *subMenu;
-    NoIncrease *tracker1;
-    MonthlyIncrease *tracker2;
-    YearlyIncrease *tracker3;
+    MoneyTracker *tracker;
 
     static ProgramMenu *instance;
 
@@ -132,17 +149,11 @@ private: // functions
      * track2 = monthly
      * track3 = yearly 
      */
-    
-    void track1() {
+    void trackMoney(MoneyTracker *tracker) {
+
         OutputControl::clear();
 
-        string sessionName;
         
-        printf("Enter session name: ");
-        std::getline(cin, sessionName);
-        // move to constructor or do something non idiot with it because when 
-        // a new obect is created balance becomes 0 lol
-        this->tracker1 = new NoIncrease(sessionName);
         
         double money;
         string reason;
@@ -159,7 +170,7 @@ private: // functions
             cin >> reason;
             printf("enter ammount of money added: ");
             cin >> money;
-            tracker1->putMoney(money, reason);
+            tracker->putMoney(money, reason);
 
             break;
 
@@ -168,98 +179,15 @@ private: // functions
             cin >> reason;
             printf("enter ammount of money spent: ");
             cin >> money;
-            tracker1->drawMoney(money, reason);
+            tracker->drawMoney(money, reason);
 
             break;
 
         }
 
-        delete this->tracker1;
 
+        delete tracker;
     }
-
-    void track2() {
-        OutputControl::clear();
-
-        string sessionName;
-        
-        printf("Enter session name: ");
-        std::getline(cin, sessionName);
-        // move to constructor or do something non idiot with it because when 
-        // a new obect is created balance becomes 0 lol
-        this->tracker2 = new MonthlyIncrease(sessionName);
-        
-        double money;
-        string reason;
-        // it's needed, because of listener business
-        this->subMenu->selectOption();
-
-        switch( this->subMenu->selectOption() ) {
-
-        case 1:
-            printf("enter income reason: ");
-            cin >> reason;
-            printf("enter ammount of money added: ");
-            cin >> money;
-            tracker2->putMoney(money, reason);
-
-            break;
-
-        case 2:
-            printf("enter outcome reason: ");
-            cin >> reason;
-            printf("enter ammount of money spent: ");
-            cin >> money;
-            tracker2->drawMoney(money, reason);
-
-            break;
-
-        }
-
-        delete this->tracker2;
-    }
-
-    void track3() {
-        OutputControl::clear();
-
-        string sessionName;
-        
-        printf("Enter session name: ");
-        std::getline(cin, sessionName);
-        // move to constructor or do something non idiot with it because when 
-        // a new obect is created balance becomes 0 lol
-        this->tracker3 = new YearlyIncrease(sessionName);
-        
-        double money;
-        string reason;
-        // it's needed, because of listener business
-        this->subMenu->selectOption();
-
-        switch( this->subMenu->selectOption() ) {
-
-        case 1:
-            printf("enter income reason: ");
-            cin >> reason;
-            printf("enter ammount of money added: ");
-            cin >> money;
-            tracker3->putMoney(money, reason);
-
-            break;
-
-        case 2:
-            printf("enter outcome reason: ");
-            cin >> reason;
-            printf("enter ammount of money spent: ");
-            cin >> money;
-            tracker3->drawMoney(money, reason);
-
-            break;
-
-        }
-
-        delete this->tracker3;
-    }
-
 
 
 };
