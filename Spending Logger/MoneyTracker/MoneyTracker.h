@@ -78,11 +78,6 @@ protected: // functions
     
     virtual void initJSONfile() = 0;
 
-    double getRemaining() {
-
-        return this->combinedData[this->balance];
-    }
-
     double getSafeRemaining() {
 
         // 20% is a pretty good ammount of money
@@ -91,23 +86,7 @@ protected: // functions
 
     virtual void updateCSVfile(double money, string reason) = 0;
     
-    virtual void updateJSONs(double money, string reason) {
-        // memory update:
-
-        // money update
-        this->combinedData[this->spentMoney] = 
-            ( (double)this->combinedData[this->spentMoney] -
-            (money <= 0? money: 0 ) );
-        
-        // outcome reason
-        this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->price] = money; 
-        
-        
-        // storage update:
-        this->permanentCombinedData->append();
-
-    }
+    virtual void updateJSONs(double money, string reason) = 0;
 
     string juiceDateOutMMDDYYYY() {
         

@@ -1,5 +1,5 @@
-#ifndef MONEYTRACKER_YEARLYYNCREASE_H
-#define MONEYTRACKER_YEARLYNCREASE_H
+#ifndef MONEYTRACKER_YEARLYINCREASE_H
+#define MONEYTRACKER_YEARLYINCREASE_H
 
 #include "MoneyTracker.h"
 
@@ -35,7 +35,7 @@ public:
 
     void putMoney(double money, string reason) {
         this->combinedData[this->balance] = (
-            this->getRemaining() 
+            (double)this->combinedData[this->balance] 
             + this->getYears() * this->growth
         );
         this->updateJSONs(money, reason);
@@ -91,13 +91,23 @@ private: // functions
     }
 
     void updateJSONs(double money, string reason) {
-        MoneyTracker::updateJSONs(money, reason);
+        // money update
+        this->combinedData[this->spentMoney] = 
+            ( (double)this->combinedData[this->spentMoney] -
+            (money <= 0? money: 0 ) );
+        
+        // outcome reason
+        this->combinedData[this->juiceDateOutMMDDYYYY()]
+            [reason][this->price] = money; 
 
         this->combinedData[this->balance] = 
-            ( this->getRemaining() + money );
+            ( (double)this->combinedData[this->balance] + money );
         
         this->combinedData[this->juiceDateOutMMDDYYYY()]
-            [reason][this->newBalance] = this->getRemaining();
+            [reason][this->newBalance] = this->combinedData[this->balance];
+
+        // storage update:
+        this->permanentCombinedData->append();
 
     }
 
@@ -106,7 +116,7 @@ private: // functions
         this->finalData->append( this->juiceDateOutMMDDYYYY() + "," // Date
             + reason + "," // Item
             + to_string(money) + "," // Price
-            + to_string(this->getRemaining() ) + "," // New Balance
+            + to_string(this->combinedData[this->balance] ) + "," // New Balance
             + (this->getSafeRemaining() > 0? to_string(this->getSafeRemaining()): to_string(0)) + "," // Safe Remaining
             + to_string(this->combinedData[this->spentMoney]) // total spendings
         );
