@@ -2,10 +2,9 @@
 #define MENU_H
 
 #include <vector> // for options list
-#include <string>
-#include <stdio.h>
-#include <stdlib.h> // exit
-#include "Option.h" // a menu consists of options of course
+#include <string> // lol
+#include <stdio.h> // printf
+#include "Option.h" // a menu consists of options
 #include "../Headers/kbInput.h" // getch
 #include "../Headers/OutputControl.hpp" // clear
 
@@ -30,8 +29,8 @@ public:
     void addOption(string optionName) {
 
         this->options->push_back( new Option( 
-                to_string(this->optionIndex) + ") " + optionName)
-            );
+            to_string(this->optionIndex) + ") " + optionName)
+        );
             
         this->optionIndex++;
         this->noOfOptions++;
@@ -47,7 +46,7 @@ public:
         // to hold the pressed key
     	char cKeyStrokeVal;
         // oj blyat classic menu
-    	while(1) {
+    	while(true) {
             // hmm
     		this->listOptions(nCurrentOption);
 
@@ -66,28 +65,17 @@ public:
 
             } 
             
-            nCurrentOption = (cKeyStrokeVal == 'j'? nCurrentOption + 1: (cKeyStrokeVal == 'k'? nCurrentOption - 1: nCurrentOption ) );
+            nCurrentOption = cKeyStrokeVal == 'j'? nCurrentOption + 1:
+                (cKeyStrokeVal == 'k'? nCurrentOption - 1: nCurrentOption );
 
-            /*else if( cKeyStrokeVal == 'j' ){
-   				nCurrentOption++;
-
-   			} else if( cKeyStrokeVal == 'k' ){
-   				nCurrentOption--;
-
-   			} else 
-*/
             // menu boundries
             /*
              * expected a comment didn't ya :)
              *
              */
-    		if( nCurrentOption > this->noOfOptions ){
-            	nCurrentOption = 1;
+            nCurrentOption = nCurrentOption > this->noOfOptions? 1:
+                ( nCurrentOption < 1? this->noOfOptions: nCurrentOption);
 
-    		} else if( nCurrentOption < 1 ){
-    			nCurrentOption = this->noOfOptions;
-
-    		}
     		OutputControl::clear();
 		
         }        

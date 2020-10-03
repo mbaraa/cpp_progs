@@ -1,26 +1,16 @@
 #ifndef PROGRAMMENU_H
 #define PROGRAMMENU_H
 
-// this file needs heavy refactoring
-
-#include "Menu.h"
-#include "MoneyTracker/AllTrackers.h"
+#include "Menu.h" // super slavic scrolable menu
+#include "MoneyTracker/AllTrackers.h" // the whole shit
 #include <stdlib.h> // exit
 #include <stdio.h> // lol
 #include <string> // lol
 #include <iostream> // cin
 #include "../Headers/OutputControl.hpp" // clear, hold
-#include "../Headers/FileManager/JsonFile.hpp" // hmm
-#include "../Headers/FileManager/TextFile.hpp"
-#include <iomanip>
-#include <unistd.h>
 
 using std::string;
 using std::cin;
-using std::setprecision;
-using std::to_string;
-using std::fixed;
-using std::endl;
 
 class ProgramMenu {
 public:
@@ -43,11 +33,10 @@ public:
     }
 
     void selectOption() {
-
         bool sthSelected = false;
         string sessionName;
 
-        while(1) {
+        while(true) {
 
             // it's needed, because of listener business
             if(sthSelected) {
@@ -57,36 +46,23 @@ public:
             switch( this->moneyTrackers->selectOption() ) {
             
             case 1:
-                
-        
                 printf("Enter session name: ");
                 std::getline(cin, sessionName);
-                // move to constructor or do something non idiot with it because when 
-                // a new obect is created balance becomes 0 lol
                 this->trackMoney(new NoIncrease(sessionName));
-
                 sthSelected = true;
                 break;
 
-            case 2:
-        
+            case 2:        
                 printf("Enter session name: ");
                 std::getline(cin, sessionName);
-                // move to constructor or do something non idiot with it because when 
-                // a new obect is created balance becomes 0 lol
                 this->trackMoney(new MonthlyIncrease(sessionName));
-
                 sthSelected = true;
                 break;
 
             case 3:
-        
                 printf("Enter session name: ");
                 std::getline(cin, sessionName);
-                // move to constructor or do something non idiot with it because when 
-                // a new obect is created balance becomes 0 lol
                 this->trackMoney(new YearlyIncrease(sessionName));
-
                 sthSelected = true;
                 break;
 
@@ -106,7 +82,7 @@ public:
     void printWelcomeScreen() {
         OutputControl::clear();
         printf("\n\nSpending Logger\n\n");
-        printf("\ncreated @ well some date\n\n");
+        printf("\ncreated @ some date\n\n");
         printf("this program uses vim controls for menu scrolling!!\n");
         printf("'j' to move down\n'k' to move up\n");
         printf("Happy spending!!\n");
@@ -127,12 +103,12 @@ private: // functions
     ProgramMenu() {
         this->moneyTrackers = new Menu();
         this->subMenu = new Menu();
-        this->initProgram();
+        this->initMenus();
     
     }
 
-    // initalize menu with proper options
-    void initProgram() {
+    // initalize menus with proper options
+    void initMenus() {
         this->moneyTrackers->addOption("Track With No Increase");
         this->moneyTrackers->addOption("Track With Monthly Increase");
         this->moneyTrackers->addOption("Track With Yearly Increase");
@@ -143,25 +119,9 @@ private: // functions
 
     }
 
-    // options, and now the smelly code begins
-    /*
-     * track1 = no increase
-     * track2 = monthly
-     * track3 = yearly 
-     */
     void trackMoney(MoneyTracker *tracker) {
-
-        OutputControl::clear();
-
-        
-        
         double money;
         string reason;
-        // it's needed, because of listener business
-        if( this->subMenu->getIsVisited() ) {
-            this->subMenu->selectOption();
-        
-        }
 
         switch( this->subMenu->selectOption() ) {
 
@@ -171,7 +131,6 @@ private: // functions
             printf("enter ammount of money added: ");
             cin >> money;
             tracker->putMoney(money, reason);
-
             break;
 
         case 2:
@@ -180,12 +139,11 @@ private: // functions
             printf("enter ammount of money spent: ");
             cin >> money;
             tracker->drawMoney(money, reason);
-
             break;
 
         }
 
-
+        // hahahaha
         delete tracker;
     }
 
