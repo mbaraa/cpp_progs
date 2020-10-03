@@ -15,24 +15,31 @@ public:
         this->minutes = 0;
         this->seconds = 0;
         this->formatTime(noOfSeconds);
+        this->bundulledTime = new tm();
+
     } // TimeFormat
+
+    ~TimeFormatter() {
+
+        delete this->bundulledTime;
+    }
 
     int getMonth() {
         this->format1();
         
-        return this->months;
+        return this->bundulledTime->tm_mon + 1;
     }
 
     int getDay() {
         this->format1();        
 
-        return this->dayOfMonth;
+        return this->bundulledTime->tm_mday;
     }
 
     int getYear() {
         this->format1();
 
-        return this->years;
+        return this->bundulledTime->tm_year + 1900;
     }
 
     // get formated time
@@ -64,10 +71,9 @@ public:
     } // void formatTime
 
 private:
+    tm *bundulledTime;
     time_t rawTime;
-    time_t years;
-    time_t months;
-    double dayOfMonth;
+
     time_t days;
     time_t hours;
     time_t minutes;
@@ -102,14 +108,7 @@ private:
 
     void format1() {
         time(&this->rawTime);
-
-        this->years = this->rawTime / 31536000;
-	    this->months = (this->rawTime / 2629800 ) - years*12;
-	    this->dayOfMonth = (this->rawTime / 86400) - years*365.25 - months*30.5;
-
-	    this->years += 1970;
-	    this->months += 1;
-	    this->dayOfMonth = ceil(this->dayOfMonth) + 1;
+        this->bundulledTime = gmtime(&this->rawTime);
 
     }
 
