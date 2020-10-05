@@ -1,7 +1,7 @@
 #ifndef PROGRAMMENU_H
 #define PROGRAMMENU_H
 
-#include "Menu.h" // super slavic scrolable menu
+#include "../Headers/Menus/Menu.hpp" // super slavic scrolable menu
 #include "MoneyTracker/AllTrackers.h" // the whole shit
 #include <stdlib.h> // exit
 #include <stdio.h> // lol
